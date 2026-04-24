@@ -1,0 +1,1383 @@
+﻿:root {
+            --primary: #2563EB;
+            --on-primary: #FFFFFF;
+            --secondary: #3B82F6;
+            --on-secondary: #FFFFFF;
+            --accent: #EA580C;
+            --on-accent: #FFFFFF;
+            --background: #F8FAFC;
+            --foreground: #1E293B;
+            --card: #FFFFFF;
+            --card-foreground: #1E293B;
+            --muted: #E9EFF8;
+            --muted-foreground: #64748B;
+            --border: #E2E8F0;
+            --destructive: #DC2626;
+            --on-destructive: #FFFFFF;
+            --ring: #2563EB;
+            --font-en-heading: 'Inter', 'Helvetica Neue', 'Arial';
+            --font-en-body: 'Inter', 'Helvetica Neue', 'Arial';
+            --font-en-mono: 'JetBrains Mono', 'Menlo', 'Monaco';
+            --font-cn: 'MiSans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC';
+            --font-cn-heading: 'MiSans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC';
+            --font-cn-body: 'MiSans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC';
+            --font-cn-serif: 'Noto Serif SC', 'Songti SC', 'SimSun';
+            --font-cn-kai: 'LXGW WenKai', 'Kaiti SC', 'STKaiti';
+            --font-cn-display: 'Smiley Sans Oblique', 'MiSans', 'PingFang SC';
+            --font-cn-rounded: 'Yozai', 'MiSans', 'PingFang SC';
+            --font-cn-hand: 'Xiaolai', 'LXGW WenKai', 'MiSans';
+            --font-cn-local: 'LeeeafHeiLocal', 'MiSans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --font-heading: var(--font-en-heading), var(--font-cn-heading), sans-serif;
+            --font-body: var(--font-en-body), var(--font-cn-body), sans-serif;
+            --font-mono: var(--font-en-mono), var(--font-cn-body), monospace;
+            --font-chinese: var(--font-cn);
+            --font-chinese-heading: var(--font-cn-heading);
+            --font-chinese-body: var(--font-cn-body);
+            --font-chinese-serif: var(--font-cn-serif);
+            --font-chinese-kai: var(--font-cn-kai);
+            --font-chinese-display: var(--font-cn-display);
+            --font-chinese-rounded: var(--font-cn-rounded);
+            --font-chinese-hand: var(--font-cn-hand);
+            --border-radius: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --border-width: 1px;
+        }
+
+        /* Targeted transitions for specific interactive elements */
+        body, .card, .btn-primary, .btn-secondary, .btn-accent, .btn-outline, .btn-ghost,
+        .input, .select, .toggle, .badge, .tab-btn, .filter-btn, .style-card,
+        .search-input, .alert, .color-swatch {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            font-family: var(--font-body) !important;
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+
+        html {
+            font-family: var(--font-body) !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading) !important;
+        }
+
+        .font-mono {
+            font-family: var(--font-mono) !important;
+        }
+
+        /* Style variations */
+        .style-neubrutalism {
+            --border-radius: 2px;
+            --shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            --border-width: 3px;
+        }
+
+        .style-glassmorphism {
+            --border-radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.1);
+            --border-width: 1px;
+        }
+
+        .style-neomorphism {
+            --border-radius: 16px;
+            --shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+            --border-width: 0px;
+        }
+
+        .style-dark-mode {
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.5);
+            --border-width: 1px;
+        }
+
+        .style-gradient-mesh {
+            --border-radius: 24px;
+            --shadow: 0 20px 60px rgba(0,0,0,0.15);
+            --border-width: 0px;
+        }
+
+        .style-bauhaus {
+            --border-radius: 0px;
+            --shadow: none;
+            --border-width: 0px;
+        }
+
+        .style-swiss {
+            --border-radius: 0px;
+            --shadow: none;
+            --border-width: 1px;
+        }
+
+        .style-minimalist {
+            --border-radius: 8px;
+            --shadow: none;
+            --border-width: 0px;
+        }
+
+        .style-cyberpunk {
+            --border-radius: 0px;
+            --shadow: 0 0 20px rgba(0,255,255,0.5);
+            --border-width: 1px;
+        }
+
+        .style-art-deco {
+            --border-radius: 0px;
+            --shadow: none;
+            --border-width: 2px;
+        }
+
+        .style-material3 {
+            --border-radius: 16px;
+            --shadow: 0px 1px 3px 1px rgba(0,0,0,0.15), 0px 1px 2px 0px rgba(0,0,0,0.3);
+            --border-width: 0px;
+        }
+
+        .style-ios {
+            --border-radius: 12px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --border-width: 1px;
+        }
+
+        .style-fluent {
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --border-width: 1px;
+        }
+
+        .style-atomic {
+            --border-radius: 4px;
+            --shadow: none;
+            --border-width: 1px;
+        }
+
+        .style-neo-brutalism {
+            --border-radius: 4px;
+            --shadow: 6px 6px 0px 0px var(--primary);
+            --border-width: 3px;
+        }
+
+        .style-claymorphism {
+            --border-radius: 24px;
+            --shadow: 8px 8px 16px rgba(0,0,0,0.1), -8px -8px 16px rgba(255,255,255,0.7), inset 4px 4px 8px rgba(255,255,255,0.5), inset -4px -4px 8px rgba(0,0,0,0.05);
+            --border-width: 0px;
+        }
+
+        .style-skeuomorphism {
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.4);
+            --border-width: 1px;
+        }
+
+        .style-flat2 {
+            --border-radius: 6px;
+            --shadow: 4px 4px 0px 0px rgba(0,0,0,0.15);
+            --border-width: 1px;
+        }
+
+        .style-line-art {
+            --border-radius: 2px;
+            --shadow: 2px 2px 0px 0px var(--foreground);
+            --border-width: 2px;
+        }
+
+        .style-zen {
+            --border-radius: 2px;
+            --shadow: none;
+            --border-width: 1px;
+        }
+
+        /* Local font definition - relies on local installation, no hardcoded path */
+        @font-face {
+            font-family: 'LeeeafHeiLocal';
+            src: local('LeeeafHei Regular'),
+                 local('狸叶黑体'),
+                 local('LeeeafHei');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        /* Respect user's motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark mode active overrides */
+        .dark-mode-active .style-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        .dark-mode-active .color-swatch {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        /* Component styles */
+        .card {
+            background-color: var(--card);
+            color: var(--card-foreground);
+            border-radius: var(--border-radius, 8px);
+            box-shadow: var(--shadow, 0 1px 3px rgba(0,0,0,0.1));
+            border: var(--border-width, 1px) solid var(--border);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            border-radius: var(--border-radius, 6px);
+            box-shadow: var(--shadow, none);
+            border: var(--border-width, 0px) solid var(--primary);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--on-secondary);
+            border-radius: var(--border-radius, 6px);
+            box-shadow: var(--shadow, none);
+            border: var(--border-width, 0px) solid var(--secondary);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--on-accent);
+            border-radius: var(--border-radius, 6px);
+            box-shadow: var(--shadow, none);
+            border: var(--border-width, 0px) solid var(--accent);
+        }
+
+        .input {
+            background-color: var(--muted);
+            color: var(--foreground);
+            border-radius: var(--border-radius, 6px);
+            border: var(--border-width, 1px) solid var(--border);
+        }
+
+        .badge {
+            background-color: var(--muted);
+            color: var(--muted-foreground);
+            border-radius: var(--border-radius, 4px);
+        }
+
+        .color-swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .style-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .style-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .style-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .preview-section {
+            min-height: 400px;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--muted);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--muted-foreground);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--foreground);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Code block styling */
+        .code-block {
+            background-color: var(--muted);
+            color: var(--foreground);
+            border-radius: var(--border-radius, 8px);
+            border: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Tab styling */
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius, 6px);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: var(--muted-foreground);
+        }
+
+        .tab-btn:hover {
+            background-color: var(--muted);
+            color: var(--foreground);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: var(--on-primary);
+            border-radius: var(--border-radius, 8px);
+            box-shadow: var(--shadow, 0 4px 12px rgba(0,0,0,0.15));
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius, 8px);
+            border: var(--border-width, 1px) solid var(--border);
+            background-color: var(--card);
+            color: var(--foreground);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--ring);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius, 6px);
+            border: 1px solid var(--border);
+            background-color: var(--card);
+            color: var(--foreground);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--muted);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: var(--border-width, 1px) solid var(--primary);
+            border-radius: var(--border-radius, 6px);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--primary);
+            border: none;
+            border-radius: var(--border-radius, 6px);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .select {
+            background-color: var(--muted);
+            color: var(--foreground);
+            border-radius: var(--border-radius, 6px);
+            border: var(--border-width, 1px) solid var(--border);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background-color: var(--muted);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--card);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+        }
+
+        .toggle.active {
+            background-color: var(--primary);
+        }
+
+        .toggle.active::after {
+            transform: translateX(20px);
+        }
+
+        .alert {
+            padding: 0.875rem 1rem;
+            border-radius: var(--border-radius, 8px);
+            border: var(--border-width, 1px) solid;
+            font-size: 0.875rem;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background-color: var(--muted);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--muted);
+        }
+
+        .step-dot.active {
+            background-color: var(--primary);
+        }
+
+        .step-line {
+            width: 24px;
+            height: 2px;
+            background-color: var(--muted);
+        }
+
+        .step-line.active {
+            background-color: var(--primary);
+        }
+
+        /* Art Effect Float Panel Toggle Switch */
+        #effect-toggle-switch:checked + .toggle-track {
+            background: var(--primary) !important;
+        }
+        #effect-toggle-switch:checked + .toggle-track + .toggle-thumb {
+            transform: translateX(16px);
+        }
+
+        /* Art Effect Float Panel */
+        #art-effect-float-panel {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        #art-effect-float-panel:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #art-effect-float-panel.hidden {
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+        }
+
+        /* Compact effect cards in float panel */
+        .effect-float-card {
+            cursor: pointer;
+            border-radius: 6px;
+            padding: 6px 4px;
+            text-align: center;
+            transition: all 0.15s ease;
+            border: 2px solid transparent;
+            font-size: 0.7rem;
+            line-height: 1.2;
+        }
+        .effect-float-card:hover {
+            border-color: var(--primary);
+            background: var(--muted);
+        }
+        .effect-float-card.active {
+            border-color: var(--primary);
+            background: var(--muted);
+            font-weight: bold;
+        }
+        .effect-float-card .effect-float-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            margin: 0 auto 4px;
+            border: 1px solid var(--border);
+        }
+
+        /* Effect enabled indicator on float button */
+        #art-effect-float-btn.effect-active {
+            box-shadow: 0 0 0 3px var(--primary), 0 4px 12px rgba(0,0,0,0.2);
+            animation: effectPulse 2s ease-in-out infinite;
+        }
+        @keyframes effectPulse {
+            0%, 100% { box-shadow: 0 0 0 3px var(--primary), 0 4px 12px rgba(0,0,0,0.2); }
+            50% { box-shadow: 0 0 0 5px rgba(var(--primary-rgb), 0.4), 0 4px 12px rgba(0,0,0,0.2); }
+        }
+
+        /* Hover micro-preview for art effects */
+        .style-card.effect-micro-preview {
+            position: relative;
+        }
+
+        /* ===== 艺术效果视觉层 - 三层渗透架构 ===== */
+        /* Art effect parameter variables are injected dynamically per-effect */
+
+        #art-effect-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+        #art-effect-overlay.active {
+            opacity: calc(0.25 + var(--art-intensity, 0.5) * 0.35);
+        }
+
+        /* Penetration modes */
+        #art-effect-overlay.penetrate-mist {
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+        #art-effect-overlay.penetrate-bleed {
+            mask-image: radial-gradient(ellipse at center, transparent 40%, black 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 100%);
+        }
+        #art-effect-overlay.penetrate-soak {
+            mask-image: none;
+            -webkit-mask-image: none;
+        }
+
+        /* 1. Pop Art */
+        #art-effect-overlay.art-effect-1 {
+            background-image: radial-gradient(circle, rgba(0,0,0,calc(var(--art-intensity, 0.5) * 0.25)) 1.5px, transparent 1.5px);
+            background-size: calc(6px + var(--art-intensity, 0.5) * 4px) calc(6px + var(--art-intensity, 0.5) * 4px);
+        }
+        body.art-effect-1 {
+            --font-heading: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif !important;
+            --font-body: 'Bebas Neue', 'Impact', sans-serif !important;
+        }
+        body.art-effect-1 #art-effect-scope {
+            filter: saturate(calc(var(--art-saturation, 1) * 100%));
+        }
+        body.art-effect-1 h1, body.art-effect-1 h2, body.art-effect-1 h3 {
+            font-family: var(--font-heading) !important;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        body.art-effect-1 .card {
+            border: 3px solid #000 !important;
+            border-radius: 0px !important;
+            box-shadow: 5px 5px 0px 0px #000 !important;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) !important;
+            color: #fff !important;
+        }
+        body.art-effect-1 .card * { color: #fff !important; text-shadow: 0 1px 3px rgba(0,0,0,0.55); }
+        body.art-effect-1 .card .color-swatch { border-color: #000 !important; }
+        body.art-effect-1 .btn-primary,
+        body.art-effect-1 .btn-secondary,
+        body.art-effect-1 .btn-accent,
+        body.art-effect-1 .tab-btn.active,
+        body.art-effect-1 .filter-btn.active {
+            border: 3px solid #000 !important;
+            border-radius: 0px !important;
+            box-shadow: 4px 4px 0px 0px #000 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        body.art-effect-1 .style-card:hover {
+            transform: scale(1.03) rotate(1deg) !important;
+            box-shadow: 6px 6px 0px 0px #000 !important;
+        }
+        body.art-effect-1 .badge {
+            border: 2px solid #000 !important;
+            border-radius: 0px !important;
+            background: #FFBE0B !important;
+            color: #000 !important;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        body.art-effect-1 .search-input {
+            border: 3px solid #000 !important;
+            border-radius: 0px !important;
+            box-shadow: 3px 3px 0px 0px #000 !important;
+        }
+
+        /* 2. Fauvism - 野兽派 (深度优化) */
+        #art-effect-overlay.art-effect-2 {
+            background:
+                radial-gradient(ellipse at 0% 0%, rgba(216,17,89,calc(var(--art-texture, 0.4) * 0.25)) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, rgba(255,188,66,calc(var(--art-texture, 0.4) * 0.2)) 0%, transparent 40%);
+        }
+        body.art-effect-2 {
+            --font-heading: 'Caveat', 'LXGW WenKai', cursive !important;
+            --font-body: 'Caveat', 'LXGW WenKai', cursive !important;
+        }
+        body.art-effect-2 #art-effect-scope {
+            filter: saturate(calc(1 + var(--art-saturation, 0.6) * 1.2)) contrast(calc(1 + var(--art-texture, 0.4) * 0.3));
+        }
+        body.art-effect-2 h1, body.art-effect-2 h2, body.art-effect-2 h3 {
+            font-family: var(--font-heading) !important;
+            transform: rotate(calc(-1deg - var(--art-saturation, 0.6) * 2deg)) skewX(calc(var(--art-texture, 0.4) * -2deg));
+            display: inline-block;
+            -webkit-text-stroke: calc(var(--art-texture, 0.4) * 1.5px) var(--primary);
+        }
+        body.art-effect-2 .card {
+            border: 3px solid var(--primary) !important;
+            border-radius: 2px !important;
+            box-shadow: none !important;
+            background: linear-gradient(45deg, rgba(216,17,89,calc(0.04 + var(--art-texture, 0.4) * 0.12)), rgba(255,188,66,calc(0.04 + var(--art-texture, 0.4) * 0.12))) !important;
+        }
+        body.art-effect-2 .style-card:hover {
+            transform: translateY(-4px) rotate(calc(-2deg - var(--art-saturation, 0.6) * 2deg)) scale(1.02) !important;
+        }
+        body.art-effect-2 .btn-primary {
+            border-radius: 2px !important;
+            box-shadow: none !important;
+            border-width: 3px !important;
+            font-size: 1.1em;
+            background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+        }
+        body.art-effect-2 .badge {
+            border-radius: 2px !important;
+            border: 2px solid var(--accent) !important;
+            background: transparent !important;
+            color: var(--accent) !important;
+        }
+
+        /* 3. RISO */
+        #art-effect-overlay.art-effect-3 {
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E"),
+                radial-gradient(circle, rgba(255,72,196,calc(0.06 + var(--art-grain, 0.5) * 0.1)) 1.5px, transparent 1.5px);
+            background-size: auto, calc(8px + var(--art-grain, 0.5) * 4px) calc(8px + var(--art-grain, 0.5) * 4px);
+            mix-blend-mode: multiply;
+            opacity: calc(0.06 + var(--art-grain, 0.5) * 0.12);
+        }
+        body.art-effect-3 {
+            --font-heading: 'Space Mono', 'JetBrains Mono', monospace !important;
+            --font-body: 'Space Mono', 'JetBrains Mono', monospace !important;
+        }
+        body.art-effect-3 .card {
+            position: relative;
+            border-radius: 4px !important;
+            border: 2px solid var(--primary) !important;
+            /* 半透明荧光叠印底色 */
+            background: linear-gradient(135deg,
+                rgba(255,72,196,calc(0.04 + var(--art-grain, 0.5) * 0.08)),
+                rgba(45,226,230,calc(0.04 + var(--art-grain, 0.5) * 0.08))
+            ) !important;
+            /* 专色偏移滤镜 */
+            filter: hue-rotate(calc(var(--art-colorShift, 0) * 1deg));
+            overflow: visible;
+        }
+        /* 套印错位双层边框 */
+        body.art-effect-3 .card::before {
+            content: '';
+            position: absolute;
+            inset: calc(-1px - var(--art-misregistration, 0.3) * 4px);
+            border-radius: 6px;
+            box-shadow:
+                inset 0 0 0 2px rgba(45,226,230,calc(0.25 + var(--art-misregistration, 0.3) * 0.5)),
+                inset 0 0 0 4px rgba(255,72,196,calc(0.15 + var(--art-misregistration, 0.3) * 0.4));
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+        /* RISO 装饰图标：套色对位标记 + 半调圆点 + 油墨晕染 */
+        body.art-effect-3 .card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            pointer-events: none;
+            background:
+                /* 左上角十字对位标记 */
+                linear-gradient(#000, #000) 10px 8px / 12px 1.5px no-repeat,
+                linear-gradient(#000, #000) 15px 3px / 1.5px 12px no-repeat,
+                /* 小圆环 */
+                radial-gradient(circle, transparent 30%, #000 31%, #000 34%, transparent 35%) 22px 3px / 12px 12px no-repeat,
+                /* 右下角半调圆点 */
+                radial-gradient(circle, rgba(0,0,0,calc(0.08 + var(--art-grain, 0.5) * 0.12)) 1.5px, transparent 1.5px) right 6px bottom 6px / 5px 5px repeat,
+                /* 底部粉色油墨晕染 */
+                linear-gradient(to top, rgba(255,72,196,calc(0.06 + var(--art-grain, 0.5) * 0.1)), transparent 80%) left bottom / 100% 5px no-repeat,
+                /* 底部青色油墨晕染（错位） */
+                linear-gradient(to top, rgba(45,226,230,calc(0.04 + var(--art-grain, 0.5) * 0.08)), transparent 70%) calc(10% + var(--art-misregistration, 0.3) * 20%) bottom / 70% 4px no-repeat;
+            opacity: calc(0.4 + var(--art-grain, 0.5) * 0.6);
+        }
+        body.art-effect-3 .btn-primary,
+        body.art-effect-3 .btn-secondary {
+            border-radius: 4px !important;
+            border: 2px solid var(--primary) !important;
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.15) !important;
+            /* 半透明荧光光晕 */
+            background: linear-gradient(135deg,
+                rgba(255,72,196,calc(0.08 + var(--art-grain, 0.5) * 0.15)),
+                rgba(45,226,230,calc(0.08 + var(--art-grain, 0.5) * 0.15))
+            ) !important;
+        }
+        body.art-effect-3 .style-card:hover {
+            animation: risoShake 0.3s ease;
+        }
+        @keyframes risoShake {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-1px, 1px); }
+            50% { transform: translate(1px, -1px); }
+            75% { transform: translate(-1px, -1px); }
+        }
+        body.art-effect-3 .badge {
+            border-radius: 4px !important;
+            border: 1.5px solid var(--accent) !important;
+            background: rgba(255,72,196,calc(0.08 + var(--art-grain, 0.5) * 0.12)) !important;
+        }
+
+        /* 4. Neo-Brutalism */
+        body.art-effect-4 {
+            --font-heading: 'Times New Roman', Times, serif !important;
+            --font-body: 'Arial', sans-serif !important;
+        }
+        body.art-effect-4 h1, body.art-effect-4 h2, body.art-effect-4 h3 {
+            font-family: 'Times New Roman', Times, serif !important;
+            letter-spacing: -0.02em;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+        body.art-effect-4 .card {
+            border-width: calc(1px + var(--art-rawness, 0.8) * 3px) !important;
+            border-radius: 0px !important;
+            border-color: #000 !important;
+            box-shadow: none !important;
+            padding: 1rem !important;
+        }
+        body.art-effect-4 .btn-primary,
+        body.art-effect-4 .btn-secondary,
+        body.art-effect-4 .btn-accent,
+        body.art-effect-4 .tab-btn.active,
+        body.art-effect-4 .filter-btn.active {
+            border-radius: 0px !important;
+            box-shadow: none !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-width: calc(1px + var(--art-rawness, 0.8) * 3px) !important;
+            border-color: #000 !important;
+        }
+        body.art-effect-4 .search-input {
+            border-radius: 0px !important;
+            border-width: calc(1px + var(--art-rawness, 0.8) * 3px) !important;
+            border-color: #000 !important;
+            background: #fff !important;
+        }
+        body.art-effect-4 .style-card:hover {
+            transform: none !important;
+            box-shadow: none !important;
+            background: #ff0 !important;
+            color: #000 !important;
+        }
+        body.art-effect-4 .badge {
+            border-radius: 0px !important;
+            border: 2px solid #000 !important;
+            background: #fff !important;
+            color: #000 !important;
+        }
+
+        /* 5. Pixel Art */
+        #art-effect-overlay.art-effect-5 {
+            background-image:
+                linear-gradient(rgba(0,255,0,calc(var(--art-grid, 0.3) * 0.1)) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,0,calc(var(--art-grid, 0.3) * 0.1)) 1px, transparent 1px);
+            background-size: calc(8px - var(--art-grid, 0.3) * 4px) calc(8px - var(--art-grid, 0.3) * 4px);
+        }
+        body.art-effect-5 {
+            --font-heading: 'Press Start 2P', 'Courier New', monospace !important;
+            --font-body: 'Press Start 2P', 'Courier New', monospace !important;
+        }
+        body.art-effect-5 h1, body.art-effect-5 h2, body.art-effect-5 h3 {
+            font-family: var(--font-heading) !important;
+            font-size: 0.85em !important;
+            line-height: 1.6 !important;
+            text-transform: uppercase;
+        }
+        body.art-effect-5 .card,
+        body.art-effect-5 .btn-primary,
+        body.art-effect-5 .btn-secondary,
+        body.art-effect-5 .tab-btn,
+        body.art-effect-5 .search-input {
+            border-radius: 0px !important;
+            border-width: 2px !important;
+            image-rendering: pixelated;
+        }
+        body.art-effect-5 .style-card:hover {
+            transform: translateY(0) !important;
+            box-shadow: 0 0 0 4px var(--primary), 4px 4px 0 0 #000 !important;
+        }
+        body.art-effect-5 .badge {
+            border-radius: 0px !important;
+            border: 2px solid var(--primary) !important;
+            background: #000 !important;
+            color: #0f0 !important;
+            font-family: var(--font-mono) !important;
+            font-size: 0.6rem !important;
+        }
+
+        /* 6. Dither */
+        #art-effect-overlay.art-effect-6 {
+            background-image: radial-gradient(circle at center, rgba(0,0,0,calc(var(--art-density, 0.5) * 0.3)) 1px, transparent 1px);
+            background-size: calc(3px + var(--art-density, 0.5) * 3px) calc(3px + var(--art-density, 0.5) * 3px);
+        }
+        body.art-effect-6 {
+            --font-heading: 'Courier Prime', 'Courier New', monospace !important;
+            --font-body: 'Courier Prime', 'Courier New', monospace !important;
+        }
+        body.art-effect-6 #art-effect-scope {
+            filter: grayscale(calc(0.1 + var(--art-density, 0.5) * 0.4)) contrast(calc(1.05 + var(--art-density, 0.5) * 0.5));
+        }
+        body.art-effect-6 h1, body.art-effect-6 h2, body.art-effect-6 h3 {
+            font-family: var(--font-heading) !important;
+        }
+        body.art-effect-6 .card {
+            border-radius: 0px !important;
+            box-shadow: none !important;
+            border: 1px solid #222 !important;
+            background: #f5f5f5 !important;
+        }
+        body.art-effect-6 .btn-primary,
+        body.art-effect-6 .btn-secondary,
+        body.art-effect-6 .tab-btn.active {
+            border-radius: 0px !important;
+            box-shadow: none !important;
+            border: 1px solid #000 !important;
+            background: #000 !important;
+            color: #fff !important;
+        }
+        body.art-effect-6 .style-card:hover {
+            border-color: var(--primary) !important;
+            background: #e0e0e0 !important;
+            transform: none !important;
+        }
+        body.art-effect-6 .color-swatch,
+        body.art-effect-6 .material-swatch {
+            filter: grayscale(1) contrast(1.5);
+        }
+        body.art-effect-6 .badge {
+            border-radius: 0px !important;
+            border: 1px solid #000 !important;
+            background: #fff !important;
+            color: #000 !important;
+        }
+
+        /* 7. Low Poly - 深度优化 */
+        #art-effect-overlay.art-effect-7 {
+            background-image:
+                linear-gradient(30deg, rgba(78,205,196,calc(var(--art-density, 0.5) * 0.1)) 12%, transparent 12.5%, transparent 87%, rgba(78,205,196,calc(var(--art-density, 0.5) * 0.1)) 87.5%),
+                linear-gradient(150deg, rgba(78,205,196,calc(var(--art-density, 0.5) * 0.1)) 12%, transparent 12.5%, transparent 87%, rgba(78,205,196,calc(var(--art-density, 0.5) * 0.1)) 87.5%),
+                linear-gradient(30deg, rgba(255,107,107,calc(var(--art-gloss, 0.5) * 0.08)) 12%, transparent 12.5%, transparent 87%, rgba(255,107,107,calc(var(--art-gloss, 0.5) * 0.08)) 87.5%),
+                linear-gradient(150deg, rgba(255,107,107,calc(var(--art-gloss, 0.5) * 0.08)) 12%, transparent 12.5%, transparent 87%, rgba(255,107,107,calc(var(--art-gloss, 0.5) * 0.08)) 87.5%);
+            background-size: calc(40px + var(--art-density, 0.5) * 40px) calc(70px + var(--art-density, 0.5) * 40px);
+            
+        }
+        body.art-effect-7 {
+            --font-heading: 'Exo 2', 'Inter', sans-serif !important;
+            --font-body: 'Exo 2', 'Inter', sans-serif !important;
+        }
+        body.art-effect-7 h1, body.art-effect-7 h2, body.art-effect-7 h3 {
+            font-family: var(--font-heading) !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.02em;
+            -webkit-text-stroke: calc(var(--art-gloss, 0.5) * 1px) var(--primary);
+        }
+        body.art-effect-7 .card {
+            border-radius: 0px !important;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            border: 1px solid var(--primary) !important;
+            box-shadow: inset calc(var(--art-gloss, 0.5) * -4px) calc(var(--art-gloss, 0.5) * -4px) calc(var(--art-gloss, 0.5) * 8px) rgba(0,0,0,0.15) !important;
+        }
+        body.art-effect-7 .btn-primary,
+        body.art-effect-7 .btn-secondary {
+            border-radius: 0px !important;
+            clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+            border: 1px solid var(--primary) !important;
+            box-shadow: inset calc(var(--art-gloss, 0.5) * -2px) calc(var(--art-gloss, 0.5) * -2px) calc(var(--art-gloss, 0.5) * 6px) rgba(0,0,0,0.12) !important;
+        }
+        body.art-effect-7 .style-card:hover {
+            transform: translateY(-2px) !important;
+            filter: brightness(calc(1.05 + var(--art-gloss, 0.5) * 0.1));
+        }
+        body.art-effect-7 .badge {
+            border-radius: 0px !important;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+        }
+
+        /* 8. Data Viz */
+        #art-effect-overlay.art-effect-8 {
+            background-image:
+                linear-gradient(rgba(26,82,118,calc(var(--art-grid, 0.4) * 0.08)) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,82,118,calc(var(--art-grid, 0.4) * 0.08)) 1px, transparent 1px);
+            background-size: calc(40px - var(--art-grid, 0.4) * 20px) calc(40px - var(--art-grid, 0.4) * 20px);
+        }
+        body.art-effect-8 {
+            --font-heading: 'JetBrains Mono', 'Space Mono', monospace !important;
+            --font-body: 'JetBrains Mono', 'Space Mono', monospace !important;
+        }
+        body.art-effect-8 h1, body.art-effect-8 h2, body.art-effect-8 h3 {
+            font-family: var(--font-heading) !important;
+            font-weight: 700 !important;
+        }
+        body.art-effect-8 .card {
+            border-radius: 2px !important;
+            border: 1px solid rgba(26,82,118,0.2) !important;
+            box-shadow: none !important;
+            background: rgba(255,255,255,0.95) !important;
+            position: relative;
+        }
+        body.art-effect-8 .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0.6;
+        }
+        body.art-effect-8 .btn-primary,
+        body.art-effect-8 .btn-secondary {
+            border-radius: 2px !important;
+            border: 1px solid var(--primary) !important;
+            box-shadow: none !important;
+            font-family: var(--font-mono) !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        body.art-effect-8 .style-card:hover {
+            transform: none !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(26,82,118,0.15) !important;
+        }
+        body.art-effect-8 .badge {
+            font-family: var(--font-mono) !important;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.6rem !important;
+            border-radius: 2px !important;
+            border: 1px solid var(--primary) !important;
+            background: transparent !important;
+            color: var(--primary) !important;
+        }
+        body.art-effect-8 .search-input {
+            border-radius: 2px !important;
+            border: 1px solid rgba(26,82,118,0.3) !important;
+            font-family: var(--font-mono) !important;
+        }
+
+        /* 9. Anti-Swiss - 深度优化 */
+        #art-effect-overlay.art-effect-9 {
+            background: repeating-linear-gradient(
+                -12deg,
+                transparent 0,
+                transparent calc(250px - var(--art-rebellion, 0.5) * 100px),
+                rgba(255,51,0,calc(var(--art-rebellion, 0.5) * 0.1)) calc(250px - var(--art-rebellion, 0.5) * 100px),
+                rgba(255,51,0,calc(var(--art-rebellion, 0.5) * 0.1)) calc(500px - var(--art-rebellion, 0.5) * 200px)
+            );
+            mask-image: linear-gradient(to bottom, black 0%, black 10%, transparent 10%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 10%, transparent 10%);
+        }
+        body.art-effect-9 {
+            --font-heading: 'Inter', 'Helvetica Neue', sans-serif !important;
+            --font-body: 'Inter', 'Helvetica Neue', sans-serif !important;
+        }
+        body.art-effect-9 h1, body.art-effect-9 h2, body.art-effect-9 h3 {
+            font-family: var(--font-heading) !important;
+            letter-spacing: -0.03em;
+            transform: skewX(calc(-2deg - var(--art-distortion, 0.3) * 4deg));
+            display: inline-block;
+            font-weight: 900 !important;
+        }
+        body.art-effect-9 .card:nth-child(odd) {
+            transform: rotate(calc(-0.5deg - var(--art-rebellion, 0.5) * 2deg));
+        }
+        body.art-effect-9 .card:nth-child(even) {
+            transform: rotate(calc(0.5deg + var(--art-rebellion, 0.5) * 2deg));
+        }
+        body.art-effect-9 .style-card:hover {
+            transform: rotate(0deg) translateY(-4px) !important;
+        }
+        body.art-effect-9 .card {
+            border-radius: 0px !important;
+            border: 1px solid #000 !important;
+            box-shadow: none !important;
+        }
+        body.art-effect-9 .btn-primary,
+        body.art-effect-9 .btn-secondary {
+            border-radius: 0px !important;
+            border: 1px solid #000 !important;
+            box-shadow: none !important;
+            text-transform: lowercase;
+        }
+        body.art-effect-9 .badge {
+            border-radius: 0px !important;
+            border: 1px solid #000 !important;
+            background: #FF3300 !important;
+            color: #fff !important;
+            transform: rotate(-3deg);
+        }
+        body.art-effect-9 .search-input {
+            border-radius: 0px !important;
+            border: 1px solid #000 !important;
+            border-bottom-width: 3px !important;
+        }
+
+        /* 10. Collage - 深度优化 */
+        #art-effect-overlay.art-effect-10 {
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(107,112,92,calc(var(--art-aging, 0.3) * 0.08)) 2px, rgba(107,112,92,calc(var(--art-aging, 0.3) * 0.08)) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(107,112,92,calc(var(--art-aging, 0.3) * 0.08)) 2px, rgba(107,112,92,calc(var(--art-aging, 0.3) * 0.08)) 4px);
+            opacity: calc(0.2 + var(--art-messiness, 0.5) * 0.25);
+        }
+        body.art-effect-10 {
+            --font-heading: 'Indie Flower', 'Caveat', 'LXGW WenKai', cursive !important;
+            --font-body: 'Indie Flower', 'Caveat', 'LXGW WenKai', cursive !important;
+        }
+        body.art-effect-10 h1, body.art-effect-10 h2, body.art-effect-10 h3 {
+            font-family: var(--font-heading) !important;
+            transform: rotate(calc(-1deg - var(--art-messiness, 0.5) * 2deg));
+            display: inline-block;
+        }
+        body.art-effect-10 .card {
+            border-radius: 2px !important;
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.12) !important;
+            position: relative;
+            transform: rotate(calc(0.3deg + var(--art-messiness, 0.5) * 1deg));
+            background: #FEFAE0 !important;
+            border: 1px solid rgba(0,0,0,0.15) !important;
+            color: #333 !important;
+        }
+        body.art-effect-10 .card:nth-child(even) {
+            transform: rotate(calc(-0.3deg - var(--art-messiness, 0.5) * 1deg));
+            background: #FAEDCD !important;
+            color: #333 !important;
+        }
+        body.art-effect-10 .card::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: calc(20px - var(--art-messiness, 0.5) * 10px);
+            width: calc(32px - var(--art-messiness, 0.5) * 8px);
+            height: 12px;
+            background: rgba(204,213,174,0.6);
+            transform: rotate(calc(-4deg + var(--art-messiness, 0.5) * 4deg));
+            border-radius: 1px;
+            pointer-events: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        body.art-effect-10 .card::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: calc(30px - var(--art-aging, 0.3) * 10px);
+            width: calc(24px - var(--art-aging, 0.3) * 6px);
+            height: 10px;
+            background: rgba(212,163,115,0.5);
+            transform: rotate(calc(5deg - var(--art-aging, 0.3) * 3deg));
+            border-radius: 1px;
+            pointer-events: none;
+        }
+        body.art-effect-10 .style-card:hover {
+            transform: rotate(0deg) translateY(-4px) scale(1.01) !important;
+            box-shadow: 6px 6px 0px 0px rgba(0,0,0,0.15) !important;
+            z-index: 10;
+        }
+        body.art-effect-10 .btn-primary,
+        body.art-effect-10 .btn-secondary {
+            border-radius: 2px !important;
+            border: 1px solid rgba(0,0,0,0.2) !important;
+            box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.1) !important;
+            background: #E9EDC9 !important;
+            color: #333 !important;
+        }
+        body.art-effect-10 .badge {
+            border-radius: 2px !important;
+            background: rgba(204,213,174,0.4) !important;
+            border: 1px dashed rgba(0,0,0,0.2) !important;
+            transform: rotate(-2deg);
+        }
+        body.art-effect-10 .search-input {
+            border-radius: 2px !important;
+            border: 1px solid rgba(0,0,0,0.2) !important;
+            background: #FEFAE0 !important;
+        }
+
+        /* 11. Acid Design - 酸性设计 */
+        #art-effect-overlay.art-effect-11 {
+            background: radial-gradient(circle at 50% 50%, rgba(184,41,221,0.03) 0%, transparent 70%);
+            opacity: calc(0.15 + var(--art-chrome, 0.7) * 0.15);
+        }
+        @keyframes acidFlow {
+            0% { background-position: 0% 0%, 100% 100%; }
+            50% { background-position: 100% 100%, 0% 0%; }
+            100% { background-position: 0% 0%, 100% 100%; }
+        }
+        body.art-effect-11 {
+            --font-heading: 'Orbitron', 'Exo 2', sans-serif !important;
+            --font-body: 'Orbitron', 'Exo 2', sans-serif !important;
+            background:
+                conic-gradient(from 0deg at 30% 50%, rgba(184,41,221,0.06) 0deg, rgba(0,245,212,0.06) 120deg, rgba(255,0,110,0.06) 240deg, rgba(184,41,221,0.06) 360deg),
+                conic-gradient(from 180deg at 70% 50%, rgba(0,245,212,0.04) 0deg, rgba(255,0,110,0.04) 120deg, rgba(184,41,221,0.04) 240deg, rgba(0,245,212,0.04) 360deg),
+                #0a0a0f !important;
+            background-size: calc(200px + var(--art-flowSpeed, 0.5) * 200px) calc(200px + var(--art-flowSpeed, 0.5) * 200px);
+            animation: acidFlow calc(10s - var(--art-flowSpeed, 0.5) * 6s) linear infinite;
+        }
+        body.art-effect-11 .card {
+            border-radius: 8px !important;
+            border: 1px solid transparent !important;
+            background: linear-gradient(#111118, #111118) padding-box,
+                        conic-gradient(from calc(var(--art-flowSpeed, 0.5) * 360deg), #B829DD, #00F5D4, #FF006E, #B829DD) border-box !important;
+            box-shadow: 0 0 calc(10px + var(--art-chrome, 0.7) * 30px) rgba(184,41,221,0.25), inset 0 0 20px rgba(0,0,0,0.5) !important;
+            color: #fff !important;
+        }
+        body.art-effect-11 .card * { color: #fff !important; }
+        body.art-effect-11 .btn-primary {
+            border-radius: 8px !important;
+            background: linear-gradient(135deg, #B829DD, #FF006E) !important;
+            border: none !important;
+            box-shadow: 0 0 calc(5px + var(--art-chrome, 0.7) * 25px) rgba(184,41,221,0.4) !important;
+            color: #fff !important;
+        }
+        body.art-effect-11 .btn-secondary {
+            border-radius: 8px !important;
+            background: transparent !important;
+            border: 1px solid #00F5D4 !important;
+            color: #00F5D4 !important;
+            box-shadow: 0 0 calc(3px + var(--art-chrome, 0.7) * 12px) rgba(0,245,212,0.25) !important;
+        }
+        body.art-effect-11 .badge {
+            border-radius: 4px !important;
+            background: linear-gradient(135deg, #B829DD, #00F5D4) !important;
+            color: #fff !important;
+            font-weight: bold;
+        }
+        body.art-effect-11 .style-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 0 calc(15px + var(--art-chrome, 0.7) * 35px) rgba(184,41,221,0.35) !important;
+        }
+
+        /* 12. Vaporwave - 蒸汽波 */
+        #art-effect-overlay.art-effect-12 {
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255,113,206,calc(var(--art-scanlines, 0.4) * 0.06)) 2px,
+                rgba(255,113,206,calc(var(--art-scanlines, 0.4) * 0.06)) 4px
+            );
+            opacity: calc(0.2 + var(--art-scanlines, 0.4) * 0.3);
+        }
+        body.art-effect-12 {
+            --font-heading: 'Courier Prime', 'Courier New', monospace !important;
+            --font-body: 'Courier Prime', 'Courier New', monospace !important;
+            background:
+                linear-gradient(to bottom, rgba(255,113,206,0.05) 0%, rgba(1,205,254,0.03) 30%, transparent 60%),
+                var(--background) !important;
+        }
+        body.art-effect-12 .card {
+            border-radius: 0px !important;
+            border: 2px solid rgba(255,113,206,0.5) !important;
+            box-shadow: 4px 4px 0px rgba(1,205,254,0.3) !important;
+            background: linear-gradient(180deg, rgba(45,27,78,0.95) 0%, rgba(45,27,78,0.9) 100%) !important;
+            position: relative;
+            overflow: hidden;
+            color: #fff !important;
+        }
+        body.art-effect-12 .card * { color: #fff !important; }
+        body.art-effect-12 .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,calc(var(--art-scanlines, 0.4) * 0.25)) 2px,
+                rgba(0,0,0,calc(var(--art-scanlines, 0.4) * 0.25)) 4px
+            );
+            pointer-events: none;
+            opacity: calc(0.2 + var(--art-scanlines, 0.4) * 0.4);
+        }
+        body.art-effect-12 .btn-primary {
+            border-radius: 0px !important;
+            background: linear-gradient(90deg, #FF71CE, #01CDFE) !important;
+            border: none !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+        body.art-effect-12 .badge {
+            border-radius: 0px !important;
+            background: #FF71CE !important;
+            color: #000 !important;
+            font-family: var(--font-mono) !important;
+        }
+        body.art-effect-12 .style-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 6px 6px 0px rgba(1,205,254,0.4) !important;
+        }
+
+        /* 13. Memphis Design - 孟菲斯 */
+        #art-effect-overlay.art-effect-13 {
+            background-image:
+                radial-gradient(circle at 10% 10%, rgba(0,0,0,calc(var(--art-patternDensity, 0.5) * 0.15)) 3px, transparent 3px),
+                radial-gradient(circle at 90% 90%, rgba(0,0,0,calc(var(--art-patternDensity, 0.5) * 0.15)) 3px, transparent 3px);
+            background-size: calc(80px + var(--art-patternDensity, 0.5) * 40px) calc(80px + var(--art-patternDensity, 0.5) * 40px);
+            opacity: calc(0.15 + var(--art-patternDensity, 0.5) * 0.2);
+        }
+        body.art-effect-13 {
+            --font-heading: 'Fredoka', 'Nunito', sans-serif !important;
+            --font-body: 'Fredoka', 'Nunito', sans-serif !important;
+        }
+        body.art-effect-13 .card {
+            border-radius: 0px !important;
+            border: 3px solid #000 !important;
+            box-shadow: 6px 6px 0px #FFBE0B !important;
+            background: #fff !important;
+            position: relative;
+            color: #000 !important;
+        }
+        body.art-effect-13 .card * { color: #000 !important; }
+        body.art-effect-13 .card::before {
+            content: '';
+            position: absolute;
+            top: -8px; right: 20px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: #000;
+        }
+        body.art-effect-13 .btn-primary {
+            border-radius: 0px !important;
+            background: #FF006E !important;
+            border: 3px solid #000 !important;
+            box-shadow: 4px 4px 0px #000 !important;
+            color: #fff !important;
+        }
+        body.art-effect-13 .btn-secondary {
+            border-radius: 0px !important;
+            background: #3A86FF !important;
+            border: 3px solid #000 !important;
+            box-shadow: 4px 4px 0px #000 !important;
+            color: #fff !important;
+        }
+        body.art-effect-13 .badge {
+            border-radius: 0px !important;
+            background: #FFBE0B !important;
+            color: #000 !important;
+            border: 2px solid #000 !important;
+            font-weight: bold;
+        }
+        body.art-effect-13 .style-card:hover {
+            transform: rotate(calc(var(--art-vibrancy, 1) * 1.5deg)) translateY(-4px) !important;
+            box-shadow: 8px 8px 0px #FFBE0B !important;
+        }
+
+
+        /* Force light/dark theme overrides */
+        body.force-light {
+            background-color: #F8FAFC !important;
+            color: #1E293B !important;
+        }
+        body.force-dark {
+            background-color: #0A0A0F !important;
+            color: #E2E8F0 !important;
+        }
+        body.force-dark .card {
+            background-color: #1A1A2E !important;
+            color: #E2E8F0 !important;
+            border-color: rgba(255,255,255,0.1) !important;
+        }
+        body.force-dark .dark-mode-active .style-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        body.force-dark .dark-mode-active .color-swatch {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+
+        /* Mobile Bottom Tab Bar */
+        #mobile-tab-bar {
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+        #mobile-tab-bar button {
+            transition: color 0.2s;
+        }
+        #mobile-tab-bar button.active {
+            color: var(--primary) !important;
+        }
+        @media (max-width: 768px) {
+            main {
+                padding-bottom: 80px;
+            }
+            #art-effect-float-btn {
+                bottom: 80px;
+            }
+            #art-effect-float-panel {
+                bottom: 140px;
+            }
+        }
+

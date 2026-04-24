@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Pro Max - 完整风格参考系统</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chinese Open Source Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans-webfont/misans-style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/dyh/dist/SmileySans-Oblique/result.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/yozai/dist/Yozai-Regular/result.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/xiaolai/dist/Xiaolai/result.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen">
+    <div id="art-effect-scope">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 border-b" style="background-color: var(--card); border-color: var(--border);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold" style="font-family: var(--font-heading);">UI/UX Pro Max</h1>
+                    <span class="badge px-3 py-1 text-sm">完整风格参考系统</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="history-undo-btn" onclick="undoState()" class="btn-ghost px-3 py-2 text-sm font-medium" title="撤销 (Ctrl+Z)" disabled>↩️</button>
+                    <button id="history-redo-btn" onclick="redoState()" class="btn-ghost px-3 py-2 text-sm font-medium" title="重做 (Ctrl+Shift+Z)" disabled>↪️</button>
+                    <button onclick="ThemeManager.cycle()" class="btn-ghost px-3 py-2 text-sm font-medium" id="theme-toggle-btn" title="切换主题">🌗</button>
+                    <button onclick="randomCombo()" class="btn-secondary px-4 py-2 text-sm font-medium" title="快捷键: R">
+                        🎲 随机组合
+                    </button>
+                    <button id="global-favorite-btn" onclick="toggleFavorite()" class="btn-outline px-4 py-2 text-sm font-medium" title="快捷键: F">
+                        ☆ 收藏
+                    </button>
+                    <button onclick="exportConfig()" class="btn-primary px-4 py-2 text-sm font-medium">
+                        导出配置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tabs -->
+        <div class="flex space-x-2 mb-8 overflow-x-auto pb-2" role="tablist" aria-label="主内容标签">
+            <button class="tab-btn active" onclick="switchTab('styles', event)" role="tab" aria-selected="true" aria-controls="styles-tab" id="tab-styles">风格库</button>
+            <button class="tab-btn" onclick="switchTab('colors', event)" role="tab" aria-selected="false" aria-controls="colors-tab" id="tab-colors">配色方案</button>
+            <button class="tab-btn" onclick="switchTab('typography', event)" role="tab" aria-selected="false" aria-controls="typography-tab" id="tab-typography">字体配对</button>
+            <button class="tab-btn" onclick="switchTab('preview', event)" role="tab" aria-selected="false" aria-controls="preview-tab" id="tab-preview">实时预览</button>
+            <button class="tab-btn" onclick="switchTab('prompts', event)" role="tab" aria-selected="false" aria-controls="prompts-tab" id="tab-prompts">提示词</button>
+            <button class="tab-btn" onclick="switchTab('favorites', event)" role="tab" aria-selected="false" aria-controls="favorites-tab" id="tab-favorites">我的收藏</button>
+            <button class="tab-btn" onclick="switchTab('effects', event)" role="tab" aria-selected="false" aria-controls="effects-tab" id="tab-effects">艺术效果</button>
+
+        </div>
+
+        <!-- Styles Tab -->
+        <div id="styles-tab" class="tab-content" role="tabpanel" aria-labelledby="tab-styles">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">20种 UI 风格</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">选择一种风格来查看详细定义和应用场景</p>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="style-search" class="search-input" placeholder="搜索风格..." oninput="debouncedFilterStyles()">
+                    <button id="style-filter-fav" class="filter-btn" onclick="toggleFilterFav('styles')">⭐ 已收藏</button>
+                </div>
+            </div>
+            <div id="styles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Styles will be populated here -->
+            </div>
+        </div>
+
+        <!-- Colors Tab -->
+        <div id="colors-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-colors">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">22种专业配色方案</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">按行业和产品类型分类的专业配色，包含国风传统色彩美学</p>
+                <div class="flex gap-2 mb-4 flex-wrap">
+                    <button class="filter-btn active" onclick="filterColors('all', event)">全部</button>
+                    <button class="filter-btn" onclick="filterColors('tech', event)">科技</button>
+                    <button class="filter-btn" onclick="filterColors('business', event)">商业</button>
+                    <button class="filter-btn" onclick="filterColors('creative', event)">创意</button>
+                    <button class="filter-btn" onclick="filterColors('guofeng', event)">国风</button>
+                    <button id="color-filter-fav" class="filter-btn" onclick="toggleFilterFav('colors')">⭐ 已收藏</button>
+                </div>
+            </div>
+            <div id="colors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Colors will be populated here -->
+            </div>
+        </div>
+
+        <!-- Typography Tab -->
+        <div id="typography-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-typography">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">字体配对</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">英文字体与中文字体各自独立配置</p>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="font-search" class="search-input" placeholder="搜索字体配对..." oninput="debouncedFilterFonts()">
+                    <button id="font-filter-fav" class="filter-btn" onclick="toggleFilterFav('fonts')">⭐ 已收藏</button>
+                </div>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--muted-foreground);">英文字体（10种）</h3>
+                <div id="typography-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- English typography will be populated here -->
+                </div>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--muted-foreground);">中文字体（8种）</h3>
+                <div id="chinese-typography-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Chinese typography will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Tab -->
+        <div id="preview-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-preview">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">实时预览</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">当前选中的风格、配色和字体效果</p>
+                <div class="flex space-x-2 overflow-x-auto pb-2">
+                    <button class="filter-btn active" id="preview-btn-components" onclick="switchPreviewMode('components')">组件展示</button>
+                    <button class="filter-btn" id="preview-btn-login" onclick="switchPreviewMode('login')">登录页</button>
+                    <button class="filter-btn" id="preview-btn-dashboard" onclick="switchPreviewMode('dashboard')">Dashboard</button>
+                    <button class="filter-btn" id="preview-btn-landing" onclick="switchPreviewMode('landing')">落地页</button>
+                    <button class="filter-btn" id="preview-btn-form" onclick="switchPreviewMode('form')">表单页</button>
+                    <button class="filter-btn" id="preview-btn-table" onclick="switchPreviewMode('table')">数据表格</button>
+                    <button class="filter-btn" id="preview-btn-settings" onclick="switchPreviewMode('settings')">设置页</button>
+                    <button class="filter-btn" id="preview-btn-empty" onclick="switchPreviewMode('empty')">空状态</button>
+                </div>
+            </div>
+            <div id="preview-container" class="preview-section">
+                <!-- Preview content will be populated here -->
+            </div>
+        </div>
+
+        <!-- Prompts Tab -->
+        <div id="prompts-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-prompts">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">AI 提示词生成器</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">用于生成 UI/UX 设计的详细提示词模板</p>
+            </div>
+            <div id="prompts-grid" class="space-y-6">
+                <!-- Prompts will be populated here -->
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div id="favorites-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-favorites">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">我的收藏</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">你收藏的所有风格组合，点击卡片直接应用整套配置</p>
+            </div>
+            <div id="favorites-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Favorites will be populated here -->
+            </div>
+            <div id="favorites-empty" class="hidden text-center py-16">
+                <p class="text-xl" style="color: var(--muted-foreground);">还没有收藏任何组合</p>
+                <p class="text-sm mt-2" style="color: var(--muted-foreground);">切换到「实时预览」Tab，调好喜欢的风格+配色+字体后，点右上角的 ☆ 收藏</p>
+            </div>
+        </div>
+
+        <!-- Effects Tab -->
+        <div id="effects-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-effects">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">视觉艺术效果</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">13种跨风格的艺术方向叠加层，为界面注入独特的视觉气质</p>
+                <div class="flex gap-2 mb-4 flex-wrap">
+                    <button class="filter-btn active" onclick="filterEffectsCategory('all', event)">全部</button>
+                    <span id="effects-category-filters" class="flex gap-2 flex-wrap"></span>
+                </div>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="effect-search" class="search-input" placeholder="搜索艺术效果..." oninput="debouncedFilterEffects()">
+                </div>
+            </div>
+            <div id="effects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Effects will be populated here -->
+            </div>
+        </div>
+    </main>
+    </div>
+
+    <!-- Art Effect Float Panel -->
+    <div id="art-effect-float-panel" class="hidden" style="position: fixed; bottom: 88px; right: 24px; z-index: 100; width: 380px; max-height: 70vh; overflow-y: auto;">
+        <div class="card p-4" style="box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <label class="relative inline-flex items-center cursor-pointer" id="effect-toggle-label">
+                        <input type="checkbox" id="effect-toggle-switch" class="sr-only" onchange="toggleEffectEnabled(this.checked)">
+                        <span class="toggle-track w-9 h-5 rounded-full transition-colors" style="background: var(--muted);"></span>
+                        <span class="toggle-thumb absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-transform shadow-sm" style="background: #fff;"></span>
+                        <span class="ml-2 text-sm font-medium">艺术效果</span>
+                    </label>
+                </div>
+                <button onclick="closeEffectPanel()" class="text-sm" style="color: var(--muted-foreground);">✕</button>
+            </div>
+            <div id="effect-current-info" class="mb-3 p-2 rounded text-sm" style="background: var(--muted);">
+                <span id="effect-current-name">未选择效果</span>
+            </div>
+            <div id="effect-float-categories" class="flex gap-1 mb-2 flex-wrap text-xs"></div>
+            <div id="effect-float-grid" class="grid grid-cols-4 gap-2 mb-3 max-h-48 overflow-y-auto"></div>
+            <div id="effect-float-params" class="hidden">
+                <div class="border-t pt-3 mb-2" style="border-color: var(--border);">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-sm font-bold" id="effect-float-params-title">参数</h4>
+                        <div class="flex gap-1">
+                            <button onclick="applyEffectPreset('light')" class="btn-outline px-2 py-0.5 text-xs" title="轻度">轻</button>
+                            <button onclick="applyEffectPreset('normal')" class="btn-outline px-2 py-0.5 text-xs" title="标准">中</button>
+                            <button onclick="applyEffectPreset('heavy')" class="btn-outline px-2 py-0.5 text-xs" title="强烈">重</button>
+                            <button onclick="randomizeEffectParams()" class="btn-outline px-2 py-0.5 text-xs">🎲</button>
+                        </div>
+                    </div>
+                    <div id="effect-float-params-sliders" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Art Effect Float Button -->
+    <button id="art-effect-float-btn" onclick="toggleEffectPanel()" class="fixed w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg transition-transform hover:scale-110" style="background: var(--primary); color: var(--on-primary); bottom: 24px; right: 24px; z-index: 99;" title="视觉艺术效果 (快捷键: E)" aria-label="打开艺术效果面板">
+        🎭
+    </button>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <nav id="mobile-tab-bar" class="fixed bottom-0 left-0 right-0 z-50 border-t md:hidden" style="background-color: var(--card); border-color: var(--border);">
+        <div class="flex justify-around items-center py-2">
+            <button onclick="switchTab('styles', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="styles">
+                <span class="text-lg">🎨</span>
+                <span>风格</span>
+            </button>
+            <button onclick="switchTab('colors', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="colors">
+                <span class="text-lg">🎨</span>
+                <span>配色</span>
+            </button>
+            <button onclick="switchTab('preview', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="preview">
+                <span class="text-lg">👁️</span>
+                <span>预览</span>
+            </button>
+            <button onclick="switchTab('effects', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="effects">
+                <span class="text-lg">🎭</span>
+                <span>效果</span>
+            </button>
+            <button onclick="switchTab('favorites', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="favorites">
+                <span class="text-lg">⭐</span>
+                <span>收藏</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background-color: rgba(0,0,0,0.5);">
+        <div class="flex items-center justify-center min-h-screen px-4 py-8">
+            <div class="card w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6" id="modal-content">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="ui-ux-pro-max-data.js"></script>
+    <script src="art-effects-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
