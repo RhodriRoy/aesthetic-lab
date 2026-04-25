@@ -587,6 +587,7 @@
         /* ===== 艺术效果视觉层 - 三层渗透架构 ===== */
         /* Art effect parameter variables are injected dynamically per-effect */
 
+        /* ===== 艺术效果多层解构系统 ===== */
         #art-effect-overlay {
             position: absolute;
             inset: 0;
@@ -594,9 +595,86 @@
             z-index: 0;
             transition: all 0.5s ease;
             opacity: 0;
+            /* 主 background-image 由独立 .art-layer div 承载 */
+            background-image: none !important;
         }
         #art-effect-overlay.active {
-            opacity: calc(0.25 + var(--art-intensity, 0.5) * 0.35);
+            opacity: 1;
+        }
+
+        #art-layer-stack {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .art-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+        .art-layer.disabled {
+            opacity: 0 !important;
+        }
+
+        /* ===== 图层侧边栏 ===== */
+        #layer-sidebar {
+            font-size: 13px;
+        }
+        #layer-sidebar.hidden {
+            display: none;
+        }
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .layer-item:last-child {
+            border-bottom: none;
+        }
+        .layer-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            flex: 1;
+            min-width: 0;
+        }
+        .layer-toggle input[type="checkbox"] {
+            margin: 0;
+            flex-shrink: 0;
+        }
+        .layer-icon {
+            flex-shrink: 0;
+            font-size: 12px;
+            width: 16px;
+            text-align: center;
+        }
+        .layer-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--foreground);
+        }
+        .layer-opacity {
+            width: 60px;
+            height: 4px;
+            border-radius: 2px;
+            appearance: none;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .layer-opacity::-webkit-slider-thumb {
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
         }
 
         /* Penetration modes */

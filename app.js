@@ -2510,6 +2510,177 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             showToast(`已选择效果: ${currentArtEffect.name}`);
         }
 
+        // ============================================
+        // 艺术效果层解构系统
+        // ============================================
+
+        function splitCSSValueList(value) {
+            if (!value) return [];
+            const items = [];
+            let depth = 0;
+            let current = '';
+            for (let i = 0; i < value.length; i++) {
+                const char = value[i];
+                if (char === '(' || char === '[') depth++;
+                else if (char === ')' || char === ']') depth--;
+                else if (char === ',' && depth === 0) {
+                    items.push(current.trim());
+                    current = '';
+                    continue;
+                }
+                current += char;
+            }
+            if (current.trim()) items.push(current.trim());
+            return items;
+        }
+
+        function parseEffectLayersFromCSS(effectId) {
+            const selector = `#art-effect-overlay.art-effect-${effectId}`;
+            let ruleText = null;
+            for (let sheet of document.styleSheets) {
+                try {
+                    for (let rule of sheet.cssRules) {
+                        if (rule.selectorText === selector) {
+                            ruleText = rule.cssText;
+                            break;
+                        }
+                    }
+                } catch (e) { /* cross-origin stylesheet */ }
+                if (ruleText) break;
+            }
+            if (!ruleText) return null;
+
+            const extract = (prop) => {
+                const re = new RegExp(`${prop}\\s*:\\s*([^;]+);`);
+                const m = ruleText.match(re);
+                return m ? m[1].trim() : null;
+            };
+
+            const bgImage = extract('background-image');
+            const bgSize = extract('background-size');
+            const bgPosition = extract('background-position');
+            const bgRepeat = extract('background-repeat');
+            const bgColor = extract('background-color');
+
+            if (!bgImage) return null;
+
+            const images = splitCSSValueList(bgImage);
+            const sizes = splitCSSValueList(bgSize);
+            const positions = splitCSSValueList(bgPosition);
+            const repeats = splitCSSValueList(bgRepeat);
+
+            const layers = [];
+            const typeNames = { 'linear-gradient': '线条', 'radial-gradient': '斑块', 'url': '纹理', 'repeating-linear-gradient': '纹样' };
+            for (let i = 0; i < images.length; i++) {
+                const img = images[i];
+                let type = '装饰';
+                for (let key of Object.keys(typeNames)) {
+                    if (img.toLowerCase().startsWith(key)) { type = typeNames[key]; break; }
+                }
+                // Extract primary color
+                let color = null;
+                const colorMatch = img.match(/(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\))/);
+                if (colorMatch) color = colorMatch[1];
+                layers.push({
+                    index: i,
+                    type: type,
+                    color: color,
+                    image: img,
+                    size: sizes[i % sizes.length] || 'auto',
+                    position: positions[i % positions.length] || '0 0',
+                    repeat: repeats[i % repeats.length] || 'no-repeat'
+                });
+            }
+            return { backgroundColor: bgColor, layers: layers };
+        }
+
+        function renderLayerStack(effectId) {
+            const parsed = parseEffectLayersFromCSS(effectId);
+            const previewContainer = document.getElementById('preview-container');
+            if (!previewContainer) return;
+
+            // Remove old layer stack
+            const oldStack = document.getElementById('art-layer-stack');
+            if (oldStack) oldStack.remove();
+
+            if (!parsed || parsed.layers.length === 0) return;
+
+            const stack = document.createElement('div');
+            stack.id = 'art-layer-stack';
+            previewContainer.appendChild(stack);
+
+            // Create layer divs
+            parsed.layers.forEach((layer, i) => {
+                const div = document.createElement('div');
+                div.className = 'art-layer';
+                div.dataset.layerIndex = i;
+                div.style.backgroundImage = layer.image;
+                div.style.backgroundSize = layer.size;
+                div.style.backgroundPosition = layer.position;
+                div.style.backgroundRepeat = layer.repeat;
+                div.style.zIndex = i;
+                stack.appendChild(div);
+            });
+
+            renderLayerSidebar(parsed);
+        }
+
+        function clearLayerStack() {
+            const stack = document.getElementById('art-layer-stack');
+            if (stack) stack.remove();
+            const sidebar = document.getElementById('layer-sidebar');
+            if (sidebar) sidebar.classList.add('hidden');
+        }
+
+        // Layer sidebar UI
+        function renderLayerSidebar(parsed) {
+            let sidebar = document.getElementById('layer-sidebar');
+            if (!sidebar) return;
+            sidebar.classList.remove('hidden');
+
+            const title = document.getElementById('layer-sidebar-title');
+            if (title && currentArtEffect) {
+                title.textContent = `${currentArtEffect.name.split('·')[0].trim()} · ${parsed.layers.length}层`;
+            }
+
+            const list = document.getElementById('layer-sidebar-list');
+            if (!list) return;
+
+            const typeIcons = { '线条': '┃', '斑块': '⚫', '纹理': '▦', '纹样': '❖', '装饰': '✦' };
+
+            list.innerHTML = parsed.layers.map((layer, i) => {
+                const icon = typeIcons[layer.type] || '✦';
+                const colorDot = layer.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${layer.color};margin-right:6px;"></span>` : '';
+                return `
+                    <div class="layer-item" data-index="${i}">
+                        <label class="layer-toggle">
+                            <input type="checkbox" checked onchange="toggleLayer(${i}, this.checked)">
+                            <span class="layer-icon">${icon}</span>
+                            ${colorDot}
+                            <span class="layer-name">${layer.type} #${i + 1}</span>
+                        </label>
+                        <input type="range" min="0" max="100" value="100" class="layer-opacity"
+                            oninput="setLayerOpacity(${i}, this.value / 100)"
+                            style="background: linear-gradient(to right, var(--primary) 0%, var(--primary) 100%, var(--muted) 100%);">
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleLayer(index, visible) {
+            const layer = document.querySelector(`.art-layer[data-layer-index="${index}"]`);
+            if (layer) {
+                layer.classList.toggle('disabled', !visible);
+            }
+        }
+
+        function setLayerOpacity(index, opacity) {
+            const layer = document.querySelector(`.art-layer[data-layer-index="${index}"]`);
+            if (layer) {
+                layer.style.opacity = opacity;
+            }
+        }
+
         function applyArtEffect(effect) {
             const root = document.documentElement;
             const body = document.body;
@@ -2531,7 +2702,6 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     document.body.appendChild(overlay);
                 }
             } else if (previewContainer && overlay.parentElement !== previewContainer) {
-                // Move overlay into preview-container if it was previously mounted elsewhere
                 previewContainer.appendChild(overlay);
             }
             overlay.className = '';
@@ -2547,7 +2717,6 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 root.style.removeProperty('--shadow');
                 root.style.removeProperty('--font-heading');
                 root.style.removeProperty('--font-body');
-                // Clear all art parameter CSS variables
                 const allVars = Array.from(root.style);
                 allVars.forEach(v => { if (v.startsWith('--art-')) root.style.removeProperty(v); });
                 const ov2 = document.getElementById('art-effect-overlay');
@@ -2555,14 +2724,13 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     ov2.className = '';
                     ov2.style.opacity = '0';
                     ov2.style.display = 'none';
-                    // Remove from preview-container and re-append to body so it's hidden globally
                     if (ov2.parentElement && ov2.parentElement.id === 'preview-container') {
                         document.body.appendChild(ov2);
                     }
                 }
+                clearLayerStack();
                 const gf = document.getElementById('gf-art-effect');
                 if (gf) gf.remove();
-                // Re-apply current color scheme and style to restore proper state
                 applyColorScheme(currentColorScheme);
                 applyStyle(currentStyle.id);
                 return;
@@ -2575,12 +2743,10 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             overlay.style.display = '';
             overlay.style.opacity = '';
 
-            // Apply penetration mode
             const penetrationMap = { 'mist': 'mist', 'bleed': 'bleed', 'soak': 'soak', 'edge': 'mist', 'corner': 'bleed' };
             const penetrationMode = penetrationMap[effect.overlayMode] || 'soak';
             overlay.classList.add('penetrate-' + penetrationMode);
 
-            // Apply CSS variable parameters — inject each parameter as its own variable
             if (effect.parameters) {
                 effect.parameters.forEach(p => {
                     const val = (effect._paramValues && effect._paramValues[p.id] !== undefined)
@@ -2589,18 +2755,15 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     root.style.setProperty('--art-' + p.id, val);
                 });
             }
-            // Also set a generic intensity fallback for effects without explicit parameters
             const intensity = (effect._paramValues && effect._paramValues.intensity !== undefined)
                 ? effect._paramValues.intensity
                 : 0.5;
             root.style.setProperty('--art-intensity', intensity);
 
-            // Inject global random seeds for uneven / organic variation across elements
             for (let r = 1; r <= 8; r++) {
                 root.style.setProperty('--art-rand-' + r, Math.random());
             }
 
-            // Font loading via registry
             const fm = CONFIG_REGISTRY.effects.fontMap[effect.id];
             if (fm) {
                 if (fm.url) {
@@ -2628,6 +2791,9 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             if (cfg) {
                 Object.entries(cfg).forEach(([k, v]) => root.style.setProperty(k, v));
             }
+
+            // Render decomposed layer stack
+            renderLayerStack(effect.id);
         }
 
         function filterEffects() {

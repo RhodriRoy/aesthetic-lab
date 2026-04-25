@@ -296,6 +296,17 @@
         </div>
     </div>
 
+    <!-- Layer Sidebar -->
+    <div id="layer-sidebar" class="hidden" style="position: fixed; top: 80px; right: 16px; width: 260px; max-height: calc(100vh - 120px); overflow-y: auto; z-index: 50; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <div class="p-3">
+            <div class="flex items-center justify-between mb-3">
+                <h3 id="layer-sidebar-title" class="text-sm font-bold">效果图层</h3>
+                <button onclick="document.getElementById('layer-sidebar').classList.add('hidden')" class="text-xs" style="color: var(--muted-foreground);">✕</button>
+            </div>
+            <div id="layer-sidebar-list" class="space-y-2"></div>
+        </div>
+    </div>
+
     <script src="ui-ux-pro-max-data.js"></script>
     <script src="art-effects-data.js"></script>
     <script src="app.js"></script>
