@@ -25,26 +25,21 @@
                 20: { className: 'style-zen',             radius: '2px',  shadow: 'none', border: '1px solid #d4c5b0' }
             },
             effects: {
-                fontMap: {
-                    1:  { url: "https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap", heading: "'Bebas Neue','Impact','Arial Black',sans-serif", body: "'Bebas Neue','Impact',sans-serif" },
-                    2:  { url: "https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap", heading: "'Caveat','LXGW WenKai',cursive", body: "'Caveat','LXGW WenKai',cursive" },
-                    3:  { url: "https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap", heading: "'Space Mono','JetBrains Mono',monospace", body: "'Space Mono','JetBrains Mono',monospace" },
-                    4:  { url: null, heading: "'Times New Roman',Times,serif", body: "'Arial',sans-serif" },
-                    5:  { url: "https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap", heading: "'Press Start 2P','Courier New',monospace", body: "'Press Start 2P','Courier New',monospace" },
-                    6:  { url: "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap", heading: "'Courier Prime','Courier New',monospace", body: "'Courier Prime','Courier New',monospace" },
-                    7:  { url: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap", heading: "'Orbitron','Exo 2',sans-serif", body: "'Orbitron','Exo 2',sans-serif" },
-                    8:  { url: null, heading: "'Helvetica Neue','Arial','Inter',sans-serif", body: "'Helvetica Neue','Arial','Inter',sans-serif" },
-                    9:  { url: null, heading: "'Inter','Helvetica Neue',sans-serif", body: "'Inter','Helvetica Neue',sans-serif" },
-                    10: { url: "https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap", heading: "'Indie Flower','Caveat','LXGW WenKai',cursive", body: "'Indie Flower','Caveat','LXGW WenKai',cursive" },
-                    11: { url: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap", heading: "'Orbitron','Exo 2',sans-serif", body: "'Orbitron','Exo 2',sans-serif" },
-                    12: { url: "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap", heading: "'Courier Prime','Courier New',monospace", body: "'Courier Prime','Courier New',monospace" },
-                    13: { url: "https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap", heading: "'Fredoka','Nunito',sans-serif", body: "'Fredoka','Nunito',sans-serif" },
-                    14: { url: "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap", heading: "'Oswald','Impact','Arial Black',sans-serif", body: "'Oswald','Inter',sans-serif" },
-                    15: { url: "https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap", heading: "'Cormorant','Times New Roman',serif", body: "'Cormorant','Inter',serif" },
-                    16: { url: "https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap", heading: "'Cormorant','Times New Roman',serif", body: "'Cormorant','Inter',serif" },
-                    17: { url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap", heading: "'Space Grotesk','Inter',sans-serif", body: "'Space Grotesk','Inter',sans-serif" },
-                    18: { url: "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap", heading: "'Cinzel','Cormorant','Noto Serif SC',serif", body: "'Noto Serif SC','Source Han Serif SC',serif" }
-                },
+                // fontMap 运行时从 artEffects 动态生成（CSS 中 body.art-effect-N 已硬编码字体栈并带 !important 覆盖，
+                // 此处仅需同步 Google Fonts 加载 URL，消除与 art-effects-data.js 的重复维护）
+                fontMap: (() => {
+                    const map = {};
+                    if (typeof artEffects !== 'undefined') {
+                        artEffects.forEach(effect => {
+                            map[effect.id] = {
+                                url: effect.fonts?.en?.url || null,
+                                heading: effect.fonts?.en?.css || "'Inter',sans-serif",
+                                body: effect.fonts?.en?.css || "'Inter',sans-serif"
+                            };
+                        });
+                    }
+                    return map;
+                })(),
                 overlayVars: {
                     1:  { '--border-width': '3px', '--border-radius': '0px', '--shadow': '4px 4px 0px 0px #000' },
                     2:  { '--border-width': '2px', '--border-radius': '2px', '--shadow': 'none' },
@@ -98,6 +93,13 @@
                 const saved = localStorage.getItem('uiuxProMaxTheme');
                 if (saved && ['light','dark','auto'].includes(saved)) this.mode = saved;
                 this.apply();
+                // Real-time system theme listener for auto mode
+                if (window.matchMedia) {
+                    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+                    mq.addEventListener('change', () => {
+                        if (this.mode === 'auto') this.apply();
+                    });
+                }
             },
             cycle() {
                 const modes = ['auto', 'light', 'dark'];
@@ -290,6 +292,7 @@
         function saveState() {
             try {
             const state = {
+                version: 1,
                 baseline: {
                     styleId: currentStyle.id,
                     colorSchemeId: currentColorScheme.id,
@@ -335,6 +338,8 @@
                 const raw = localStorage.getItem('uiuxProMaxState');
                 if (!raw) return false;
                 const state = JSON.parse(raw);
+                // Version check: incompatible versions fall back to defaults
+                if (state.version !== 1) return false;
                 // New format with baseline/effect separation
                 if (state.baseline) {
                     const b = state.baseline;
@@ -392,6 +397,29 @@
             showToast('已重置为默认状态');
         }
 
+        function resetToDefaults() {
+            if (!confirm('确定要重置所有设置为默认状态吗？')) return;
+            resetState();
+            location.hash = '';
+            saveState();
+            renderStyles();
+            renderColors();
+            renderTypography();
+            renderChineseTypography();
+            renderFavorites();
+            updateFavoriteBtn();
+            HistoryManager.updateUI();
+        }
+
+        function copyShareLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('分享链接已复制！');
+            }).catch(() => {
+                showToast('复制失败，请手动复制地址栏链接');
+            });
+        }
+
         // Favorites
         function getComboKey() {
             return `${currentStyle.id}-${currentColorScheme.id}-${currentFontPairing.id}-${currentChineseFontPairing.id}-${currentArtEffect.id}`;
@@ -409,10 +437,8 @@
                 favorites.splice(idx, 1);
                 showToast('已取消收藏');
             } else {
-                const name = prompt('给这个收藏组合起个名字（可选）:', `${currentStyle.name} + ${currentColorScheme.name}`);
-                if (name === null) return; // user cancelled
-                favorites.push({ key, name: name || `${currentStyle.name} + ${currentColorScheme.name}`, createdAt: Date.now() });
-                showToast('已收藏当前组合');
+                favorites.push({ key, name: `${currentStyle.name} + ${currentColorScheme.name}`, createdAt: Date.now() });
+                showToast('已收藏当前组合，在「我的收藏」中可重命名');
             }
             saveState();
             updateFavoriteBtn();
@@ -445,7 +471,7 @@
             currentChineseFontPairing = chineseFontPairings[Math.floor(Math.random() * chineseFontPairings.length)];
             currentArtEffect = artEffects[Math.floor(Math.random() * artEffects.length)];
             currentPaletteIndex = 0;
-            effectEnabled = true;
+            // Respect user's previous effect toggle state instead of forcing it on
             applyStyle(currentStyle.id);
             applyColorScheme(currentColorScheme);
             applyFontPairing(currentFontPairing.id);
@@ -608,10 +634,6 @@
                     </div>
                 </div>
             `).join('');
-        }
-
-        function renderGuofeng() {
-            // Deprecated: guofeng colors are now rendered in the unified colors grid
         }
 
         function renderTypography(filter = '') {
@@ -1719,9 +1741,15 @@ console.log(greet('UI/UX Pro Max'));</pre>
                         <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: ${c.colors.accent};"></div>
                     </div>
                     <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-bold">${name || s.name}</h3>
-                            <span class="badge px-2 py-1 text-xs">#${s.id}</span>
+                        <div class="flex items-center justify-between gap-2">
+                            <h3 class="text-lg font-bold flex-1 min-w-0"
+                                contenteditable="true"
+                                onblur="renameFavorite('${key}', this.innerText)"
+                                onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}"
+                                style="outline:none;border-bottom:1px solid transparent;"
+                                onfocus="this.style.borderBottomColor='var(--primary)'"
+                                title="点击编辑名称">${name || s.name}</h3>
+                            <span class="badge px-2 py-1 text-xs flex-shrink-0">#${s.id}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <div class="w-4 h-4 rounded-full" style="background-color: ${c.colors.primary};"></div>
@@ -1775,6 +1803,14 @@ console.log(greet('UI/UX Pro Max'));</pre>
             renderEffectFloatParams();
             saveState();
             showToast(`已应用: ${s.name} + ${c.name}`);
+        }
+
+        function renameFavorite(key, newName) {
+            const idx = favorites.findIndex(f => (typeof f === 'string' ? f : f.key) === key);
+            if (idx >= 0 && newName && newName.trim()) {
+                favorites[idx].name = newName.trim();
+                saveState();
+            }
         }
 
         function deleteFavoriteItem(key) {
@@ -1867,6 +1903,13 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 root.style.setProperty(`--${cssVar}`, value);
             });
 
+            // Set --primary-rgb for rgba() usage in animations
+            const primary = scheme.colors.primary || '#2563EB';
+            const pr = parseInt(primary.slice(1, 3), 16);
+            const pg = parseInt(primary.slice(3, 5), 16);
+            const pb = parseInt(primary.slice(5, 7), 16);
+            root.style.setProperty('--primary-rgb', `${pr}, ${pg}, ${pb}`);
+
             // Auto dark mode detection based on background luminance
             const bg = scheme.colors.background || '#F8FAFC';
             const luminance = getLuminance(bg);
@@ -1900,7 +1943,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
                     link.rel = 'stylesheet';
                     link.href = pairing.googleFonts;
                     link.onerror = function() {
-                        console.warn('Failed to load font:', pairing.googleFonts);
+                        /* silently ignore font load errors in production */
                     };
                     document.head.appendChild(link);
                 }
@@ -1973,6 +2016,12 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 btn.classList.remove('active');
                 if (btn.dataset.mobileTab === tab) btn.classList.add('active');
             });
+            // Tabs inside "more" menu highlight the "more" button
+            const moreTabs = ['typography', 'prompts', 'favorites'];
+            if (moreTabs.includes(tab)) {
+                const moreBtn = document.getElementById('mobile-more-btn');
+                if (moreBtn) moreBtn.classList.add('active');
+            }
             
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
@@ -1988,6 +2037,21 @@ console.log(greet('UI/UX Pro Max'));</pre>
             if (tab === 'prompts') { renderPrompts(); renderCurrentPrompt(); }
             saveState();
         }
+
+        function toggleMobileMoreMenu(evt) {
+            const menu = document.getElementById('mobile-more-menu');
+            if (!menu) return;
+            if (evt) evt.stopPropagation();
+            menu.classList.toggle('hidden');
+        }
+        // Close mobile more menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-more-menu');
+            const btn = document.getElementById('mobile-more-btn');
+            if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
 
         function switchPreviewMode(mode) {
             currentPreviewMode = mode;
@@ -2029,41 +2093,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
         const debouncedFilterEffects = debounce(filterEffects, 200);
 
         function generateConfigCode() {
-            // Helper to turn a CSS font-family string into a quoted JS array string
-            const cssToJsArray = (cssFontStr) => {
-                return cssFontStr.split(',').map(s => {
-                    const name = s.trim().replace(/^['"]|['"]$/g, '');
-                    return `"${name}"`;
-                }).join(', ');
-            };
-            return `// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: '${currentColorScheme.colors.primary}',
-        secondary: '${currentColorScheme.colors.secondary}',
-        accent: '${currentColorScheme.colors.accent}',
-        background: '${currentColorScheme.colors.background}',
-        foreground: '${currentColorScheme.colors.foreground}',
-        card: '${currentColorScheme.colors.card}',
-        'card-foreground': '${currentColorScheme.colors.cardForeground}',
-        muted: '${currentColorScheme.colors.muted}',
-        'muted-foreground': '${currentColorScheme.colors.mutedForeground}',
-        border: '${currentColorScheme.colors.border}',
-        destructive: '${currentColorScheme.colors.destructive}',
-        ring: '${currentColorScheme.colors.ring}',
-      },
-      fontFamily: {
-        heading: ['${currentFontPairing.heading}', 'sans-serif'],
-        body: ['${currentFontPairing.body}', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-        'cn-heading': [${cssToJsArray(currentChineseFontPairing.headingCss)}],
-        'cn-body': [${cssToJsArray(currentChineseFontPairing.bodyCss)}],
-      },
-    },
-  },
-}`;
+            return Exporter.tailwind();
         }
 
         function exportConfig() {
@@ -2510,168 +2540,6 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             showToast(`已选择效果: ${currentArtEffect.name}`);
         }
 
-        // ============================================
-        // 艺术效果层解构系统
-        // ============================================
-
-        function splitCSSValueList(value) {
-            if (!value) return [];
-            const items = [];
-            let depth = 0;
-            let current = '';
-            for (let i = 0; i < value.length; i++) {
-                const char = value[i];
-                if (char === '(' || char === '[') depth++;
-                else if (char === ')' || char === ']') depth--;
-                else if (char === ',' && depth === 0) {
-                    items.push(current.trim());
-                    current = '';
-                    continue;
-                }
-                current += char;
-            }
-            if (current.trim()) items.push(current.trim());
-            return items;
-        }
-
-        function parseEffectLayersFromCSS(effectId) {
-            const overlay = document.getElementById('art-effect-overlay');
-            if (overlay) {
-                // Ensure effect class is on the real overlay for computed style
-                const hadClass = overlay.classList.contains(`art-effect-${effectId}`);
-                if (!hadClass) overlay.classList.add(`art-effect-${effectId}`);
-                const style = window.getComputedStyle(overlay);
-                const bgImage = style.backgroundImage;
-                if (!hadClass) overlay.classList.remove(`art-effect-${effectId}`);
-                if (bgImage && bgImage !== 'none') {
-                    const images = splitCSSValueList(bgImage);
-                    const sizes = splitCSSValueList(style.backgroundSize);
-                    const positions = splitCSSValueList(style.backgroundPosition);
-                    const repeats = splitCSSValueList(style.backgroundRepeat);
-                    return buildLayerData(images, sizes, positions, repeats, style.backgroundColor);
-                }
-            }
-
-            // Fallback: parse from CSS rules text
-            const marker = `#art-effect-overlay.art-effect-${effectId}`;
-            let ruleText = null;
-            for (let sheet of document.styleSheets) {
-                try {
-                    for (let rule of sheet.cssRules) {
-                        if (rule.cssText && rule.cssText.includes(marker)) {
-                            ruleText = rule.cssText;
-                            break;
-                        }
-                    }
-                } catch (e) {}
-                if (ruleText) break;
-            }
-            if (!ruleText) return null;
-
-            // Remove CSS comments
-            const clean = ruleText.replace(/\/\*[\s\S]*?\*\//g, '');
-
-            // Extract background properties
-            const extract = (prop) => {
-                const re = new RegExp(`${prop}\\s*:\\s*([\\s\\S]*?)(?:;\\s*(?:background|opacity|z-index|transition|pointer-events|position|inset|mask|mix-blend|animation|content|border)|\\}|$)`, 'i');
-                const m = clean.match(re);
-                return m ? m[1].trim() : null;
-            };
-
-            const bgImage = extract('background-image');
-            if (!bgImage || bgImage === 'none') return null;
-
-            const images = splitCSSValueList(bgImage);
-            const sizes = splitCSSValueList(extract('background-size') || '');
-            const positions = splitCSSValueList(extract('background-position') || '');
-            const repeats = splitCSSValueList(extract('background-repeat') || '');
-            const bgColorMatch = clean.match(/background-color\s*:\s*([^;]+);/i);
-            const bgColor = bgColorMatch ? bgColorMatch[1].trim() : null;
-
-            return buildLayerData(images, sizes, positions, repeats, bgColor);
-        }
-
-        function buildLayerData(images, sizes, positions, repeats, bgColor) {
-            if (!images || images.length === 0) return null;
-            const typeNames = { 'linear-gradient': '线条', 'radial-gradient': '斑块', 'url': '纹理', 'repeating-linear-gradient': '纹样' };
-            const layers = [];
-            for (let i = 0; i < images.length; i++) {
-                const img = images[i];
-                if (img === 'none') continue;
-                let type = '装饰';
-                for (let key of Object.keys(typeNames)) {
-                    if (img.toLowerCase().startsWith(key)) { type = typeNames[key]; break; }
-                }
-                let color = null;
-                const colorMatch = img.match(/(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\))/);
-                if (colorMatch) color = colorMatch[1];
-                layers.push({
-                    index: i,
-                    type: type,
-                    color: color,
-                    image: img,
-                    size: sizes[i % sizes.length] || 'auto',
-                    position: positions[i % positions.length] || '0 0',
-                    repeat: repeats[i % repeats.length] || 'no-repeat'
-                });
-            }
-            return { backgroundColor: bgColor, layers: layers };
-        }
-
-        function toggleLayerSidebar() {
-            const sidebar = document.getElementById('layer-sidebar');
-            if (sidebar) {
-                sidebar.classList.toggle('collapsed');
-            }
-        }
-
-        function setMasterOverlayOpacity(opacity) {
-            const overlay = document.getElementById('art-effect-overlay');
-            if (overlay) {
-                overlay.style.setProperty('--overlay-master-opacity', opacity);
-                overlay.style.opacity = `calc((0.25 + var(--art-intensity, 0.5) * 0.35) * ${opacity})`;
-            }
-        }
-
-        // Layer sidebar UI — read-only layer info + master controls
-        function renderLayerSidebar() {
-            if (!currentArtEffect) return;
-            const parsed = parseEffectLayersFromCSS(currentArtEffect.id);
-            let sidebar = document.getElementById('layer-sidebar');
-            if (!sidebar) return;
-            sidebar.classList.remove('hidden');
-            sidebar.classList.remove('collapsed');
-
-            const title = document.getElementById('layer-sidebar-title');
-            if (title) {
-                title.textContent = `${currentArtEffect.name.split('·')[0].trim()} · ${parsed ? parsed.layers.length : 0}层`;
-            }
-
-            const info = document.getElementById('layer-sidebar-info');
-            if (info) {
-                info.textContent = parsed
-                    ? `背景色: ${parsed.backgroundColor || 'transparent'} · ${parsed.layers.length} 个视觉层`
-                    : '该效果暂无图层信息';
-            }
-
-            const list = document.getElementById('layer-sidebar-list');
-            if (!list || !parsed) return;
-
-            const typeIcons = { '线条': '┃', '斑块': '⚫', '纹理': '▦', '纹样': '❖', '装饰': '✦' };
-
-            list.innerHTML = parsed.layers.map((layer, i) => {
-                const icon = typeIcons[layer.type] || '✦';
-                const colorDot = layer.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${layer.color};margin-right:6px;border:1px solid var(--border);"></span>` : '';
-                return `
-                    <div class="layer-item" data-index="${i}" title="${layer.image.substring(0, 80)}...">
-                        <span class="layer-icon">${icon}</span>
-                        ${colorDot}
-                        <span class="layer-name">${layer.type} #${i + 1}</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
         function applyArtEffect(effect) {
             const root = document.documentElement;
             const body = document.body;
@@ -2757,20 +2625,16 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             }
 
             const fm = CONFIG_REGISTRY.effects.fontMap[effect.id];
-            if (fm) {
-                if (fm.url) {
-                    const gfId = 'gf-art-effect';
-                    let gf = document.getElementById(gfId);
-                    if (!gf) {
-                        gf = document.createElement('link');
-                        gf.id = gfId;
-                        gf.rel = 'stylesheet';
-                        document.head.appendChild(gf);
-                    }
-                    gf.href = fm.url;
+            if (fm && fm.url) {
+                const gfId = 'gf-art-effect';
+                let gf = document.getElementById(gfId);
+                if (!gf) {
+                    gf = document.createElement('link');
+                    gf.id = gfId;
+                    gf.rel = 'stylesheet';
+                    document.head.appendChild(gf);
                 }
-                root.style.setProperty('--font-heading', fm.heading);
-                root.style.setProperty('--font-body', fm.body);
+                gf.href = fm.url;
             }
 
             const p = (effect.colorPalettes && effect.colorPalettes[currentPaletteIndex])
@@ -2784,8 +2648,6 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 Object.entries(cfg).forEach(([k, v]) => root.style.setProperty(k, v));
             }
 
-            // Update layer sidebar info
-            renderLayerSidebar();
         }
 
         function filterEffects() {
@@ -2957,8 +2819,8 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
         document.addEventListener('keydown', function(e) {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
             const key = e.key;
-            if (key >= '1' && key <= '6') {
-                const tabs = ['styles', 'colors', 'typography', 'preview', 'prompts', 'favorites'];
+            if (key >= '1' && key <= '7') {
+                const tabs = ['styles', 'colors', 'typography', 'preview', 'prompts', 'favorites', 'effects'];
                 const tab = tabs[parseInt(key) - 1];
                 if (tab) {
                     const btn = document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`);
@@ -2981,37 +2843,6 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 e.preventDefault();
                 randomizeEffectParams();
             }
-        });
-
-        // Hover micro-preview for art effects on style cards
-        document.addEventListener('mouseover', function(e) {
-            if (effectEnabled) return; // Don't preview when effect is already globally enabled
-            const card = e.target.closest('.style-card, .card');
-            if (!card) return;
-            if (currentArtEffect && currentArtEffect.id > 0) {
-                card.classList.add('effect-micro-preview');
-                // Apply the art effect class scoped to this card only
-                // This is done via CSS specificity, not body class
-                card.dataset.artPreview = currentArtEffect.id;
-                // Note: actual preview requires inline styles or scoped CSS
-                // For simplicity, we add a visual indicator instead
-                if (!card.querySelector('.effect-preview-badge')) {
-                    const badge = document.createElement('span');
-                    badge.className = 'effect-preview-badge';
-                    badge.textContent = 'FX';
-                    badge.style.cssText = 'position:absolute;top:4px;right:4px;font-size:12px;opacity:0.7;pointer-events:none;z-index:5;';
-                    card.style.position = 'relative';
-                    card.appendChild(badge);
-                }
-            }
-        });
-        document.addEventListener('mouseout', function(e) {
-            const card = e.target.closest('.style-card, .card');
-            if (!card) return;
-            card.classList.remove('effect-micro-preview');
-            delete card.dataset.artPreview;
-            const badge = card.querySelector('.effect-preview-badge');
-            if (badge) badge.remove();
         });
 
         // ============================================

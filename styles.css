@@ -579,11 +579,6 @@
             50% { box-shadow: 0 0 0 5px rgba(var(--primary-rgb), 0.4), 0 4px 12px rgba(0,0,0,0.2); }
         }
 
-        /* Hover micro-preview for art effects */
-        .style-card.effect-micro-preview {
-            position: relative;
-        }
-
         /* ===== 艺术效果视觉层 - 三层渗透架构 ===== */
         /* Art effect parameter variables are injected dynamically per-effect */
 
@@ -600,93 +595,7 @@
             opacity: calc(0.25 + var(--art-intensity, 0.5) * 0.35);
         }
 
-        /* ===== 图层侧边栏（左侧可折叠） ===== */
-        #layer-sidebar {
-            position: fixed;
-            top: 80px;
-            left: 16px;
-            width: 260px;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            z-index: 50;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            font-size: 13px;
-            transition: transform 0.3s ease, width 0.3s ease;
-        }
-        #layer-sidebar.collapsed {
-            width: 44px;
-            overflow: hidden;
-        }
-        #layer-sidebar.collapsed .layer-sidebar-content {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #layer-sidebar.hidden {
-            display: none;
-        }
-        .layer-sidebar-toggle {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: var(--muted);
-            color: var(--foreground);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
-            z-index: 2;
-        }
-        .layer-sidebar-toggle:hover {
-            background: var(--primary);
-            color: var(--on-primary);
-        }
-        .layer-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .layer-item:last-child {
-            border-bottom: none;
-        }
-        .layer-icon {
-            flex-shrink: 0;
-            font-size: 12px;
-            width: 16px;
-            text-align: center;
-        }
-        .layer-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: var(--foreground);
-            flex: 1;
-        }
-        .layer-opacity-master {
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            appearance: none;
-            cursor: pointer;
-            margin-top: 4px;
-        }
-        .layer-opacity-master::-webkit-slider-thumb {
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-        }
+
 
         /* Penetration modes */
         #art-effect-overlay.penetrate-mist {
