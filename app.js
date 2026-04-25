@@ -2519,12 +2519,20 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 body.classList.remove('art-effect-' + i);
             }
 
-            // Manage overlay
+            // Manage overlay — scoped to preview-container so art effects act as background, not obstruction
             let overlay = document.getElementById('art-effect-overlay');
+            const previewContainer = document.getElementById('preview-container');
             if (!overlay) {
                 overlay = document.createElement('div');
                 overlay.id = 'art-effect-overlay';
-                document.body.appendChild(overlay);
+                if (previewContainer) {
+                    previewContainer.appendChild(overlay);
+                } else {
+                    document.body.appendChild(overlay);
+                }
+            } else if (previewContainer && overlay.parentElement !== previewContainer) {
+                // Move overlay into preview-container if it was previously mounted elsewhere
+                previewContainer.appendChild(overlay);
             }
             overlay.className = '';
 
@@ -2547,6 +2555,10 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     ov2.className = '';
                     ov2.style.opacity = '0';
                     ov2.style.display = 'none';
+                    // Remove from preview-container and re-append to body so it's hidden globally
+                    if (ov2.parentElement && ov2.parentElement.id === 'preview-container') {
+                        document.body.appendChild(ov2);
+                    }
                 }
                 const gf = document.getElementById('gf-art-effect');
                 if (gf) gf.remove();
