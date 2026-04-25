@@ -2535,47 +2535,59 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
         }
 
         function parseEffectLayersFromCSS(effectId) {
-            // Try reading from inline style of a temporary element with the effect class applied
-            const temp = document.createElement('div');
-            temp.id = 'art-effect-overlay-temp-parser';
-            temp.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;';
-            temp.className = `art-effect-${effectId}`;
-            document.body.appendChild(temp);
-
-            const style = window.getComputedStyle(temp);
-            const bgImage = style.backgroundImage;
-            const bgSize = style.backgroundSize;
-            const bgPosition = style.backgroundPosition;
-            const bgRepeat = style.backgroundRepeat;
-            const bgColor = style.backgroundColor;
-
-            temp.remove();
-
-            if (!bgImage || bgImage === 'none') {
-                // Fallback: try reading from CSS rules directly
-                const selector = `#art-effect-overlay.art-effect-${effectId}`;
-                let rule = null;
-                for (let sheet of document.styleSheets) {
-                    try {
-                        for (let r of sheet.cssRules) {
-                            if (r.selectorText === selector) { rule = r; break; }
-                        }
-                    } catch (e) {}
-                    if (rule) break;
+            const overlay = document.getElementById('art-effect-overlay');
+            if (overlay) {
+                // Ensure effect class is on the real overlay for computed style
+                const hadClass = overlay.classList.contains(`art-effect-${effectId}`);
+                if (!hadClass) overlay.classList.add(`art-effect-${effectId}`);
+                const style = window.getComputedStyle(overlay);
+                const bgImage = style.backgroundImage;
+                if (!hadClass) overlay.classList.remove(`art-effect-${effectId}`);
+                if (bgImage && bgImage !== 'none') {
+                    const images = splitCSSValueList(bgImage);
+                    const sizes = splitCSSValueList(style.backgroundSize);
+                    const positions = splitCSSValueList(style.backgroundPosition);
+                    const repeats = splitCSSValueList(style.backgroundRepeat);
+                    return buildLayerData(images, sizes, positions, repeats, style.backgroundColor);
                 }
-                if (!rule) return null;
-                const images = splitCSSValueList(rule.style.backgroundImage);
-                if (images.length === 0 || (images.length === 1 && images[0] === 'none')) return null;
-                const sizes = splitCSSValueList(rule.style.backgroundSize);
-                const positions = splitCSSValueList(rule.style.backgroundPosition);
-                const repeats = splitCSSValueList(rule.style.backgroundRepeat);
-                return buildLayerData(images, sizes, positions, repeats, rule.style.backgroundColor);
             }
 
+            // Fallback: parse from CSS rules text
+            const marker = `#art-effect-overlay.art-effect-${effectId}`;
+            let ruleText = null;
+            for (let sheet of document.styleSheets) {
+                try {
+                    for (let rule of sheet.cssRules) {
+                        if (rule.cssText && rule.cssText.includes(marker)) {
+                            ruleText = rule.cssText;
+                            break;
+                        }
+                    }
+                } catch (e) {}
+                if (ruleText) break;
+            }
+            if (!ruleText) return null;
+
+            // Remove CSS comments
+            const clean = ruleText.replace(/\/\*[\s\S]*?\*\//g, '');
+
+            // Extract background properties
+            const extract = (prop) => {
+                const re = new RegExp(`${prop}\\s*:\\s*([\\s\\S]*?)(?:;\\s*(?:background|opacity|z-index|transition|pointer-events|position|inset|mask|mix-blend|animation|content|border)|\\}|$)`, 'i');
+                const m = clean.match(re);
+                return m ? m[1].trim() : null;
+            };
+
+            const bgImage = extract('background-image');
+            if (!bgImage || bgImage === 'none') return null;
+
             const images = splitCSSValueList(bgImage);
-            const sizes = splitCSSValueList(bgSize);
-            const positions = splitCSSValueList(bgPosition);
-            const repeats = splitCSSValueList(bgRepeat);
+            const sizes = splitCSSValueList(extract('background-size') || '');
+            const positions = splitCSSValueList(extract('background-position') || '');
+            const repeats = splitCSSValueList(extract('background-repeat') || '');
+            const bgColorMatch = clean.match(/background-color\s*:\s*([^;]+);/i);
+            const bgColor = bgColorMatch ? bgColorMatch[1].trim() : null;
+
             return buildLayerData(images, sizes, positions, repeats, bgColor);
         }
 
