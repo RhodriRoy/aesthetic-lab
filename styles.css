@@ -988,7 +988,6 @@
                 calc(var(--art-rand-7, 0.5) * 180px) calc(var(--art-rand-8, 0.5) * 120px);
             background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
             mix-blend-mode: multiply;
-            opacity: calc(0.35 + var(--art-grain, 0.5) * 0.45);
         }
         body.art-effect-3 {
             --font-heading: 'Space Mono', 'JetBrains Mono', monospace !important;
@@ -2342,7 +2341,6 @@
                 calc(8% + var(--art-rand-3, 0.5) * 55%) calc(12% + var(--art-rand-4, 0.5) * 45%),
                 calc(var(--art-rand-5, 0.5) * 250px) calc(var(--art-rand-6, 0.5) * 220px);
             background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-            opacity: calc(0.25 + var(--art-messiness, 0.5) * 0.20 + var(--art-aging, 0.3) * 0.15);
         }
         body.art-effect-10 {
             --font-heading: 'Indie Flower', 'Caveat', 'LXGW WenKai', cursive !important;
@@ -3572,7 +3570,6 @@
                 100% 100%;
             background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
             /* 移除 blur，改用透明度自然晕染 */
-            opacity: calc(0.85 + var(--art-wash, 0.5) * 0.15);
         }
         body.art-effect-15 {
             --font-heading: 'Cormorant', 'Times New Roman', serif !important;
@@ -3746,7 +3743,6 @@
                 linear-gradient(135deg, rgba(6,95,175,calc(0.02 + var(--art-brilliance, 0.5) * 0.03)), rgba(20,175,105,calc(0.015 + var(--art-brilliance, 0.5) * 0.025)), rgba(225,195,80,calc(0.01 + var(--art-brilliance, 0.5) * 0.015)));
             background-size: auto, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 120% 120%, 100% 100%;
             background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-            opacity: calc(0.9 + var(--art-brilliance, 0.5) * 0.1);
             animation: art16Drift 60s ease-in-out infinite alternate;
         }
 
@@ -3936,7 +3932,6 @@
                 calc(3% + var(--art-rand-7) * 88%) calc(3% + var(--art-rand-2) * 88%),
                 calc(3% + var(--art-rand-4) * 88%) calc(3% + var(--art-rand-6) * 88%);
             background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-            opacity: calc(0.92 + var(--art-colorRatio, 0.4) * 0.08);
         }
 
         /* 线条重绘动画感 — 某些线条 opacity 微动 + 轻微位移 */
@@ -4278,7 +4273,6 @@
                 100% 10%,
                 0 calc(92% + var(--art-rand-1) * 5%);
             background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-            opacity: calc(0.25 + var(--art-patina, 0.55) * 0.25);
         }
 
         /* 金箔散落光点 — 微动 */
