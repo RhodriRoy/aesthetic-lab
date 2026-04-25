@@ -1482,8 +1482,12 @@ console.log(greet('UI/UX Pro Max'));</pre>
         }
 
         function renderPosterPreview() {
+            try {
             const container = document.getElementById('preview-container');
+            if (!container) { showToast('预览容器未找到'); return; }
             const c = currentColorScheme.colors;
+            if (!c) { showToast('配色方案未加载'); return; }
+            if (!currentArtEffect) { showToast('艺术效果未加载'); return; }
             const effect = currentArtEffect;
             const paramValues = effect._paramValues || {};
             const style = currentStyle;
@@ -1644,6 +1648,10 @@ console.log(greet('UI/UX Pro Max'));</pre>
                     </div>
                 </div>
             `;
+            } catch (err) {
+                console.error('renderPosterPreview error:', err);
+                showToast('海报渲染错误: ' + (err && err.message ? err.message : String(err)));
+            }
         }
 
         function renderPrompts(filter = '') {
@@ -1919,12 +1927,16 @@ console.log(greet('UI/UX Pro Max'));</pre>
             saveState();
             showToast(`已切换到配色: ${currentColorScheme.name}`);
             // Linkage: if Sanxingdui color selected, recommend Sanxingdui effect
-            const linkedEffectId = STYLE_LINKAGE.colorToEffect[id];
-            if (linkedEffectId && (!currentArtEffect || currentArtEffect.id !== linkedEffectId)) {
-                const effect = artEffects.find(e => e.id === linkedEffectId);
-                if (effect) {
-                    showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentColorScheme.name} × ${effect.name.split('·')[0].trim()} 联动推荐</span><button onclick="applyLinkageEffect(${linkedEffectId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
+            try {
+                const linkedEffectId = STYLE_LINKAGE.colorToEffect[id];
+                if (linkedEffectId && (!currentArtEffect || currentArtEffect.id !== linkedEffectId)) {
+                    const effect = artEffects.find(e => e.id === linkedEffectId);
+                    if (effect) {
+                        showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentColorScheme.name} × ${effect.name.split('·')[0].trim()} 联动推荐</span><button onclick="applyLinkageEffect(${linkedEffectId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
+                    }
                 }
+            } catch (err) {
+                console.error('Linkage color error:', err);
             }
         }
 
@@ -2121,18 +2133,23 @@ console.log(greet('UI/UX Pro Max'));</pre>
         });
 
         function switchPreviewMode(mode) {
-            currentPreviewMode = mode;
-            document.querySelectorAll('#preview-tab .filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            const btn = document.getElementById(`preview-btn-${mode}`);
-            if (btn) btn.classList.add('active');
-            const posterControls = document.getElementById('poster-controls');
-            if (posterControls) {
-                posterControls.classList.toggle('hidden', mode !== 'poster');
+            try {
+                currentPreviewMode = mode;
+                document.querySelectorAll('#preview-tab .filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                const btn = document.getElementById(`preview-btn-${mode}`);
+                if (btn) btn.classList.add('active');
+                const posterControls = document.getElementById('poster-controls');
+                if (posterControls) {
+                    posterControls.classList.toggle('hidden', mode !== 'poster');
+                }
+                renderPreview();
+                saveState();
+            } catch (err) {
+                console.error('switchPreviewMode error:', err);
+                showToast('预览切换错误: ' + (err && err.message ? err.message : String(err)));
             }
-            renderPreview();
-            saveState();
         }
 
         function applyLinkageEffect(effectId) {
@@ -2674,12 +2691,16 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             saveState();
             showToast(`已选择效果: ${currentArtEffect.name}`);
             // Linkage: if Sanxingdui effect selected, recommend Sanxingdui color
-            const linkedColorId = STYLE_LINKAGE.effectToColor[id];
-            if (linkedColorId && (!currentColorScheme || currentColorScheme.id !== linkedColorId)) {
-                const color = colorSchemes.find(c => c.id === linkedColorId) || guofengColors.find(c => c.id === linkedColorId);
-                if (color) {
-                    showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentArtEffect.name.split('·')[0].trim()} × ${color.name} 联动推荐</span><button onclick="applyLinkageColor(${linkedColorId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
+            try {
+                const linkedColorId = STYLE_LINKAGE.effectToColor[id];
+                if (linkedColorId && (!currentColorScheme || currentColorScheme.id !== linkedColorId)) {
+                    const color = colorSchemes.find(c => c.id === linkedColorId) || guofengColors.find(c => c.id === linkedColorId);
+                    if (color) {
+                        showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentArtEffect.name.split('·')[0].trim()} × ${color.name} 联动推荐</span><button onclick="applyLinkageColor(${linkedColorId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
+                    }
                 }
+            } catch (err) {
+                console.error('Linkage effect error:', err);
             }
         }
 
