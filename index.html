@@ -297,13 +297,19 @@
     </div>
 
     <!-- Layer Sidebar -->
-    <div id="layer-sidebar" class="hidden" style="position: fixed; top: 80px; right: 16px; width: 260px; max-height: calc(100vh - 120px); overflow-y: auto; z-index: 50; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-        <div class="p-3">
-            <div class="flex items-center justify-between mb-3">
+    <div id="layer-sidebar" class="hidden collapsed">
+        <button class="layer-sidebar-toggle" onclick="toggleLayerSidebar()" title="折叠/展开图层面板">☰</button>
+        <div class="layer-sidebar-content p-3">
+            <div class="flex items-center justify-between mb-3 pr-8">
                 <h3 id="layer-sidebar-title" class="text-sm font-bold">效果图层</h3>
-                <button onclick="document.getElementById('layer-sidebar').classList.add('hidden')" class="text-xs" style="color: var(--muted-foreground);">✕</button>
             </div>
-            <div id="layer-sidebar-list" class="space-y-2"></div>
+            <div id="layer-sidebar-info" class="mb-3 text-xs" style="color: var(--muted-foreground);"></div>
+            <div id="layer-sidebar-list" class="space-y-1 mb-3"></div>
+            <div class="pt-2 border-t" style="border-color: var(--border);">
+                <div class="text-xs font-medium mb-1" style="color: var(--muted-foreground);">整体透明度</div>
+                <input type="range" id="layer-master-opacity" min="0" max="100" value="100" class="layer-opacity-master"
+                    oninput="setMasterOverlayOpacity(this.value / 100)">
+            </div>
         </div>
     </div>
 

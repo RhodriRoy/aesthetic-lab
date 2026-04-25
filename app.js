@@ -2594,91 +2594,57 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             return { backgroundColor: bgColor, layers: layers };
         }
 
-        function renderLayerStack(effectId) {
-            const parsed = parseEffectLayersFromCSS(effectId);
-            const previewContainer = document.getElementById('preview-container');
-            if (!previewContainer) return;
-
-            // Remove old layer stack
-            const oldStack = document.getElementById('art-layer-stack');
-            if (oldStack) oldStack.remove();
-
-            if (!parsed || parsed.layers.length === 0) return;
-
-            const stack = document.createElement('div');
-            stack.id = 'art-layer-stack';
-            previewContainer.appendChild(stack);
-
-            // Create layer divs
-            parsed.layers.forEach((layer, i) => {
-                const div = document.createElement('div');
-                div.className = 'art-layer';
-                div.dataset.layerIndex = i;
-                div.style.backgroundImage = layer.image;
-                div.style.backgroundSize = layer.size;
-                div.style.backgroundPosition = layer.position;
-                div.style.backgroundRepeat = layer.repeat;
-                div.style.zIndex = i;
-                stack.appendChild(div);
-            });
-
-            renderLayerSidebar(parsed);
-        }
-
-        function clearLayerStack() {
-            const stack = document.getElementById('art-layer-stack');
-            if (stack) stack.remove();
+        function toggleLayerSidebar() {
             const sidebar = document.getElementById('layer-sidebar');
-            if (sidebar) sidebar.classList.add('hidden');
+            if (sidebar) {
+                sidebar.classList.toggle('collapsed');
+            }
         }
 
-        // Layer sidebar UI
-        function renderLayerSidebar(parsed) {
+        function setMasterOverlayOpacity(opacity) {
+            const overlay = document.getElementById('art-effect-overlay');
+            if (overlay) {
+                overlay.style.setProperty('--overlay-master-opacity', opacity);
+                overlay.style.opacity = `calc((0.25 + var(--art-intensity, 0.5) * 0.35) * ${opacity})`;
+            }
+        }
+
+        // Layer sidebar UI — read-only layer info + master controls
+        function renderLayerSidebar() {
+            if (!currentArtEffect) return;
+            const parsed = parseEffectLayersFromCSS(currentArtEffect.id);
             let sidebar = document.getElementById('layer-sidebar');
             if (!sidebar) return;
             sidebar.classList.remove('hidden');
 
             const title = document.getElementById('layer-sidebar-title');
-            if (title && currentArtEffect) {
-                title.textContent = `${currentArtEffect.name.split('·')[0].trim()} · ${parsed.layers.length}层`;
+            if (title) {
+                title.textContent = `${currentArtEffect.name.split('·')[0].trim()} · ${parsed ? parsed.layers.length : 0}层`;
+            }
+
+            const info = document.getElementById('layer-sidebar-info');
+            if (info) {
+                info.textContent = parsed
+                    ? `背景色: ${parsed.backgroundColor || 'transparent'} · ${parsed.layers.length} 个视觉层`
+                    : '该效果暂无图层信息';
             }
 
             const list = document.getElementById('layer-sidebar-list');
-            if (!list) return;
+            if (!list || !parsed) return;
 
             const typeIcons = { '线条': '┃', '斑块': '⚫', '纹理': '▦', '纹样': '❖', '装饰': '✦' };
 
             list.innerHTML = parsed.layers.map((layer, i) => {
                 const icon = typeIcons[layer.type] || '✦';
-                const colorDot = layer.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${layer.color};margin-right:6px;"></span>` : '';
+                const colorDot = layer.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${layer.color};margin-right:6px;border:1px solid var(--border);"></span>` : '';
                 return `
-                    <div class="layer-item" data-index="${i}">
-                        <label class="layer-toggle">
-                            <input type="checkbox" checked onchange="toggleLayer(${i}, this.checked)">
-                            <span class="layer-icon">${icon}</span>
-                            ${colorDot}
-                            <span class="layer-name">${layer.type} #${i + 1}</span>
-                        </label>
-                        <input type="range" min="0" max="100" value="100" class="layer-opacity"
-                            oninput="setLayerOpacity(${i}, this.value / 100)"
-                            style="background: linear-gradient(to right, var(--primary) 0%, var(--primary) 100%, var(--muted) 100%);">
+                    <div class="layer-item" data-index="${i}" title="${layer.image.substring(0, 80)}...">
+                        <span class="layer-icon">${icon}</span>
+                        ${colorDot}
+                        <span class="layer-name">${layer.type} #${i + 1}</span>
                     </div>
                 `;
             }).join('');
-        }
-
-        function toggleLayer(index, visible) {
-            const layer = document.querySelector(`.art-layer[data-layer-index="${index}"]`);
-            if (layer) {
-                layer.classList.toggle('disabled', !visible);
-            }
-        }
-
-        function setLayerOpacity(index, opacity) {
-            const layer = document.querySelector(`.art-layer[data-layer-index="${index}"]`);
-            if (layer) {
-                layer.style.opacity = opacity;
-            }
         }
 
         function applyArtEffect(effect) {
@@ -2728,7 +2694,8 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                         document.body.appendChild(ov2);
                     }
                 }
-                clearLayerStack();
+                const sidebar = document.getElementById('layer-sidebar');
+                if (sidebar) sidebar.classList.add('hidden');
                 const gf = document.getElementById('gf-art-effect');
                 if (gf) gf.remove();
                 applyColorScheme(currentColorScheme);
@@ -2792,8 +2759,8 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 Object.entries(cfg).forEach(([k, v]) => root.style.setProperty(k, v));
             }
 
-            // Render decomposed layer stack
-            renderLayerStack(effect.id);
+            // Update layer sidebar info
+            renderLayerSidebar();
         }
 
         function filterEffects() {

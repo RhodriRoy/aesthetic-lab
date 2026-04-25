@@ -587,7 +587,7 @@
         /* ===== 艺术效果视觉层 - 三层渗透架构 ===== */
         /* Art effect parameter variables are injected dynamically per-effect */
 
-        /* ===== 艺术效果多层解构系统 ===== */
+        /* ===== 艺术效果视觉层 ===== */
         #art-effect-overlay {
             position: absolute;
             inset: 0;
@@ -595,36 +595,58 @@
             z-index: 0;
             transition: all 0.5s ease;
             opacity: 0;
-            /* 主 background-image 由独立 .art-layer div 承载 */
-            background-image: none !important;
         }
         #art-effect-overlay.active {
-            opacity: 1;
+            opacity: calc(0.25 + var(--art-intensity, 0.5) * 0.35);
         }
 
-        #art-layer-stack {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .art-layer {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            opacity: 1;
-        }
-        .art-layer.disabled {
-            opacity: 0 !important;
-        }
-
-        /* ===== 图层侧边栏 ===== */
+        /* ===== 图层侧边栏（左侧可折叠） ===== */
         #layer-sidebar {
+            position: fixed;
+            top: 80px;
+            left: 16px;
+            width: 260px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            z-index: 50;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             font-size: 13px;
+            transition: transform 0.3s ease, width 0.3s ease;
+        }
+        #layer-sidebar.collapsed {
+            width: 44px;
+            overflow: hidden;
+        }
+        #layer-sidebar.collapsed .layer-sidebar-content {
+            opacity: 0;
+            pointer-events: none;
         }
         #layer-sidebar.hidden {
             display: none;
+        }
+        .layer-sidebar-toggle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--muted);
+            color: var(--foreground);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 2;
+        }
+        .layer-sidebar-toggle:hover {
+            background: var(--primary);
+            color: var(--on-primary);
         }
         .layer-item {
             display: flex;
@@ -635,18 +657,6 @@
         }
         .layer-item:last-child {
             border-bottom: none;
-        }
-        .layer-toggle {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            flex: 1;
-            min-width: 0;
-        }
-        .layer-toggle input[type="checkbox"] {
-            margin: 0;
-            flex-shrink: 0;
         }
         .layer-icon {
             flex-shrink: 0;
@@ -659,19 +669,20 @@
             overflow: hidden;
             text-overflow: ellipsis;
             color: var(--foreground);
+            flex: 1;
         }
-        .layer-opacity {
-            width: 60px;
-            height: 4px;
-            border-radius: 2px;
+        .layer-opacity-master {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
             appearance: none;
             cursor: pointer;
-            flex-shrink: 0;
+            margin-top: 4px;
         }
-        .layer-opacity::-webkit-slider-thumb {
+        .layer-opacity-master::-webkit-slider-thumb {
             appearance: none;
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
