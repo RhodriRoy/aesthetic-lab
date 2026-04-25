@@ -619,7 +619,9 @@
         }
 
         function renderColors(filter = 'all') {
+            try {
             const grid = document.getElementById('colors-grid');
+            if (!grid) { console.error('colors-grid not found'); return; }
             const allSchemes = [...colorSchemes, ...guofengColors];
             
             let filtered = allSchemes;
@@ -665,6 +667,10 @@
                     </div>
                 </div>
             `;}).join('');
+            } catch (err) {
+                console.error('renderColors error:', err);
+                showToast('配色渲染错误: ' + (err && err.message ? err.message : String(err)));
+            }
         }
 
         function renderTypography(filter = '') {
@@ -1919,7 +1925,9 @@ console.log(greet('UI/UX Pro Max'));</pre>
         }
 
         function selectColorScheme(id) {
+            try {
             currentColorScheme = colorSchemes.find(c => c.id === id) || guofengColors.find(c => c.id === id);
+            if (!currentColorScheme) { showToast('配色未找到: ID ' + id); return; }
             applyColorScheme(currentColorScheme);
             updateActiveCards();
             if (activeTab === 'preview') renderPreview();
@@ -1937,6 +1945,10 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 }
             } catch (err) {
                 console.error('Linkage color error:', err);
+            }
+            } catch (err) {
+                console.error('selectColorScheme error:', err);
+                showToast('配色切换错误: ' + (err && err.message ? err.message : String(err)));
             }
         }
 
