@@ -4903,3 +4903,322 @@
             }
         }
 
+
+        /* ============================================
+           Poster Size Variants
+           ============================================ */
+        .poster-canvas[data-poster-size="square"] {
+            max-width: 480px;
+            aspect-ratio: 1 / 1;
+        }
+        .poster-canvas[data-poster-size="story"] {
+            max-width: 360px;
+            aspect-ratio: 9 / 16;
+        }
+        .poster-canvas[data-poster-size="wide"] {
+            max-width: 640px;
+            aspect-ratio: 16 / 9;
+        }
+        /* Story size: reduce font sizes */
+        .poster-canvas[data-poster-size="story"] .poster-main-title {
+            font-size: 1.6rem;
+        }
+        .poster-canvas[data-poster-size="story"] .poster-body {
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .poster-canvas[data-poster-size="story"] .poster-img-row {
+            height: 40px;
+        }
+        .poster-canvas[data-poster-size="story"] .poster-main-image {
+            height: 90px;
+        }
+        /* Wide size: horizontal layout */
+        .poster-canvas[data-poster-size="wide"] {
+            padding: 1rem 1.25rem;
+        }
+        .poster-canvas[data-poster-size="wide"] .poster-hero {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .poster-canvas[data-poster-size="wide"] .poster-main-title {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+        .poster-canvas[data-poster-size="wide"] .poster-body {
+            flex-direction: row;
+        }
+        .poster-canvas[data-poster-size="wide"] .poster-img-row {
+            height: 45px;
+        }
+
+        /* ============================================
+           Poster Template: MINIMAL
+           ============================================ */
+        .poster-tmpl-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .poster-minimal-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 2px solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+        }
+        .poster-minimal-corner {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border: 2px solid;
+        }
+        .poster-minimal-corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .poster-minimal-corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .poster-minimal-corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .poster-minimal-corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+        .poster-minimal-category {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .poster-minimal-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1.05;
+            color: var(--foreground);
+            letter-spacing: -0.03em;
+            word-break: break-word;
+        }
+        .poster-minimal-subtitle {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--muted-foreground);
+            letter-spacing: 0.05em;
+        }
+        .poster-minimal-line {
+            width: 40px;
+            height: 4px;
+            margin: 0.3rem 0;
+        }
+        .poster-minimal-desc {
+            font-size: 0.6rem;
+            line-height: 1.5;
+            color: var(--muted-foreground);
+            max-width: 80%;
+        }
+        .poster-minimal-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 0.3rem;
+        }
+        .poster-keyword {
+            font-size: 0.45rem;
+            padding: 2px 6px;
+            border: 1px solid var(--border);
+            color: var(--muted-foreground);
+            letter-spacing: 0.05em;
+        }
+        .poster-minimal-palette {
+            display: flex;
+            gap: 4px;
+            margin-top: 0.5rem;
+        }
+        .poster-minimal-palette .poster-palette-swatch {
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--border);
+        }
+        .poster-minimal-palette .poster-palette-swatch span {
+            display: none;
+        }
+        .poster-minimal-footer {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 12px;
+            font-size: 0.4rem;
+            font-family: var(--font-mono);
+            color: var(--muted-foreground);
+            letter-spacing: 0.08em;
+        }
+
+        /* ============================================
+           Poster Template: BRUTAL
+           ============================================ */
+        .poster-tmpl-brutal {
+            padding: 0;
+            border: 4px solid var(--foreground);
+            background: var(--card);
+        }
+        .poster-brutal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.5rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .poster-brutal-hero {
+            padding: 0.8rem 0.6rem 0.4rem;
+        }
+        .poster-brutal-title {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.05;
+            color: var(--foreground);
+            letter-spacing: -0.02em;
+            word-break: break-all;
+            margin-bottom: 0.15rem;
+        }
+        .poster-brutal-en {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--muted-foreground);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .poster-brutal-body {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            padding: 0 0.6rem;
+            gap: 0;
+        }
+        .poster-brutal-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 0.4rem 0;
+        }
+        .poster-brutal-label {
+            font-size: 0.45rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            padding: 3px 6px;
+            margin-bottom: 0.3rem;
+            display: inline-block;
+            align-self: flex-start;
+        }
+        .poster-brutal-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .poster-brutal-list .poster-feature {
+            font-size: 0.5rem;
+            line-height: 1.3;
+            color: var(--muted-foreground);
+            padding-left: 0.5rem;
+        }
+        .poster-brutal-list .poster-feature::before {
+            content: '▪';
+            color: var(--foreground);
+            font-size: 0.6rem;
+        }
+        .poster-brutal-params {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .poster-brutal-params .poster-param {
+            font-size: 0.45rem;
+        }
+        .poster-brutal-params .poster-param-name {
+            width: 2.5rem;
+        }
+        .poster-brutal-palette-row {
+            display: flex;
+            gap: 3px;
+            padding: 0.3rem 0.6rem;
+        }
+        .poster-brutal-palette-row .poster-palette-swatch {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--foreground);
+            flex: 1;
+        }
+        .poster-brutal-palette-row .poster-palette-swatch span {
+            display: none;
+        }
+        .poster-brutal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.3rem 0.6rem;
+            margin-top: auto;
+        }
+        .poster-brutal-id {
+            font-size: 0.5rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+        .poster-brutal-date {
+            font-size: 0.45rem;
+            font-family: var(--font-mono);
+            color: var(--muted-foreground);
+        }
+        .poster-brutal-curator {
+            font-size: 0.5rem;
+            font-weight: 700;
+        }
+
+        /* ============================================
+           Poster contenteditable polish
+           ============================================ */
+        .poster-canvas [contenteditable="true"] {
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .poster-canvas [contenteditable="true"]:hover {
+            border-bottom-color: var(--primary);
+            cursor: text;
+        }
+        .poster-canvas [contenteditable="true"]:focus {
+            border-bottom-color: var(--primary);
+            background: rgba(0,0,0,0.02);
+        }
+
+        /* ============================================
+           Linkage Badge
+           ============================================ */
+        .poster-linkage-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--on-primary);
+            letter-spacing: 0.05em;
+            cursor: help;
+            animation: linkagePulse 2s ease-in-out infinite;
+        }
+        @keyframes linkagePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }

@@ -136,6 +136,23 @@
                     <button class="filter-btn" id="preview-btn-empty" onclick="switchPreviewMode('empty')">空状态</button>
                     <button class="filter-btn" id="preview-btn-poster" onclick="switchPreviewMode('poster')">海报</button>
                 </div>
+                <!-- Poster controls -->
+                <div id="poster-controls" class="hidden flex items-center gap-2 flex-wrap mb-4 p-3 rounded-lg" style="background: var(--muted);">
+                    <span class="text-sm font-medium" style="color: var(--muted-foreground);">模板:</span>
+                    <select id="poster-template-select" class="select text-sm" onchange="switchPosterTemplate(this.value)">
+                        <option value="grid">展览海报 · 网格</option>
+                        <option value="minimal">极简宣言 · 居中</option>
+                        <option value="brutal">粗野主义 · 高对比</option>
+                    </select>
+                    <span class="text-sm font-medium ml-2" style="color: var(--muted-foreground);">尺寸:</span>
+                    <select id="poster-size-select" class="select text-sm" onchange="switchPosterSize(this.value)">
+                        <option value="a4">A4 竖版 (2:3)</option>
+                        <option value="square">方形 (1:1)</option>
+                        <option value="story">Story (9:16)</option>
+                        <option value="wide">宽屏 (16:9)</option>
+                    </select>
+                    <button onclick="exportPosterPNG()" class="btn-primary px-3 py-1.5 text-sm ml-auto">📥 导出 PNG</button>
+                </div>
             </div>
             <div id="preview-container" class="preview-section">
                 <!-- Preview content will be populated here -->
@@ -318,6 +335,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="ui-ux-pro-max-data.js"></script>
     <script src="art-effects-data.js"></script>
     <script src="app.js"></script>
