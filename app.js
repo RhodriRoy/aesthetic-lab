@@ -2535,49 +2535,61 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
         }
 
         function parseEffectLayersFromCSS(effectId) {
-            const selector = `#art-effect-overlay.art-effect-${effectId}`;
-            let ruleText = null;
-            for (let sheet of document.styleSheets) {
-                try {
-                    for (let rule of sheet.cssRules) {
-                        if (rule.selectorText === selector) {
-                            ruleText = rule.cssText;
-                            break;
+            // Try reading from inline style of a temporary element with the effect class applied
+            const temp = document.createElement('div');
+            temp.id = 'art-effect-overlay-temp-parser';
+            temp.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;';
+            temp.className = `art-effect-${effectId}`;
+            document.body.appendChild(temp);
+
+            const style = window.getComputedStyle(temp);
+            const bgImage = style.backgroundImage;
+            const bgSize = style.backgroundSize;
+            const bgPosition = style.backgroundPosition;
+            const bgRepeat = style.backgroundRepeat;
+            const bgColor = style.backgroundColor;
+
+            temp.remove();
+
+            if (!bgImage || bgImage === 'none') {
+                // Fallback: try reading from CSS rules directly
+                const selector = `#art-effect-overlay.art-effect-${effectId}`;
+                let rule = null;
+                for (let sheet of document.styleSheets) {
+                    try {
+                        for (let r of sheet.cssRules) {
+                            if (r.selectorText === selector) { rule = r; break; }
                         }
-                    }
-                } catch (e) { /* cross-origin stylesheet */ }
-                if (ruleText) break;
+                    } catch (e) {}
+                    if (rule) break;
+                }
+                if (!rule) return null;
+                const images = splitCSSValueList(rule.style.backgroundImage);
+                if (images.length === 0 || (images.length === 1 && images[0] === 'none')) return null;
+                const sizes = splitCSSValueList(rule.style.backgroundSize);
+                const positions = splitCSSValueList(rule.style.backgroundPosition);
+                const repeats = splitCSSValueList(rule.style.backgroundRepeat);
+                return buildLayerData(images, sizes, positions, repeats, rule.style.backgroundColor);
             }
-            if (!ruleText) return null;
-
-            const extract = (prop) => {
-                const re = new RegExp(`${prop}\\s*:\\s*([^;]+);`);
-                const m = ruleText.match(re);
-                return m ? m[1].trim() : null;
-            };
-
-            const bgImage = extract('background-image');
-            const bgSize = extract('background-size');
-            const bgPosition = extract('background-position');
-            const bgRepeat = extract('background-repeat');
-            const bgColor = extract('background-color');
-
-            if (!bgImage) return null;
 
             const images = splitCSSValueList(bgImage);
             const sizes = splitCSSValueList(bgSize);
             const positions = splitCSSValueList(bgPosition);
             const repeats = splitCSSValueList(bgRepeat);
+            return buildLayerData(images, sizes, positions, repeats, bgColor);
+        }
 
-            const layers = [];
+        function buildLayerData(images, sizes, positions, repeats, bgColor) {
+            if (!images || images.length === 0) return null;
             const typeNames = { 'linear-gradient': '线条', 'radial-gradient': '斑块', 'url': '纹理', 'repeating-linear-gradient': '纹样' };
+            const layers = [];
             for (let i = 0; i < images.length; i++) {
                 const img = images[i];
+                if (img === 'none') continue;
                 let type = '装饰';
                 for (let key of Object.keys(typeNames)) {
                     if (img.toLowerCase().startsWith(key)) { type = typeNames[key]; break; }
                 }
-                // Extract primary color
                 let color = null;
                 const colorMatch = img.match(/(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\))/);
                 if (colorMatch) color = colorMatch[1];
@@ -2616,6 +2628,7 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             let sidebar = document.getElementById('layer-sidebar');
             if (!sidebar) return;
             sidebar.classList.remove('hidden');
+            sidebar.classList.remove('collapsed');
 
             const title = document.getElementById('layer-sidebar-title');
             if (title) {
