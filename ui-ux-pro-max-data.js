@@ -571,6 +571,56 @@ const guofengColors = [
       ring: "#F4A7B9"
     },
     notes: "桃之夭夭，灼灼其华。春日里最明媚的一抹青春"
+  },
+  {
+    id: 111,
+    name: "三星堆·现代",
+    category: "guofeng",
+    description: "三星堆青铜与黄金的现代活力演绎",
+    colors: {
+      primary: "#2E8B57",
+      onPrimary: "#FFFFFF",
+      secondary: "#FFC107",
+      onSecondary: "#1A1A1A",
+      accent: "#FF8C42",
+      onAccent: "#FFFFFF",
+      background: "#F5F5F0",
+      foreground: "#2D2D2D",
+      card: "#FAFAF5",
+      cardForeground: "#2D2D2D",
+      muted: "#E8ECE9",
+      mutedForeground: "#6B7B6E",
+      border: "#D4D9D6",
+      destructive: "#E63946",
+      onDestructive: "#FFFFFF",
+      ring: "#2E8B57"
+    },
+    notes: "青铜绿的现代新生，黄金面具的耀眼变奏。古蜀文明遇上当代活力。"
+  },
+  {
+    id: 112,
+    name: "千里江山",
+    category: "guofeng",
+    description: "北宋王希孟《千里江山图》经典青绿山水配色",
+    colors: {
+      primary: "#1B4D6B",
+      onPrimary: "#FFFFFF",
+      secondary: "#3A8B6E",
+      onSecondary: "#FFFFFF",
+      accent: "#C9A84C",
+      onAccent: "#1A1A1A",
+      background: "#F0E8D0",
+      foreground: "#2C2C2C",
+      card: "#FAF6EB",
+      cardForeground: "#2C2C2C",
+      muted: "#E8DCC8",
+      mutedForeground: "#7A6B55",
+      border: "#D4C9A8",
+      destructive: "#B42828",
+      onDestructive: "#FFFFFF",
+      ring: "#1B4D6B"
+    },
+    notes: "石青石绿，泥金勾线，绢本底色。青绿山水之极致，上青下绿，金碧辉煌。"
   }
 ];
 

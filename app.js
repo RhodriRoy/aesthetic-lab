@@ -32,13 +32,18 @@
                     4:  { url: null, heading: "'Times New Roman',Times,serif", body: "'Arial',sans-serif" },
                     5:  { url: "https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap", heading: "'Press Start 2P','Courier New',monospace", body: "'Press Start 2P','Courier New',monospace" },
                     6:  { url: "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap", heading: "'Courier Prime','Courier New',monospace", body: "'Courier Prime','Courier New',monospace" },
-                    7:  { url: "https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap", heading: "'Exo 2','Inter',sans-serif", body: "'Exo 2','Inter',sans-serif" },
-                    8:  { url: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap", heading: "'JetBrains Mono','Space Mono',monospace", body: "'JetBrains Mono','Space Mono',monospace" },
+                    7:  { url: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap", heading: "'Orbitron','Exo 2',sans-serif", body: "'Orbitron','Exo 2',sans-serif" },
+                    8:  { url: null, heading: "'Helvetica Neue','Arial','Inter',sans-serif", body: "'Helvetica Neue','Arial','Inter',sans-serif" },
                     9:  { url: null, heading: "'Inter','Helvetica Neue',sans-serif", body: "'Inter','Helvetica Neue',sans-serif" },
                     10: { url: "https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap", heading: "'Indie Flower','Caveat','LXGW WenKai',cursive", body: "'Indie Flower','Caveat','LXGW WenKai',cursive" },
                     11: { url: "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap", heading: "'Orbitron','Exo 2',sans-serif", body: "'Orbitron','Exo 2',sans-serif" },
                     12: { url: "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap", heading: "'Courier Prime','Courier New',monospace", body: "'Courier Prime','Courier New',monospace" },
-                    13: { url: "https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap", heading: "'Fredoka','Nunito',sans-serif", body: "'Fredoka','Nunito',sans-serif" }
+                    13: { url: "https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap", heading: "'Fredoka','Nunito',sans-serif", body: "'Fredoka','Nunito',sans-serif" },
+                    14: { url: "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap", heading: "'Oswald','Impact','Arial Black',sans-serif", body: "'Oswald','Inter',sans-serif" },
+                    15: { url: "https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap", heading: "'Cormorant','Times New Roman',serif", body: "'Cormorant','Inter',serif" },
+                    16: { url: "https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap", heading: "'Cormorant','Times New Roman',serif", body: "'Cormorant','Inter',serif" },
+                    17: { url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap", heading: "'Space Grotesk','Inter',sans-serif", body: "'Space Grotesk','Inter',sans-serif" },
+                    18: { url: "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap", heading: "'Cinzel','Cormorant','Noto Serif SC',serif", body: "'Noto Serif SC','Source Han Serif SC',serif" }
                 },
                 overlayVars: {
                     1:  { '--border-width': '3px', '--border-radius': '0px', '--shadow': '4px 4px 0px 0px #000' },
@@ -47,13 +52,18 @@
                     4:  { '--border-width': '3px', '--border-radius': '0px', '--shadow': 'none' },
                     5:  { '--border-width': '2px', '--border-radius': '0px', '--shadow': 'none' },
                     6:  { '--border-width': '1px', '--border-radius': '0px', '--shadow': 'none' },
-                    7:  { '--border-width': '1px', '--border-radius': '0px', '--shadow': 'none' },
-                    8:  { '--border-width': '1px', '--border-radius': '2px', '--shadow': 'none' },
+                    7:  { '--border-width': '1px', '--border-radius': '0px', '--shadow': '0 0 20px rgba(57,255,20,0.3)' },
+                    8:  { '--border-width': '1px', '--border-radius': '0px', '--shadow': 'none' },
                     9:  { '--border-width': '1px', '--border-radius': '0px', '--shadow': 'none' },
                     10: { '--border-width': '1px', '--border-radius': '2px', '--shadow': '3px 3px 0px 0px rgba(0,0,0,0.15)' },
                     11: { '--border-width': '1px', '--border-radius': '8px', '--shadow': '0 0 20px rgba(184,41,221,0.3)' },
                     12: { '--border-width': '2px', '--border-radius': '0px', '--shadow': '4px 4px 0px rgba(1,205,254,0.3)' },
-                    13: { '--border-width': '3px', '--border-radius': '0px', '--shadow': '6px 6px 0px #FFBE0B' }
+                    13: { '--border-width': '3px', '--border-radius': '0px', '--shadow': '6px 6px 0px #FFBE0B' },
+                    14: { '--border-width': '3px', '--border-radius': '0px', '--shadow': '6px 6px 0px 0px #000' },
+                    15: { '--border-width': '1px', '--border-radius': '2px', '--shadow': '0 8px 32px rgba(0,0,0,0.06)' },
+                    16: { '--border-width': '1px', '--border-radius': '4px', '--shadow': '0 12px 40px rgba(14,107,168,0.15)' },
+                    17: { '--border-width': '4px', '--border-radius': '0px', '--shadow': 'none' },
+                    18: { '--border-width': '2px', '--border-radius': '0px', '--shadow': '0 0 20px rgba(201,162,39,0.15)' }
                 },
                 presets: {
                     1:  { intensity: 0.3, saturation: 0.8 },
@@ -62,16 +72,21 @@
                     4:  { rawness: 0.5 },
                     5:  { grid: 0.15 },
                     6:  { density: 0.3 },
-                    7:  { density: 0.3, gloss: 0.3 },
+                    7:  { density: 0.5, gloss: 0.5 },
                     8:  { grid: 0.2 },
                     9:  { rebellion: 0.3, distortion: 0.15 },
                     10: { messiness: 0.3, aging: 0.15 },
                     11: { flowSpeed: 0.3, chrome: 0.4 },
                     12: { scanlines: 0.2, saturation: 0.8 },
-                    13: { patternDensity: 0.3, vibrancy: 0.8 }
+                    13: { patternDensity: 0.3, vibrancy: 0.8 },
+                    14: { dynamism: 0.5, contrast: 0.7, montage: 0.4 },
+                    15: { depth: 0.5, wash: 0.5, mist: 0.4 },
+                    16: { depth: 0.6, brilliance: 0.5, mist: 0.3 },
+                    17: { gridDensity: 0.5, colorRatio: 0.4, asymmetry: 0.6 },
+                    18: { patina: 0.55, goldLeaf: 0.45, mystery: 0.35 }
                 }
             },
-            previewModes: ['components', 'login', 'dashboard', 'landing', 'form', 'table', 'settings', 'empty']
+            previewModes: ['components', 'login', 'dashboard', 'landing', 'form', 'table', 'settings', 'empty', 'poster']
         };
 
         // ============================================
@@ -110,7 +125,7 @@
                 }
             },
             getIcon() {
-                return this.mode === 'auto' ? '🌗' : this.mode === 'light' ? '☀️' : '🌙';
+                return this.mode === 'auto' ? '自动' : this.mode === 'light' ? '浅色' : '深色';
             }
         };
 
@@ -215,6 +230,7 @@
                     cf: currentChineseFontPairing.id,
                     e: currentArtEffect.id,
                     en: effectEnabled ? 1 : 0,
+                    pi: currentPaletteIndex,
                     p: currentPreviewMode,
                     t: activeTab
                 };
@@ -259,6 +275,7 @@
         let currentArtEffect = artEffects[0];
         let effectEnabled = false;
         let artEffectOverrideActive = false;
+        let currentPaletteIndex = 0;
 
         // Utility: debounce
         function debounce(fn, delay) {
@@ -283,7 +300,8 @@
                 effect: {
                     effectId: currentArtEffect.id,
                     params: currentArtEffect && currentArtEffect._paramValues ? currentArtEffect._paramValues : null,
-                    enabled: effectEnabled
+                    enabled: effectEnabled,
+                    paletteIndex: currentPaletteIndex
                 },
                 recipes: favorites,
                 theme: ThemeManager.mode
@@ -308,6 +326,7 @@
                     if (urlState.cf) { const cf = chineseFontPairings.find(x => x.id === urlState.cf); if (cf) currentChineseFontPairing = cf; }
                     if (urlState.e) { const e = artEffects.find(x => x.id === urlState.e); if (e) currentArtEffect = e; }
                     if (urlState.en !== undefined) effectEnabled = !!urlState.en;
+                    if (urlState.pi !== undefined) currentPaletteIndex = urlState.pi;
                     if (urlState.p && CONFIG_REGISTRY.previewModes.includes(urlState.p)) currentPreviewMode = urlState.p;
                     if (urlState.t) activeTab = urlState.t;
                     return true;
@@ -336,11 +355,13 @@
                     if (state.effect.effectId) { const e = artEffects.find(x => x.id === state.effect.effectId); if (e) currentArtEffect = e; }
                     if (state.effect.params && currentArtEffect) currentArtEffect._paramValues = state.effect.params;
                     if (typeof state.effect.enabled === 'boolean') effectEnabled = state.effect.enabled;
+                    if (typeof state.effect.paletteIndex === 'number') currentPaletteIndex = state.effect.paletteIndex;
                 } else if (state.effectId) {
                     // Legacy effect state
                     const e = artEffects.find(x => x.id === state.effectId);
                     if (e) currentArtEffect = e;
                     if (state.effectParams && currentArtEffect) currentArtEffect._paramValues = state.effectParams;
+                    if (typeof state.paletteIndex === 'number') currentPaletteIndex = state.paletteIndex;
                 }
                 if (Array.isArray(state.recipes)) favorites = state.recipes;
                 else if (Array.isArray(state.favorites)) favorites = state.favorites;
@@ -423,6 +444,7 @@
             currentFontPairing = fontPairings[Math.floor(Math.random() * fontPairings.length)];
             currentChineseFontPairing = chineseFontPairings[Math.floor(Math.random() * chineseFontPairings.length)];
             currentArtEffect = artEffects[Math.floor(Math.random() * artEffects.length)];
+            currentPaletteIndex = 0;
             effectEnabled = true;
             applyStyle(currentStyle.id);
             applyColorScheme(currentColorScheme);
@@ -685,6 +707,7 @@
             if (currentPreviewMode === 'table') { renderTablePreview(); return; }
             if (currentPreviewMode === 'settings') { renderSettingsPreview(); return; }
             if (currentPreviewMode === 'empty') { renderEmptyPreview(); return; }
+            if (currentPreviewMode === 'poster') { renderPosterPreview(); return; }
             renderComponentsPreview();
         }
 
@@ -1396,7 +1419,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
             container.innerHTML = `
                 <div class="flex items-center justify-center py-24">
                     <div class="text-center max-w-sm">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl" style="background-color: var(--muted);">📭</div>
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-sm font-bold" style="background-color: var(--muted); color: var(--muted-foreground);">空空</div>
                         <h3 class="text-lg font-bold mb-2" style="color: var(--foreground);">暂无数据</h3>
                         <p class="text-sm mb-6" style="color: var(--muted-foreground);">当前列表为空，点击下方按钮创建第一条记录。</p>
                         <button class="btn-primary px-4 py-2 text-sm font-medium">新建记录</button>
@@ -1405,37 +1428,266 @@ console.log(greet('UI/UX Pro Max'));</pre>
             `;
         }
 
-        function renderPrompts() {
-            const grid = document.getElementById('prompts-grid');
-            grid.innerHTML = uiStyles.map(style => {
-                let promptText = style.prompt;
-                if (effectEnabled && currentArtEffect) {
-                    const p = currentArtEffect._paramValues || {};
-                    const paramDesc = currentArtEffect.parameters ? currentArtEffect.parameters.map(param => {
-                        const val = p[param.id] !== undefined ? Math.round(p[param.id] * 100) : param.default;
-                        return `${param.name}: ${val}${param.unit}`;
-                    }).join(', ') : '';
-                    promptText += `\n\n--- Art Direction Overlay ---\n`;
-                    promptText += `Apply ${currentArtEffect.nameEn || currentArtEffect.name} aesthetic.\n`;
-                    promptText += `Key traits: ${currentArtEffect.visualFeatures.slice(0, 3).join('; ')}.\n`;
-                    if (paramDesc) promptText += `Parameters: ${paramDesc}.\n`;
-                    promptText += `Color palette: ${currentArtEffect.colorPalette.slice(0, 4).join(', ')}.\n`;
-                }
-                return `
-                <div class="card p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold">${style.name}</h3>
-                        <div class="flex space-x-2">
-                            <button onclick="copyPrompt(${style.id})" class="btn-primary px-3 py-1 text-sm">复制提示词</button>
-                            <button onclick="showDetail(${style.id})" class="btn-secondary px-3 py-1 text-sm">详情</button>
+        function renderPosterPreview() {
+            const container = document.getElementById('preview-container');
+            const c = currentColorScheme.colors;
+            const effect = currentArtEffect;
+            const paramValues = effect._paramValues || {};
+            const style = currentStyle;
+
+            // 海报主色调跟随用户选择的配色方案，艺术效果配色仅作色板参考
+            const cp = [c.primary, c.secondary, c.accent, c.foreground, c.background];
+            const ep = (effect.colorPalettes && effect.colorPalettes[currentPaletteIndex])
+                ? effect.colorPalettes[currentPaletteIndex].palette
+                : (effect.colorPalette || cp);
+            const p1 = cp[0] || '#2563EB';
+            const p2 = cp[1] || '#64748B';
+            const p3 = cp[2] || '#EA580C';
+            const p4 = cp[3] || '#0F172A';
+            const p5 = cp[4] || '#F8FAFC';
+
+            const paramsHtml = effect.parameters.map(p => {
+                const val = paramValues[p.id] !== undefined ? paramValues[p.id] : p.default;
+                const pct = Math.round((val / p.max) * 100);
+                return `<div class="poster-param"><span class="poster-param-name">${p.name}</span><div class="poster-param-bar"><div class="poster-param-fill" style="width:${pct}%;background:${p1}"></div></div><span class="poster-param-val">${Math.round(val)}${p.unit}</span></div>`;
+            }).join('');
+
+            const paletteHtml = ep.slice(0, 6).map((color) =>
+                `<div class="poster-palette-swatch" style="background:${color}"><span>${color}</span></div>`
+            ).join('');
+
+            const featuresHtml = effect.visualFeatures.slice(0, 3).map(f =>
+                `<li class="poster-feature">${f}</li>`
+            ).join('');
+
+            const year = new Date().getFullYear();
+            const month = new Date().getMonth() + 1;
+            const day = new Date().getDate();
+            const randRot = (Math.random() * 4 - 2).toFixed(1);
+
+            container.innerHTML = `
+                <div class="poster-preview-wrapper">
+                    <button class="poster-refresh-btn" onclick="renderPosterPreview()" title="刷新海报">↻</button>
+                    <div class="poster-canvas" style="transform: rotate(${randRot}deg)">
+                        <!-- 背景装饰 — 使用艺术效果配色 -->
+                        <div class="poster-bg-deco">
+                            <div class="poster-bg-block-1" style="background:${p1}"></div>
+                            <div class="poster-bg-block-2" style="background:${p2}"></div>
+                            <div class="poster-bg-stripe" style="background:${p3}"></div>
+                            <div class="poster-bg-circle" style="border-color:${p3}"></div>
+                        </div>
+
+                        <!-- 顶部信息 -->
+                        <div class="poster-top-band">
+                            <span class="poster-series" contenteditable="true" data-poster-text="series">UI/UX PRO MAX · 视觉艺术系列</span>
+                            <span class="poster-edition">NO.${String(effect.id).padStart(2,'0')} / ${year}</span>
+                        </div>
+
+                        <!-- 主标题 -->
+                        <div class="poster-hero">
+                            <div class="poster-category-pill" style="background:${p1};color:#fff">${effect.category}</div>
+                            <h1 class="poster-main-title" contenteditable="true" data-poster-text="title" style="text-shadow: 3px 3px 0 ${p3}">${effect.name.split('·')[0].trim()}</h1>
+                            <div class="poster-en-title" contenteditable="true" data-poster-text="subtitle">${effect.nameEn}</div>
+                        </div>
+
+                        <!-- 分割线 -->
+                        <div class="poster-divider" style="background:${p1}"></div>
+
+                        <!-- 主插图区域 -->
+                        <div class="poster-main-image" style="border-color:${p1}">
+                            <span class="poster-main-image-label" style="background:${p1};color:#fff">MAIN VISUAL</span>
+                            <div class="poster-main-image-inner" style="background:linear-gradient(135deg, ${p1}22, ${p2}22, ${p3}22)"></div>
+                            <div class="poster-main-image-caption" contenteditable="true" data-poster-text="caption">${effect.visualFeatures[0] || '主视觉示意图'}</div>
+                        </div>
+
+                        <!-- 描述 -->
+                        <div class="poster-desc" contenteditable="true" data-poster-text="desc">${effect.description.slice(0, 80)}${effect.description.length > 80 ? '…' : ''}</div>
+
+                        <!-- 配图网格 — 3张小图 -->
+                        <div class="poster-img-row">
+                            <div class="poster-img-block" style="border-color:${p2}">
+                                <span class="poster-img-label" style="background:${p2};color:#fff">FIG.01</span>
+                                <div class="poster-img-inner" style="background:${p2};opacity:0.12"></div>
+                            </div>
+                            <div class="poster-img-block" style="border-color:${p3}">
+                                <span class="poster-img-label" style="background:${p3};color:#000">FIG.02</span>
+                                <div class="poster-img-inner" style="background:${p3};opacity:0.12"></div>
+                            </div>
+                            <div class="poster-img-block" style="border-color:${p4}">
+                                <span class="poster-img-label" style="background:${p4};color:#fff">FIG.03</span>
+                                <div class="poster-img-inner" style="background:${p4};opacity:0.1"></div>
+                            </div>
+                        </div>
+
+                        <!-- 双栏内容 -->
+                        <div class="poster-body">
+                            <div class="poster-left-col">
+                                <div class="poster-section-title" style="color:${p1}">视觉特征</div>
+                                <ul class="poster-features">${featuresHtml}</ul>
+                                <div class="poster-section-title" style="color:${p1};margin-top:0.6rem">参数状态</div>
+                                <div class="poster-params">${paramsHtml}</div>
+                            </div>
+                            <div class="poster-right-col">
+                                <div class="poster-section-title" style="color:${p1}">色彩方案</div>
+                                <div class="poster-palette">${paletteHtml}</div>
+                                <div class="poster-section-title" style="color:${p1};margin-top:0.6rem">适用场景</div>
+                                <div class="poster-bestfor" contenteditable="true" data-poster-text="bestfor">${effect.bestFor.split(',').slice(0,3).join('<br>')}</div>
+                            </div>
+                        </div>
+
+                        <!-- 装饰字母 -->
+                        <div class="poster-deco-letter" style="color:${p1};opacity:0.05">${effect.nameEn.charAt(0)}</div>
+
+                        <!-- 底部信息 -->
+                        <div class="poster-bottom-band">
+                            <div class="poster-venue" contenteditable="true" data-poster-text="venue">
+                                <span>数字美术馆 · 线上展厅</span>
+                            </div>
+                            <div class="poster-date-block">
+                                <div class="poster-date-day">${day}</div>
+                                <div class="poster-date-month">${month}月</div>
+                            </div>
+                            <div class="poster-curator">
+                                <span>策展</span>
+                                <strong contenteditable="true" data-poster-text="curator">${style.name}</strong>
+                            </div>
+                        </div>
+
+                        <!-- 条形码 -->
+                        <div class="poster-barcode-area">
+                            <div class="poster-barcode-visual">
+                                ${Array.from({length:14},(_,i)=>`<div class="poster-barcode-bar" style="background:${c.foreground};width:${2+Math.random()*5}px;height:${50+Math.random()*50}%"></div>`).join('')}
+                            </div>
+                            <div class="poster-barcode-text">${effect.id.toString().padStart(6,'0')} · ${effect.category} · ${year}</div>
                         </div>
                     </div>
-                    <div class="code-block p-4">
-                        <pre class="whitespace-pre-wrap">${promptText}</pre>
+                </div>
+            `;
+        }
+
+        function renderPrompts(filter = '') {
+            const grid = document.getElementById('prompts-grid');
+            let filtered = uiStyles;
+            if (filter) {
+                const q = filter.toLowerCase();
+                filtered = filtered.filter(s =>
+                    s.name.toLowerCase().includes(q) ||
+                    s.keywords.toLowerCase().includes(q) ||
+                    s.bestFor.toLowerCase().includes(q) ||
+                    s.vibe.toLowerCase().includes(q)
+                );
+            }
+            // Sort: current style first, then by id
+            filtered = [...filtered].sort((a, b) => {
+                if (a.id === currentStyle.id) return -1;
+                if (b.id === currentStyle.id) return 1;
+                return a.id - b.id;
+            });
+
+            grid.innerHTML = filtered.map(style => {
+                const isCurrent = style.id === currentStyle.id;
+                const keywords = style.keywords.split(', ').slice(0, 5);
+                const promptPreview = generatePrompt(style, 'quick');
+                return `
+                <div class="card p-4 ${isCurrent ? 'active' : ''}" id="prompt-style-card-${style.id}">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <h3 class="text-base font-bold">${style.name}</h3>
+                                ${isCurrent ? '<span class="badge px-2 py-0.5 text-xs" style="background: var(--primary); color: var(--on-primary);">当前</span>' : `<span class="badge px-2 py-0.5 text-xs">#${style.id}</span>`}
+                            </div>
+                            <div class="flex flex-wrap gap-1.5 mb-2">
+                                ${keywords.map(kw => `<span class="text-xs px-1.5 py-0.5 rounded" style="background: var(--muted); color: var(--muted-foreground);">${kw}</span>`).join('')}
+                            </div>
+                            <p class="text-xs mb-2" style="color: var(--muted-foreground);"><span class="font-medium">适用:</span> ${style.bestFor}</p>
+                            <div class="code-block p-2.5 text-xs" style="max-height: 80px; overflow: hidden; position: relative;">
+                                <pre class="whitespace-pre-wrap" style="font-family: var(--font-mono); line-height: 1.5;">${promptPreview.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                                <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: linear-gradient(transparent, var(--muted));"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 shrink-0">
+                            <button onclick="copyPrompt(${style.id})" class="btn-primary px-2.5 py-1.5 text-xs" title="复制提示词">复制</button>
+                            <button onclick="expandPrompt(${style.id})" class="btn-secondary px-2.5 py-1.5 text-xs" title="展开完整提示词">展开</button>
+                            <button onclick="showDetail(${style.id})" class="btn-ghost px-2.5 py-1.5 text-xs" title="风格详情">ℹ️</button>
+                        </div>
+                    </div>
+                    <div id="prompt-full-${style.id}" class="hidden mt-3 pt-3" style="border-top: 1px solid var(--border);">
+                        <div class="code-block p-3 text-xs" style="max-height: 240px; overflow-y: auto;">
+                            <pre class="whitespace-pre-wrap" style="font-family: var(--font-mono); line-height: 1.6;"></pre>
+                        </div>
+                        <div class="flex gap-2 mt-2">
+                            <button onclick="copyPrompt(${style.id})" class="btn-primary px-3 py-1 text-xs">复制当前格式</button>
+                            <button onclick="collapsePrompt(${style.id})" class="btn-ghost px-3 py-1 text-xs">收起</button>
+                        </div>
                     </div>
                 </div>
                 `;
             }).join('');
+        }
+
+        function expandPrompt(id) {
+            const fullEl = document.getElementById(`prompt-full-${id}`);
+            const preEl = fullEl.querySelector('pre');
+            const style = uiStyles.find(s => s.id === id);
+            const format = document.getElementById('prompt-format-select')?.value || 'standard';
+            preEl.textContent = generatePrompt(style, format);
+            fullEl.classList.remove('hidden');
+        }
+
+        function collapsePrompt(id) {
+            document.getElementById(`prompt-full-${id}`).classList.add('hidden');
+        }
+
+        function filterPromptStyles() {
+            const search = document.getElementById('prompt-style-search')?.value || '';
+            renderPrompts(search);
+        }
+
+        const debouncedFilterPromptStyles = debounce(filterPromptStyles, 300);
+
+        function renderCurrentPrompt() {
+            const format = document.getElementById('prompt-format-select')?.value || 'standard';
+            const textEl = document.getElementById('current-prompt-text');
+            const summaryEl = document.getElementById('current-config-summary');
+            if (!textEl) return;
+
+            textEl.textContent = generatePrompt(null, format);
+
+            if (summaryEl) {
+                const effectBadge = effectEnabled && currentArtEffect
+                    ? `<span class="badge px-2 py-1 text-xs" style="background: ${(currentArtEffect.colorPalettes && currentArtEffect.colorPalettes[currentPaletteIndex]) ? currentArtEffect.colorPalettes[currentPaletteIndex].palette[0] : currentArtEffect.colorPalette[0]}; color: #fff;">${currentArtEffect.name.split('·')[0].trim()}</span>`
+                    : '';
+                summaryEl.innerHTML = `
+                    <span class="badge px-2 py-1 text-xs" style="background: var(--primary); color: var(--on-primary);">${currentStyle.name}</span>
+                    <span class="badge px-2 py-1 text-xs" style="background: var(--secondary); color: var(--on-secondary);">${currentColorScheme.name}</span>
+                    <span class="badge px-2 py-1 text-xs" style="background: var(--accent); color: var(--on-accent);">${currentFontPairing.name}</span>
+                    <span class="badge px-2 py-1 text-xs" style="background: var(--muted); color: var(--foreground);">${currentChineseFontPairing.name}</span>
+                    ${effectBadge}
+                `;
+            }
+        }
+
+        function copyCurrentPrompt() {
+            const format = document.getElementById('prompt-format-select')?.value || 'standard';
+            const text = generatePrompt(null, format);
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('当前配置提示词已复制！');
+            });
+        }
+
+        function downloadPromptTxt() {
+            const format = document.getElementById('prompt-format-select')?.value || 'standard';
+            const text = generatePrompt(null, format);
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ui-prompt-${currentStyle.nameEn || currentStyle.name}-${format}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('提示词已导出为 .txt');
         }
 
         function renderFavorites() {
@@ -1604,6 +1856,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
             const cfg = CONFIG_REGISTRY.styles[id];
             if (cfg) body.classList.add(cfg.className);
             if (artEffectOverrideActive) applyArtEffect(currentArtEffect);
+            if (activeTab === 'preview' && currentPreviewMode === 'poster') renderPreview();
         }
 
         function applyColorScheme(scheme) {
@@ -1624,6 +1877,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 body.classList.remove('dark-mode-active');
             }
             if (artEffectOverrideActive) applyArtEffect(currentArtEffect);
+            if (activeTab === 'preview' && currentPreviewMode === 'poster') renderPreview();
         }
 
         function getLuminance(hex) {
@@ -1731,6 +1985,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
             if (tab === 'preview') { renderPreview(); setTimeout(updateFavoriteBtn, 0); renderEffectStatusBar(); }
             if (tab === 'favorites') renderFavorites();
             if (tab === 'effects') { renderEffects(); renderEffectCategoryFilters(); }
+            if (tab === 'prompts') { renderPrompts(); renderCurrentPrompt(); }
             saveState();
         }
 
@@ -1830,22 +2085,136 @@ module.exports = {
             showToast('配置已导出！');
         }
 
+        // ============================================
+        // 提示词生成引擎
+        // ============================================
+        function generatePrompt(styleOverride, format) {
+            const style = styleOverride || currentStyle;
+            const scheme = currentColorScheme;
+            const c = scheme.colors;
+            const font = currentFontPairing;
+            const cnFont = currentChineseFontPairing;
+            const effect = effectEnabled && currentArtEffect ? currentArtEffect : null;
+            const effectPalette = effect ? ((effect.colorPalettes && effect.colorPalettes[currentPaletteIndex]) ? effect.colorPalettes[currentPaletteIndex].palette : effect.colorPalette) : null;
+
+            const styleName = style.nameEn || style.name;
+            const colorDesc = `Primary ${c.primary}, Secondary ${c.secondary}, Accent ${c.accent}, Background ${c.background}`;
+            const fontDesc = `English: ${font.heading} + ${font.body}; Chinese: ${cnFont.heading} + ${cnFont.body}`;
+            const effectDesc = effect ? `${effect.nameEn || effect.name} aesthetic — ${effect.description}` : '';
+
+            switch (format) {
+                case 'quick':
+                    return `Design a ${styleName} UI with ${scheme.name} color scheme (${colorDesc}). ${fontDesc}. ${effectDesc || style.description}`;
+
+                case 'standard':
+                    return `Create a UI design in ${styleName} style.
+
+Style Description: ${style.description}
+Vibe: ${style.vibe}
+Keywords: ${style.keywords}
+
+Color Scheme — ${scheme.name}:
+• Primary: ${c.primary} | On Primary: ${c.onPrimary}
+• Secondary: ${c.secondary} | On Secondary: ${c.onSecondary}
+• Accent: ${c.accent} | On Accent: ${c.onAccent}
+• Background: ${c.background} | Foreground: ${c.foreground}
+• Card: ${c.card} | Muted: ${c.muted}
+
+Typography:
+• English: ${font.heading} (headings) + ${font.body} (body)
+• Chinese: ${cnFont.heading} (headings) + ${cnFont.body} (body)
+
+${effect ? `Art Direction Overlay — ${effect.name}:\n• ${effect.visualFeatures.slice(0, 4).join('\n• ')}\n• Color palette: ${effectPalette.slice(0, 4).join(', ')}` : ''}`;
+
+                case 'detailed':
+                    return `You are a senior UI/UX designer. Create a comprehensive design system and high-fidelity mockup for a web application using the following specifications:
+
+## 1. Design Style
+- Style: ${styleName}
+- Description: ${style.description}
+- Vibe: ${style.vibe}
+- Keywords: ${style.keywords}
+- Best for: ${style.bestFor}
+
+## 2. Color System (${scheme.name})
+| Token | Hex | Usage |
+|-------|-----|-------|
+| Primary | ${c.primary} | Buttons, links, active states |
+| Secondary | ${c.secondary} | Info, secondary actions |
+| Accent | ${c.accent} | Highlights, badges, CTAs |
+| Background | ${c.background} | Page background |
+| Foreground | ${c.foreground} | Primary text |
+| Card | ${c.card} | Card surfaces |
+| Muted | ${c.muted} | Secondary backgrounds |
+| Border | ${c.border} | Dividers, outlines |
+| Destructive | ${c.destructive} | Errors, warnings |
+| Ring | ${c.ring} | Focus states |
+
+## 3. Typography
+- English Headings: ${font.heading}
+- English Body: ${font.body}
+- Chinese Headings: ${cnFont.heading}
+- Chinese Body: ${cnFont.body}
+- Mood: ${font.mood}
+
+## 4. Component Style Specifications
+${style.uiApplication || 'Apply the design style consistently across all components.'}
+
+## 5. ${effect ? `Art Direction — ${effect.name}\n${effect.description}\nVisual Features:\n• ${effect.visualFeatures.join('\n• ')}\nColor palette: ${effectPalette.join(', ')}` : 'No art direction overlay.'}
+
+Please generate: (1) a design system overview, (2) a landing page mockup description, (3) a component library checklist.`;
+
+                case 'midjourney':
+                    return `${styleName} UI/UX design, ${scheme.name} color palette, ${c.primary} primary ${c.secondary} secondary ${c.accent} accent, clean modern interface, ${style.keywords.split(', ').slice(0, 4).join(', ')}, ${font.heading} typography, ${effect ? effect.nameEn || effect.name : 'modern'} aesthetic, high detail, professional mockup, dribbble trending, UI design, web application --ar 16:9 --style raw --v 6`;
+
+                case 'chatgpt':
+                    return `Write HTML and CSS code for a landing page with the following design system:
+
+**Design Style:** ${styleName}
+${style.description}
+
+**Color Tokens (CSS variables):**
+\`\`\`css
+:root {
+  --primary: ${c.primary};
+  --on-primary: ${c.onPrimary};
+  --secondary: ${c.secondary};
+  --accent: ${c.accent};
+  --background: ${c.background};
+  --foreground: ${c.foreground};
+  --card: ${c.card};
+  --muted: ${c.muted};
+  --border: ${c.border};
+  --destructive: ${c.destructive};
+  --ring: ${c.ring};
+  --font-heading: ${font.heading}, sans-serif;
+  --font-body: ${font.body}, sans-serif;
+}
+\`\`\`
+
+**Typography:**
+- Headings: ${font.heading} / ${cnFont.heading}
+- Body: ${font.body} / ${cnFont.body}
+
+**Style Guidelines:**
+- ${style.vibe}
+- Keywords: ${style.keywords}
+- ${style.uiApplication || 'Follow the design style consistently.'}
+
+${effect ? `**Art Direction — ${effect.name}:**\n${effect.description}\nApply these visual traits to all components.` : ''}
+
+Please generate a complete, production-ready HTML file with embedded CSS that includes a responsive landing page with: navigation, hero section, feature grid, and footer.`;
+
+                default:
+                    return style.prompt;
+            }
+        }
+
         function copyPrompt(id) {
             const style = uiStyles.find(s => s.id === id);
             if (!style) return;
-            let promptText = style.prompt;
-            if (effectEnabled && currentArtEffect) {
-                const p = currentArtEffect._paramValues || {};
-                const paramDesc = currentArtEffect.parameters ? currentArtEffect.parameters.map(param => {
-                    const val = p[param.id] !== undefined ? Math.round(p[param.id] * 100) : param.default;
-                    return `${param.name}: ${val}${param.unit}`;
-                }).join(', ') : '';
-                promptText += `\n\n--- Art Direction Overlay ---\n`;
-                promptText += `Apply ${currentArtEffect.nameEn || currentArtEffect.name} aesthetic.\n`;
-                promptText += `Key traits: ${currentArtEffect.visualFeatures.slice(0, 3).join('; ')}.\n`;
-                if (paramDesc) promptText += `Parameters: ${paramDesc}.\n`;
-                promptText += `Color palette: ${currentArtEffect.colorPalette.slice(0, 4).join(', ')}.\n`;
-            }
+            const format = document.getElementById('prompt-format-select')?.value || 'standard';
+            const promptText = generatePrompt(style, format);
             navigator.clipboard.writeText(promptText).then(() => {
                 showToast('提示词已复制！');
             });
@@ -1982,8 +2351,12 @@ module.exports = {
                     <p class="text-sm mb-3" style="color: var(--muted-foreground);">${effect.description}</p>
                     <div class="mb-3">
                         <div class="flex gap-1 mb-2">
-                            ${effect.colorPalette.map(clr => `<div style="width:24px;height:24px;border-radius:4px;background:${clr};border:1px solid var(--border);"></div>`).join('')}
+                            ${(effect.colorPalettes && effect.colorPalettes[currentPaletteIndex]
+                                ? effect.colorPalettes[currentPaletteIndex].palette
+                                : effect.colorPalette
+                            ).map(clr => `<div style="width:24px;height:24px;border-radius:4px;background:${clr};border:1px solid var(--border);"></div>`).join('')}
                         </div>
+                        ${(effect.colorPalettes && currentArtEffect.id === effect.id) ? `<div class="text-xs" style="color: var(--muted-foreground);">配色: ${effect.colorPalettes[currentPaletteIndex].name}</div>` : ''}
                     </div>
                     <div class="text-sm mb-2" style="color: var(--muted-foreground);">
                         <span class="font-medium">适用:</span> ${effect.bestFor}
@@ -2050,7 +2423,7 @@ module.exports = {
         function updateEffectCurrentInfo() {
             const nameEl = document.getElementById('effect-current-name');
             if (nameEl && currentArtEffect) {
-                nameEl.textContent = currentArtEffect.name + (effectEnabled ? ' ✓ 已启用' : ' ○ 未启用');
+                nameEl.textContent = currentArtEffect.name + (effectEnabled ? ' · 已启用' : ' · 未启用');
             }
         }
 
@@ -2080,7 +2453,7 @@ module.exports = {
                 const active = currentArtEffect.id === effect.id ? 'active' : '';
                 return `
                     <div class="effect-float-card ${active}" onclick="selectEffect(${effect.id})" title="${effect.name}">
-                        <div class="effect-float-swatch" style="background: ${effect.colorPalette[0]};"></div>
+                        <div class="effect-float-swatch" style="background: ${(effect.colorPalettes && currentArtEffect.id === effect.id && effect.colorPalettes[currentPaletteIndex]) ? effect.colorPalettes[currentPaletteIndex].palette[0] : effect.colorPalette[0]};"></div>
                         <div class="truncate">${effect.name.split('·')[0].trim()}</div>
                     </div>
                 `;
@@ -2103,8 +2476,8 @@ module.exports = {
             }
             const baselineText = `${currentStyle.name} + ${currentColorScheme.name} + ${currentFontPairing.name.split(' + ')[0]}`;
             const effectText = effectEnabled
-                ? `🎭 艺术效果: 已开启（${currentArtEffect.name}）`
-                : `🎭 艺术效果: 已关闭（${currentArtEffect.name}）`;
+                ? `艺术效果: 已开启（${currentArtEffect.name}）`
+                : `艺术效果: 已关闭（${currentArtEffect.name}）`;
             bar.innerHTML = `
                 <span><strong>当前基线:</strong> ${baselineText}</span>
                 <button onclick="toggleEffectSwitchFromBar()" class="text-sm font-medium" style="color: var(--primary);">${effectText}</button>
@@ -2121,6 +2494,7 @@ module.exports = {
 
         function selectEffect(id) {
             currentArtEffect = artEffects.find(e => e.id === id);
+            currentPaletteIndex = 0;
             updateEffectCurrentInfo();
             renderEffectFloatGrid();
             renderEffectFloatParams();
@@ -2130,6 +2504,7 @@ module.exports = {
                 updateActiveCards();
                 updateFavoriteBtn();
             }
+            if (activeTab === 'preview') renderPreview();
             renderEffectStatusBar();
             saveState();
             showToast(`已选择效果: ${currentArtEffect.name}`);
@@ -2140,7 +2515,7 @@ module.exports = {
             const body = document.body;
 
             // Remove all art effect body classes
-            for (let i = 1; i <= 13; i++) {
+            for (let i = 1; i <= 18; i++) {
                 body.classList.remove('art-effect-' + i);
             }
 
@@ -2169,7 +2544,9 @@ module.exports = {
                 allVars.forEach(v => { if (v.startsWith('--art-')) root.style.removeProperty(v); });
                 const ov2 = document.getElementById('art-effect-overlay');
                 if (ov2) {
-                    ov2.classList.remove('penetrate-mist', 'penetrate-bleed', 'penetrate-soak');
+                    ov2.className = '';
+                    ov2.style.opacity = '0';
+                    ov2.style.display = 'none';
                 }
                 const gf = document.getElementById('gf-art-effect');
                 if (gf) gf.remove();
@@ -2183,6 +2560,8 @@ module.exports = {
             body.classList.add('art-effect-' + effect.id);
             overlay.classList.add('art-effect-' + effect.id);
             overlay.classList.add('active');
+            overlay.style.display = '';
+            overlay.style.opacity = '';
 
             // Apply penetration mode
             const penetrationMap = { 'mist': 'mist', 'bleed': 'bleed', 'soak': 'soak', 'edge': 'mist', 'corner': 'bleed' };
@@ -2204,6 +2583,11 @@ module.exports = {
                 : 0.5;
             root.style.setProperty('--art-intensity', intensity);
 
+            // Inject global random seeds for uneven / organic variation across elements
+            for (let r = 1; r <= 8; r++) {
+                root.style.setProperty('--art-rand-' + r, Math.random());
+            }
+
             // Font loading via registry
             const fm = CONFIG_REGISTRY.effects.fontMap[effect.id];
             if (fm) {
@@ -2222,7 +2606,9 @@ module.exports = {
                 root.style.setProperty('--font-body', fm.body);
             }
 
-            const p = effect.colorPalette;
+            const p = (effect.colorPalettes && effect.colorPalettes[currentPaletteIndex])
+                ? effect.colorPalettes[currentPaletteIndex].palette
+                : effect.colorPalette;
             root.style.setProperty('--primary', p[0] || '#2563EB');
             root.style.setProperty('--accent', p[1] || '#EA580C');
             root.style.setProperty('--ring', p[2] || p[0] || '#2563EB');
@@ -2275,7 +2661,29 @@ module.exports = {
             }
 
             if (!slidersContainer) return;
-            slidersContainer.innerHTML = currentArtEffect.parameters.map(p => {
+
+            // Palette selector for effects with multiple color palettes
+            let paletteHtml = '';
+            if (currentArtEffect.colorPalettes && currentArtEffect.colorPalettes.length > 1) {
+                paletteHtml = `
+                    <div class="mb-3">
+                        <div class="text-xs mb-1.5" style="color: var(--muted-foreground);">配色方案</div>
+                        <div class="flex gap-2 flex-wrap">
+                            ${currentArtEffect.colorPalettes.map((cp, idx) => `
+                                <button onclick="selectEffectPalette(${idx})" class="flex items-center gap-1 px-2 py-1 rounded text-xs transition-all ${idx === currentPaletteIndex ? 'font-bold' : ''}"
+                                    style="border: 1.5px solid ${idx === currentPaletteIndex ? 'var(--primary)' : 'var(--border)'}; background: ${idx === currentPaletteIndex ? 'var(--muted)' : 'transparent'};">
+                                    <span class="flex gap-0.5">
+                                        ${cp.palette.slice(0, 3).map(clr => `<span style="width:10px;height:10px;border-radius:2px;background:${clr};display:inline-block;"></span>`).join('')}
+                                    </span>
+                                    ${cp.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            slidersContainer.innerHTML = paletteHtml + currentArtEffect.parameters.map(p => {
                 const val = currentArtEffect._paramValues[p.id] !== undefined ? currentArtEffect._paramValues[p.id] : p.default / 100;
                 const displayVal = Math.round(val * 100);
                 return `
@@ -2292,6 +2700,25 @@ module.exports = {
                     </div>
                 `;
             }).join('');
+        }
+
+        function selectEffectPalette(index) {
+            if (!currentArtEffect || !currentArtEffect.colorPalettes) return;
+            currentPaletteIndex = index;
+            const palette = currentArtEffect.colorPalettes[index].palette;
+            // Hot-update CSS variables without full re-apply
+            const root = document.documentElement;
+            root.style.setProperty('--primary', palette[0] || '#2563EB');
+            root.style.setProperty('--accent', palette[1] || '#EA580C');
+            root.style.setProperty('--ring', palette[2] || palette[0] || '#2563EB');
+            // Re-render float panel to update selection highlight
+            renderEffectFloatParams();
+            renderEffectFloatGrid();
+            renderEffects();
+            renderEffectStatusBar();
+            if (activeTab === 'preview') renderPreview();
+            saveState();
+            showToast(`配色: ${currentArtEffect.colorPalettes[index].name}`);
         }
 
         function updateEffectParam(paramId, value, sliderEl) {
@@ -2312,6 +2739,7 @@ module.exports = {
             if (paramId === 'intensity') {
                 root.style.setProperty('--art-intensity', value);
             }
+            if (activeTab === 'preview') renderPreview();
             saveState();
         }
 
@@ -2325,6 +2753,11 @@ module.exports = {
             renderEffectFloatParams();
             if (effectEnabled) {
                 applyArtEffect(currentArtEffect);
+                // Re-inject fresh random seeds so CSS picks up new variation
+                const root = document.documentElement;
+                for (let r = 1; r <= 8; r++) {
+                    root.style.setProperty('--art-rand-' + r, Math.random());
+                }
                 updateActiveCards();
             }
             saveState();
@@ -2395,7 +2828,7 @@ module.exports = {
                 if (!card.querySelector('.effect-preview-badge')) {
                     const badge = document.createElement('span');
                     badge.className = 'effect-preview-badge';
-                    badge.textContent = '🎭';
+                    badge.textContent = 'FX';
                     badge.style.cssText = 'position:absolute;top:4px;right:4px;font-size:12px;opacity:0.7;pointer-events:none;z-index:5;';
                     card.style.position = 'relative';
                     card.appendChild(badge);

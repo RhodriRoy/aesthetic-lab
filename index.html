@@ -29,9 +29,9 @@
                 <div class="flex items-center space-x-2">
                     <button id="history-undo-btn" onclick="undoState()" class="btn-ghost px-3 py-2 text-sm font-medium" title="撤销 (Ctrl+Z)" disabled>↩️</button>
                     <button id="history-redo-btn" onclick="redoState()" class="btn-ghost px-3 py-2 text-sm font-medium" title="重做 (Ctrl+Shift+Z)" disabled>↪️</button>
-                    <button onclick="ThemeManager.cycle()" class="btn-ghost px-3 py-2 text-sm font-medium" id="theme-toggle-btn" title="切换主题">🌗</button>
+                    <button onclick="ThemeManager.cycle()" class="btn-ghost px-3 py-2 text-sm font-medium" id="theme-toggle-btn" title="切换主题">主题</button>
                     <button onclick="randomCombo()" class="btn-secondary px-4 py-2 text-sm font-medium" title="快捷键: R">
-                        🎲 随机组合
+                        随机组合
                     </button>
                     <button id="global-favorite-btn" onclick="toggleFavorite()" class="btn-outline px-4 py-2 text-sm font-medium" title="快捷键: F">
                         ☆ 收藏
@@ -130,6 +130,7 @@
                     <button class="filter-btn" id="preview-btn-table" onclick="switchPreviewMode('table')">数据表格</button>
                     <button class="filter-btn" id="preview-btn-settings" onclick="switchPreviewMode('settings')">设置页</button>
                     <button class="filter-btn" id="preview-btn-empty" onclick="switchPreviewMode('empty')">空状态</button>
+                    <button class="filter-btn" id="preview-btn-poster" onclick="switchPreviewMode('poster')">海报</button>
                 </div>
             </div>
             <div id="preview-container" class="preview-section">
@@ -139,11 +140,47 @@
 
         <!-- Prompts Tab -->
         <div id="prompts-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-prompts">
-            <div class="mb-6">
-                <h2 class="text-3xl font-bold mb-2">AI 提示词生成器</h2>
-                <p class="text-lg mb-4" style="color: var(--muted-foreground);">用于生成 UI/UX 设计的详细提示词模板</p>
+            <!-- Current Config Prompt (Core) -->
+            <div id="current-prompt-section" class="card p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold">当前配置提示词</h2>
+                        <p class="text-sm mt-1" style="color: var(--muted-foreground);">基于你当前选中的风格、配色、字体和艺术效果一键生成</p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <select id="prompt-format-select" class="select text-sm" onchange="renderCurrentPrompt()">
+                            <option value="quick">快速版</option>
+                            <option value="standard" selected>标准版</option>
+                            <option value="detailed">详细版</option>
+                            <option value="midjourney">Midjourney</option>
+                            <option value="chatgpt">ChatGPT</option>
+                        </select>
+                        <button onclick="copyCurrentPrompt()" class="btn-primary px-4 py-2 text-sm">复制</button>
+                    </div>
+                </div>
+                <!-- Config Summary Chips -->
+                <div id="current-config-summary" class="flex flex-wrap gap-2 mb-4"></div>
+                <!-- Prompt Text -->
+                <div class="code-block p-4" style="max-height: 320px; overflow-y: auto;">
+                    <pre id="current-prompt-text" class="whitespace-pre-wrap text-sm" style="font-family: var(--font-mono);"></pre>
+                </div>
+                <!-- Quick Actions -->
+                <div class="flex flex-wrap gap-2 mt-3">
+                    <a href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">ChatGPT</a>
+                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">Claude</a>
+                    <a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">Midjourney</a>
+                    <button onclick="downloadPromptTxt()" class="btn-ghost px-3 py-1.5 text-xs">导出 .txt</button>
+                </div>
             </div>
-            <div id="prompts-grid" class="space-y-6">
+
+            <!-- Style Browser -->
+            <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h3 class="text-xl font-bold">按风格浏览</h3>
+                <div class="flex gap-2">
+                    <input type="text" id="prompt-style-search" class="search-input w-full sm:w-64" placeholder="搜索风格、关键词或适用场景..." oninput="debouncedFilterPromptStyles()">
+                </div>
+            </div>
+            <div id="prompts-grid" class="space-y-3">
                 <!-- Prompts will be populated here -->
             </div>
         </div>
@@ -167,7 +204,7 @@
         <div id="effects-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-effects">
             <div class="mb-6">
                 <h2 class="text-3xl font-bold mb-2">视觉艺术效果</h2>
-                <p class="text-lg mb-4" style="color: var(--muted-foreground);">13种跨风格的艺术方向叠加层，为界面注入独特的视觉气质</p>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">17种跨风格的艺术方向叠加层，为界面注入独特的视觉气质</p>
                 <div class="flex gap-2 mb-4 flex-wrap">
                     <button class="filter-btn active" onclick="filterEffectsCategory('all', event)">全部</button>
                     <span id="effects-category-filters" class="flex gap-2 flex-wrap"></span>
@@ -210,7 +247,7 @@
                             <button onclick="applyEffectPreset('light')" class="btn-outline px-2 py-0.5 text-xs" title="轻度">轻</button>
                             <button onclick="applyEffectPreset('normal')" class="btn-outline px-2 py-0.5 text-xs" title="标准">中</button>
                             <button onclick="applyEffectPreset('heavy')" class="btn-outline px-2 py-0.5 text-xs" title="强烈">重</button>
-                            <button onclick="randomizeEffectParams()" class="btn-outline px-2 py-0.5 text-xs">🎲</button>
+                            <button onclick="randomizeEffectParams()" class="btn-outline px-2 py-0.5 text-xs" title="随机参数">随机</button>
                         </div>
                     </div>
                     <div id="effect-float-params-sliders" class="space-y-3"></div>
@@ -220,31 +257,31 @@
     </div>
 
     <!-- Art Effect Float Button -->
-    <button id="art-effect-float-btn" onclick="toggleEffectPanel()" class="fixed w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg transition-transform hover:scale-110" style="background: var(--primary); color: var(--on-primary); bottom: 24px; right: 24px; z-index: 99;" title="视觉艺术效果 (快捷键: E)" aria-label="打开艺术效果面板">
-        🎭
+    <button id="art-effect-float-btn" onclick="toggleEffectPanel()" class="fixed w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold shadow-lg transition-transform hover:scale-110" style="background: var(--primary); color: var(--on-primary); bottom: 24px; right: 24px; z-index: 99;" title="视觉艺术效果 (快捷键: E)" aria-label="打开艺术效果面板">
+        FX
     </button>
 
     <!-- Mobile Bottom Tab Bar -->
     <nav id="mobile-tab-bar" class="fixed bottom-0 left-0 right-0 z-50 border-t md:hidden" style="background-color: var(--card); border-color: var(--border);">
         <div class="flex justify-around items-center py-2">
             <button onclick="switchTab('styles', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="styles">
-                <span class="text-lg">🎨</span>
+                <span class="text-lg font-bold" style="font-family: var(--font-mono);">St</span>
                 <span>风格</span>
             </button>
             <button onclick="switchTab('colors', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="colors">
-                <span class="text-lg">🎨</span>
+                <span class="text-lg font-bold" style="font-family: var(--font-mono);">Co</span>
                 <span>配色</span>
             </button>
             <button onclick="switchTab('preview', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="preview">
-                <span class="text-lg">👁️</span>
+                <span class="text-lg font-bold" style="font-family: var(--font-mono);">Pr</span>
                 <span>预览</span>
             </button>
             <button onclick="switchTab('effects', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="effects">
-                <span class="text-lg">🎭</span>
+                <span class="text-lg font-bold" style="font-family: var(--font-mono);">Fx</span>
                 <span>效果</span>
             </button>
             <button onclick="switchTab('favorites', event)" class="flex flex-col items-center gap-0.5 p-1 text-xs" style="color: var(--muted-foreground);" data-mobile-tab="favorites">
-                <span class="text-lg">⭐</span>
+                <span class="text-lg font-bold" style="font-family: var(--font-mono);">Fv</span>
                 <span>收藏</span>
             </button>
         </div>
