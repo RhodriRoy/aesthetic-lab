@@ -136,6 +136,16 @@
                     <button class="filter-btn" id="preview-btn-empty" onclick="switchPreviewMode('empty')">空状态</button>
                     <button class="filter-btn" id="preview-btn-poster" onclick="switchPreviewMode('poster')">海报</button>
                 </div>
+                <!-- Linkage Recommendation Bar -->
+                <div id="linkage-bar" class="hidden mb-4 p-4 rounded-lg" style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--on-primary);">
+                    <div class="flex items-center justify-between gap-3 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <span style="font-size:1.25rem">🔮</span>
+                            <span id="linkage-text" class="text-sm font-medium"></span>
+                        </div>
+                        <button id="linkage-btn" onclick="activateLinkage()" class="px-4 py-1.5 text-sm rounded-md font-semibold" style="background: var(--on-primary); color: var(--primary);">激活联动</button>
+                    </div>
+                </div>
                 <!-- Poster controls -->
                 <div id="poster-controls" class="hidden flex items-center gap-2 flex-wrap mb-4 p-3 rounded-lg" style="background: var(--muted);">
                     <span class="text-sm font-medium" style="color: var(--muted-foreground);">模板:</span>

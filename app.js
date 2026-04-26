@@ -650,7 +650,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-xl font-bold">${scheme.name}</h3>
                         <div class="flex gap-1">
-                            ${linkedEffect ? '<span class="poster-linkage-badge">🔮 联动</span>' : ''}
+                            ${linkedEffect ? '<span class="poster-linkage-badge" onclick="event.stopPropagation();applyLinkageEffect('+linkedEffect+')">🔮 激活</span>' : ''}
                             <span class="badge px-2 py-1 text-xs">${scheme.category === 'guofeng' ? '国风' : '#' + scheme.id}</span>
                         </div>
                     </div>
@@ -1882,11 +1882,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
             updateFavoriteBtn();
             saveState();
             showToast(`已切换到配色: ${currentColorScheme.name}`);
-            // Linkage: recommend linked effect
-            const linkedEffectId = STYLE_LINKAGE.colorToEffect[id];
-            if (linkedEffectId && currentArtEffect && currentArtEffect.id !== linkedEffectId) {
-                showToast(`🔮 联动推荐: ${currentColorScheme.name} × ${STYLE_LINKAGE.effectName[linkedEffectId]}，效果面板可一键激活`);
-            }
+            renderLinkageBar();
         }
 
         function selectGuofeng(id) {
@@ -2120,6 +2116,44 @@ console.log(greet('UI/UX Pro Max'));</pre>
             updateFavoriteBtn();
             saveState();
             showToast(`已联动激活: ${color.name}`);
+        }
+
+        function renderLinkageBar() {
+            const bar = document.getElementById('linkage-bar');
+            const text = document.getElementById('linkage-text');
+            const btn = document.getElementById('linkage-btn');
+            if (!bar || !text || !btn) return;
+
+            const linkedEffectId = currentColorScheme ? STYLE_LINKAGE.colorToEffect[currentColorScheme.id] : null;
+            const linkedColorId = currentArtEffect ? STYLE_LINKAGE.effectToColor[currentArtEffect.id] : null;
+
+            if (linkedEffectId && currentArtEffect && currentArtEffect.id !== linkedEffectId) {
+                bar.classList.remove('hidden');
+                text.textContent = '当前配色「' + currentColorScheme.name + '」与「' + STYLE_LINKAGE.effectName[linkedEffectId] + '」效果存在联动';
+                btn.textContent = '激活效果';
+                btn.setAttribute('data-linkage-type', 'effect');
+                btn.setAttribute('data-linkage-id', linkedEffectId);
+            } else if (linkedColorId && currentColorScheme && currentColorScheme.id !== linkedColorId) {
+                bar.classList.remove('hidden');
+                text.textContent = '当前效果「' + currentArtEffect.name.split('·')[0].trim() + '」推荐搭配「' + STYLE_LINKAGE.colorNames[linkedColorId] + '」配色';
+                btn.textContent = '激活配色';
+                btn.setAttribute('data-linkage-type', 'color');
+                btn.setAttribute('data-linkage-id', linkedColorId);
+            } else {
+                bar.classList.add('hidden');
+            }
+        }
+
+        function activateLinkage() {
+            const btn = document.getElementById('linkage-btn');
+            if (!btn) return;
+            const type = btn.getAttribute('data-linkage-type');
+            const id = parseInt(btn.getAttribute('data-linkage-id'));
+            if (type === 'effect') {
+                applyLinkageEffect(id);
+            } else if (type === 'color') {
+                applyLinkageColor(id);
+            }
         }
 
         function switchPosterTemplate(template) {
@@ -2466,7 +2500,7 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-xl font-bold">${effect.name}</h3>
                         <div class="flex gap-1">
-                            ${linkedColor ? '<span class="poster-linkage-badge">🔮 联动</span>' : ''}
+                            ${linkedColor ? '<span class="poster-linkage-badge" onclick="event.stopPropagation();applyLinkageColor('+linkedColor+')">🔮 激活</span>' : ''}
                             <span class="badge px-2 py-1 text-xs">${effect.category}</span>
                         </div>
                     </div>
@@ -2630,12 +2664,7 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             renderEffectStatusBar();
             saveState();
             showToast(`已选择效果: ${currentArtEffect.name}`);
-            // Linkage: recommend linked color
-            const linkedColorId = STYLE_LINKAGE.effectToColor[id];
-            if (linkedColorId && currentColorScheme && currentColorScheme.id !== linkedColorId) {
-                const colorName = STYLE_LINKAGE.colorNames[linkedColorId];
-                showToast(`🔮 联动推荐: ${currentArtEffect.name.split('·')[0].trim()} × ${colorName}，配色面板可一键激活`);
-            }
+            renderLinkageBar();
         }
 
         function applyArtEffect(effect) {
