@@ -619,9 +619,7 @@
         }
 
         function renderColors(filter = 'all') {
-            try {
             const grid = document.getElementById('colors-grid');
-            if (!grid) { console.error('colors-grid not found'); return; }
             const allSchemes = [...colorSchemes, ...guofengColors];
             
             let filtered = allSchemes;
@@ -644,7 +642,7 @@
             }
             
             grid.innerHTML = filtered.map(scheme => {
-                const hasLinkage = STYLE_LINKAGE.colorToEffect[scheme.id];
+                const linkedEffect = STYLE_LINKAGE.colorToEffect[scheme.id];
                 return `
                 <div class="style-card card p-6 ${currentColorScheme.id === scheme.id ? 'active' : ''}" 
                      onclick="selectColorScheme(${scheme.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectColorScheme(${scheme.id});}" 
@@ -652,7 +650,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-xl font-bold">${scheme.name}</h3>
                         <div class="flex gap-1">
-                            ${hasLinkage ? `<span class="poster-linkage-badge" title="与 ${STYLE_LINKAGE.effectName[STYLE_LINKAGE.colorToEffect[scheme.id]]} 联动">🔮 联动</span>` : ''}
+                            ${linkedEffect ? '<span class="poster-linkage-badge">🔮 联动</span>' : ''}
                             <span class="badge px-2 py-1 text-xs">${scheme.category === 'guofeng' ? '国风' : '#' + scheme.id}</span>
                         </div>
                     </div>
@@ -667,10 +665,6 @@
                     </div>
                 </div>
             `;}).join('');
-            } catch (err) {
-                console.error('renderColors error:', err);
-                showToast('配色渲染错误: ' + (err && err.message ? err.message : String(err)));
-            }
         }
 
         function renderTypography(filter = '') {
@@ -1488,176 +1482,132 @@ console.log(greet('UI/UX Pro Max'));</pre>
         }
 
         function renderPosterPreview() {
-            try {
             const container = document.getElementById('preview-container');
-            if (!container) { showToast('预览容器未找到'); return; }
             const c = currentColorScheme.colors;
-            if (!c) { showToast('配色方案未加载'); return; }
-            if (!currentArtEffect) { showToast('艺术效果未加载'); return; }
             const effect = currentArtEffect;
-            const paramValues = effect._paramValues || {};
             const style = currentStyle;
-
             const cp = [c.primary, c.secondary, c.accent, c.foreground, c.background];
             const ep = (effect.colorPalettes && effect.colorPalettes[currentPaletteIndex])
                 ? effect.colorPalettes[currentPaletteIndex].palette
                 : (effect.colorPalette || cp);
-            const p1 = cp[0] || '#2563EB';
-            const p2 = cp[1] || '#64748B';
-            const p3 = cp[2] || '#EA580C';
-            const p4 = cp[3] || '#0F172A';
-            const p5 = cp[4] || '#F8FAFC';
-
-            const paramsHtml = effect.parameters.map(p => {
-                const val = paramValues[p.id] !== undefined ? paramValues[p.id] : p.default;
-                const pct = Math.round((val / p.max) * 100);
-                return `<div class="poster-param"><span class="poster-param-name">${p.name}</span><div class="poster-param-bar"><div class="poster-param-fill" style="width:${pct}%;background:${p1}"></div></div><span class="poster-param-val">${Math.round(val)}${p.unit}</span></div>`;
+            const p = { 1: cp[0]||'#2563EB', 2: cp[1]||'#64748B', 3: cp[2]||'#EA580C', 4: cp[3]||'#0F172A', 5: cp[4]||'#F8FAFC' };
+            const paramsHtml = effect.parameters.map(pr => {
+                const val = (effect._paramValues && effect._paramValues[pr.id] !== undefined) ? effect._paramValues[pr.id] : pr.default;
+                const pct = Math.round((val / pr.max) * 100);
+                return '<div class="poster-param"><span class="poster-param-name">'+pr.name+'</span><div class="poster-param-bar"><div class="poster-param-fill" style="width:'+pct+'%;background:'+p[1]+'"></div></div><span class="poster-param-val">'+Math.round(val)+pr.unit+'</span></div>';
             }).join('');
+            const paletteHtml = ep.slice(0,6).map(clr => '<div class="poster-palette-swatch" style="background:'+clr+'"><span>'+clr+'</span></div>').join('');
+            const featuresHtml = effect.visualFeatures.slice(0,4).map(f => '<li class="poster-feature">'+f+'</li>').join('');
+            const keywordsHtml = effect.keywords.split(',').slice(0,5).map(k => '<span class="poster-keyword">'+k.trim()+'</span>').join('');
+            const d = new Date();
+            const year = d.getFullYear(), month = d.getMonth()+1, day = d.getDate();
+            const rot = (Math.random()*3-1.5).toFixed(1);
+            const cnFont = (currentChineseFontPairing.headingCss||'').split(',')[0].replace(/'/g,'') || 'MiSans';
+            const enFont = currentFontPairing.heading || 'Inter';
+            const aspect = {a4:'2/3',square:'1/1',story:'9/16',wide:'16/9'}[currentPosterSize] || '2/3';
+            const tmpl = currentPosterTemplate;
 
-            const paletteHtml = ep.slice(0, 6).map((color) =>
-                `<div class="poster-palette-swatch" style="background:${color}"><span>${color}</span></div>`
-            ).join('');
-
-            const featuresHtml = effect.visualFeatures.slice(0, 4).map(f =>
-                `<li class="poster-feature">${f}</li>`
-            ).join('');
-
-            const keywordsHtml = effect.keywords.split(',').slice(0, 5).map(k =>
-                `<span class="poster-keyword">${k.trim()}</span>`
-            ).join('');
-
-            const year = new Date().getFullYear();
-            const month = new Date().getMonth() + 1;
-            const day = new Date().getDate();
-            const randRot = (Math.random() * 3 - 1.5).toFixed(1);
-            const headingFont = currentFontPairing.heading || 'Inter';
-            const cnHeadingFont = currentChineseFontPairing.headingCss ? currentChineseFontPairing.headingCss.split(',')[0].replace(/'/g, '') : 'MiSans';
-
-            const sizeMap = { a4: '2/3', square: '1/1', story: '9/16', wide: '16/9' };
-            const aspectRatio = sizeMap[currentPosterSize] || '2/3';
-
-            let inner = '';
-
-            // ===== TEMPLATE: GRID (展览海报) =====
-            if (currentPosterTemplate === 'grid') {
-                inner = `
-                    <div class="poster-bg-deco">
-                        <div class="poster-bg-block-1" style="background:${p1}"></div>
-                        <div class="poster-bg-block-2" style="background:${p2}"></div>
-                        <div class="poster-bg-stripe" style="background:${p3}"></div>
-                        <div class="poster-bg-circle" style="border-color:${p3}"></div>
+            const gridTmpl = `
+                <div class="poster-bg-deco">
+                    <div class="poster-bg-block-1" style="background:${p[1]}"></div>
+                    <div class="poster-bg-block-2" style="background:${p[2]}"></div>
+                    <div class="poster-bg-stripe" style="background:${p[3]}"></div>
+                    <div class="poster-bg-circle" style="border-color:${p[3]}"></div>
+                </div>
+                <div class="poster-top-band">
+                    <span class="poster-series" contenteditable="true">UI/UX PRO MAX · 视觉艺术系列</span>
+                    <span class="poster-edition">NO.${String(effect.id).padStart(2,'0')} / ${year}</span>
+                </div>
+                <div class="poster-hero">
+                    <div class="poster-category-pill" style="background:${p[1]};color:#fff">${effect.category}</div>
+                    <h1 class="poster-main-title" contenteditable="true" style="text-shadow:3px 3px 0 ${p[3]};font-family:${cnFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</h1>
+                    <div class="poster-en-title" contenteditable="true">${effect.nameEn}</div>
+                </div>
+                <div class="poster-divider" style="background:${p[1]}"></div>
+                <div class="poster-main-image" style="border-color:${p[1]}">
+                    <span class="poster-main-image-label" style="background:${p[1]};color:#fff">MAIN VISUAL</span>
+                    <div class="poster-main-image-inner" style="background:linear-gradient(135deg,${p[1]}22,${p[2]}22,${p[3]}22)"></div>
+                    <div class="poster-main-image-caption" contenteditable="true">${effect.visualFeatures[0]||'主视觉示意图'}</div>
+                </div>
+                <div class="poster-desc" contenteditable="true">${effect.description.slice(0,80)}${effect.description.length>80?'…':''}</div>
+                <div class="poster-img-row">
+                    <div class="poster-img-block" style="border-color:${p[2]}"><span class="poster-img-label" style="background:${p[2]};color:#fff">FIG.01</span><div class="poster-img-inner" style="background:${p[2]};opacity:0.12"></div></div>
+                    <div class="poster-img-block" style="border-color:${p[3]}"><span class="poster-img-label" style="background:${p[3]};color:#000">FIG.02</span><div class="poster-img-inner" style="background:${p[3]};opacity:0.12"></div></div>
+                    <div class="poster-img-block" style="border-color:${p[4]}"><span class="poster-img-label" style="background:${p[4]};color:#fff">FIG.03</span><div class="poster-img-inner" style="background:${p[4]};opacity:0.1"></div></div>
+                </div>
+                <div class="poster-body">
+                    <div class="poster-left-col">
+                        <div class="poster-section-title" style="color:${p[1]}">视觉特征</div>
+                        <ul class="poster-features">${featuresHtml}</ul>
+                        <div class="poster-section-title" style="color:${p[1]};margin-top:0.6rem">参数状态</div>
+                        <div class="poster-params">${paramsHtml}</div>
                     </div>
-                    <div class="poster-top-band">
-                        <span class="poster-series" contenteditable="true" data-poster-text="series">UI/UX PRO MAX · 视觉艺术系列</span>
-                        <span class="poster-edition">NO.${String(effect.id).padStart(2,'0')} / ${year}</span>
-                    </div>
-                    <div class="poster-hero">
-                        <div class="poster-category-pill" style="background:${p1};color:#fff">${effect.category}</div>
-                        <h1 class="poster-main-title" contenteditable="true" data-poster-text="title" style="text-shadow: 3px 3px 0 ${p3};font-family:${cnHeadingFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</h1>
-                        <div class="poster-en-title" contenteditable="true" data-poster-text="subtitle">${effect.nameEn}</div>
-                    </div>
-                    <div class="poster-divider" style="background:${p1}"></div>
-                    <div class="poster-main-image" style="border-color:${p1}">
-                        <span class="poster-main-image-label" style="background:${p1};color:#fff">MAIN VISUAL</span>
-                        <div class="poster-main-image-inner" style="background:linear-gradient(135deg, ${p1}22, ${p2}22, ${p3}22)"></div>
-                        <div class="poster-main-image-caption" contenteditable="true" data-poster-text="caption">${effect.visualFeatures[0] || '主视觉示意图'}</div>
-                    </div>
-                    <div class="poster-desc" contenteditable="true" data-poster-text="desc">${effect.description.slice(0, 80)}${effect.description.length > 80 ? '…' : ''}</div>
-                    <div class="poster-img-row">
-                        <div class="poster-img-block" style="border-color:${p2}"><span class="poster-img-label" style="background:${p2};color:#fff">FIG.01</span><div class="poster-img-inner" style="background:${p2};opacity:0.12"></div></div>
-                        <div class="poster-img-block" style="border-color:${p3}"><span class="poster-img-label" style="background:${p3};color:#000">FIG.02</span><div class="poster-img-inner" style="background:${p3};opacity:0.12"></div></div>
-                        <div class="poster-img-block" style="border-color:${p4}"><span class="poster-img-label" style="background:${p4};color:#fff">FIG.03</span><div class="poster-img-inner" style="background:${p4};opacity:0.1"></div></div>
-                    </div>
-                    <div class="poster-body">
-                        <div class="poster-left-col">
-                            <div class="poster-section-title" style="color:${p1}">视觉特征</div>
-                            <ul class="poster-features">${featuresHtml}</ul>
-                            <div class="poster-section-title" style="color:${p1};margin-top:0.6rem">参数状态</div>
-                            <div class="poster-params">${paramsHtml}</div>
-                        </div>
-                        <div class="poster-right-col">
-                            <div class="poster-section-title" style="color:${p1}">色彩方案</div>
-                            <div class="poster-palette">${paletteHtml}</div>
-                            <div class="poster-section-title" style="color:${p1};margin-top:0.6rem">适用场景</div>
-                            <div class="poster-bestfor" contenteditable="true" data-poster-text="bestfor">${effect.bestFor.split(',').slice(0,3).join('<br>')}</div>
-                        </div>
-                    </div>
-                    <div class="poster-deco-letter" style="color:${p1};opacity:0.05">${effect.nameEn.charAt(0)}</div>
-                    <div class="poster-bottom-band">
-                        <div class="poster-venue" contenteditable="true" data-poster-text="venue"><span>数字美术馆 · 线上展厅</span></div>
-                        <div class="poster-date-block"><div class="poster-date-day">${day}</div><div class="poster-date-month">${month}月</div></div>
-                        <div class="poster-curator"><span>策展</span><strong contenteditable="true" data-poster-text="curator">${style.name}</strong></div>
-                    </div>
-                    <div class="poster-barcode-area">
-                        <div class="poster-barcode-visual">${Array.from({length:14},(_,i)=>`<div class="poster-barcode-bar" style="background:${c.foreground};width:${2+Math.random()*5}px;height:${50+Math.random()*50}%"></div>`).join('')}</div>
-                        <div class="poster-barcode-text">${effect.id.toString().padStart(6,'0')} · ${effect.category} · ${year}</div>
-                    </div>`;
-            }
-
-            // ===== TEMPLATE: MINIMAL (极简宣言) =====
-            else if (currentPosterTemplate === 'minimal') {
-                inner = `
-                    <div class="poster-minimal-frame" style="border-color:${p1}">
-                        <div class="poster-minimal-corner tl" style="border-color:${p1}"></div>
-                        <div class="poster-minimal-corner tr" style="border-color:${p1}"></div>
-                        <div class="poster-minimal-corner bl" style="border-color:${p1}"></div>
-                        <div class="poster-minimal-corner br" style="border-color:${p1}"></div>
-                        <div class="poster-minimal-category" style="color:${p2}">${effect.category}</div>
-                        <h1 class="poster-minimal-title" contenteditable="true" data-poster-text="title" style="font-family:${headingFont},var(--font-heading),sans-serif">${effect.nameEn}</h1>
-                        <div class="poster-minimal-subtitle" contenteditable="true" data-poster-text="subtitle" style="font-family:${cnHeadingFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</div>
-                        <div class="poster-minimal-line" style="background:${p1}"></div>
-                        <div class="poster-minimal-desc" contenteditable="true" data-poster-text="desc">${effect.description}</div>
-                        <div class="poster-minimal-keywords">${keywordsHtml}</div>
-                        <div class="poster-minimal-palette">${paletteHtml}</div>
-                        <div class="poster-minimal-footer">
-                            <span class="poster-minimal-id">NO.${String(effect.id).padStart(2,'0')}</span>
-                            <span class="poster-minimal-date">${year}.${String(month).padStart(2,'0')}.${String(day).padStart(2,'0')}</span>
-                        </div>
-                    </div>`;
-            }
-
-            // ===== TEMPLATE: BRUTAL (粗野主义) =====
-            else if (currentPosterTemplate === 'brutal') {
-                inner = `
-                    <div class="poster-brutal-top" style="background:${p1};color:#fff">
-                        <span contenteditable="true" data-poster-text="series">UI/UX PRO MAX</span>
-                        <span>${effect.category.toUpperCase()}</span>
-                    </div>
-                    <div class="poster-brutal-hero">
-                        <h1 class="poster-brutal-title" contenteditable="true" data-poster-text="title" style="font-family:${cnHeadingFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</h1>
-                        <div class="poster-brutal-en" contenteditable="true" data-poster-text="subtitle">${effect.nameEn}</div>
-                    </div>
-                    <div class="poster-brutal-bar" style="background:${p4};height:6px"></div>
-                    <div class="poster-brutal-body">
-                        <div class="poster-brutal-col" style="border-right:3px solid ${p4}">
-                            <div class="poster-brutal-label" style="background:${p4};color:#fff">FEATURES</div>
-                            <ul class="poster-brutal-list">${featuresHtml}</ul>
-                        </div>
-                        <div class="poster-brutal-col">
-                            <div class="poster-brutal-label" style="background:${p1};color:#fff">PARAMS</div>
-                            <div class="poster-brutal-params">${paramsHtml}</div>
-                        </div>
-                    </div>
-                    <div class="poster-brutal-palette-row">${paletteHtml}</div>
-                    <div class="poster-brutal-footer" style="border-top:3px solid ${p4}">
-                        <div class="poster-brutal-id">ID ${effect.id.toString().padStart(3,'0')}</div>
-                        <div class="poster-brutal-date">${year} · ${month} · ${day}</div>
-                        <div class="poster-brutal-curator" contenteditable="true" data-poster-text="curator">${style.name}</div>
-                    </div>`;
-            }
-
-            container.innerHTML = `
-                <div class="poster-preview-wrapper">
-                    <button class="poster-refresh-btn" onclick="renderPosterPreview()" title="刷新海报">↻</button>
-                    <div class="poster-canvas poster-tmpl-${currentPosterTemplate}" data-poster-size="${currentPosterSize}" style="transform: rotate(${randRot}deg); aspect-ratio: ${aspectRatio}">
-                        ${inner}
+                    <div class="poster-right-col">
+                        <div class="poster-section-title" style="color:${p[1]}">色彩方案</div>
+                        <div class="poster-palette">${paletteHtml}</div>
+                        <div class="poster-section-title" style="color:${p[1]};margin-top:0.6rem">适用场景</div>
+                        <div class="poster-bestfor" contenteditable="true">${effect.bestFor.split(',').slice(0,3).join('<br>')}</div>
                     </div>
                 </div>
-            `;
-            } catch (err) {
-                console.error('renderPosterPreview error:', err);
-                showToast('海报渲染错误: ' + (err && err.message ? err.message : String(err)));
-            }
+                <div class="poster-deco-letter" style="color:${p[1]};opacity:0.05">${effect.nameEn.charAt(0)}</div>
+                <div class="poster-bottom-band">
+                    <div class="poster-venue" contenteditable="true"><span>数字美术馆 · 线上展厅</span></div>
+                    <div class="poster-date-block"><div class="poster-date-day">${day}</div><div class="poster-date-month">${month}月</div></div>
+                    <div class="poster-curator"><span>策展</span><strong contenteditable="true">${style.name}</strong></div>
+                </div>
+                <div class="poster-barcode-area">
+                    <div class="poster-barcode-visual">${Array.from({length:14},()=>'<div class="poster-barcode-bar" style="background:'+c.foreground+';width:'+(2+Math.random()*5).toFixed(1)+'px;height:'+(50+Math.random()*50).toFixed(0)+'%\'"></div>').join('')}</div>
+                    <div class="poster-barcode-text">${String(effect.id).padStart(6,'0')} · ${effect.category} · ${year}</div>
+                </div>`;
+
+            const minimalTmpl = `
+                <div class="poster-minimal-frame" style="border-color:${p[1]}">
+                    <div class="poster-minimal-corner tl" style="border-color:${p[1]}"></div>
+                    <div class="poster-minimal-corner tr" style="border-color:${p[1]}"></div>
+                    <div class="poster-minimal-corner bl" style="border-color:${p[1]}"></div>
+                    <div class="poster-minimal-corner br" style="border-color:${p[1]}"></div>
+                    <div class="poster-minimal-category" style="color:${p[2]}">${effect.category}</div>
+                    <h1 class="poster-minimal-title" contenteditable="true" style="font-family:${enFont},var(--font-heading),sans-serif">${effect.nameEn}</h1>
+                    <div class="poster-minimal-subtitle" contenteditable="true" style="font-family:${cnFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</div>
+                    <div class="poster-minimal-line" style="background:${p[1]}"></div>
+                    <div class="poster-minimal-desc" contenteditable="true">${effect.description}</div>
+                    <div class="poster-minimal-keywords">${keywordsHtml}</div>
+                    <div class="poster-minimal-palette">${paletteHtml}</div>
+                    <div class="poster-minimal-footer">
+                        <span class="poster-minimal-id">NO.${String(effect.id).padStart(2,'0')}</span>
+                        <span class="poster-minimal-date">${year}.${String(month).padStart(2,'0')}.${String(day).padStart(2,'0')}</span>
+                    </div>
+                </div>`;
+
+            const brutalTmpl = `
+                <div class="poster-brutal-top" style="background:${p[1]};color:#fff">
+                    <span contenteditable="true">UI/UX PRO MAX</span>
+                    <span>${effect.category.toUpperCase()}</span>
+                </div>
+                <div class="poster-brutal-hero">
+                    <h1 class="poster-brutal-title" contenteditable="true" style="font-family:${cnFont},var(--font-cn-heading),sans-serif">${effect.name.split('·')[0].trim()}</h1>
+                    <div class="poster-brutal-en" contenteditable="true">${effect.nameEn}</div>
+                </div>
+                <div class="poster-brutal-bar" style="background:${p[4]};height:6px"></div>
+                <div class="poster-brutal-body">
+                    <div class="poster-brutal-col" style="border-right:3px solid ${p[4]}">
+                        <div class="poster-brutal-label" style="background:${p[4]};color:#fff">FEATURES</div>
+                        <ul class="poster-brutal-list">${featuresHtml}</ul>
+                    </div>
+                    <div class="poster-brutal-col">
+                        <div class="poster-brutal-label" style="background:${p[1]};color:#fff">PARAMS</div>
+                        <div class="poster-brutal-params">${paramsHtml}</div>
+                    </div>
+                </div>
+                <div class="poster-brutal-palette-row">${paletteHtml}</div>
+                <div class="poster-brutal-footer" style="border-top:3px solid ${p[4]}">
+                    <div class="poster-brutal-id">ID ${String(effect.id).padStart(3,'0')}</div>
+                    <div class="poster-brutal-date">${year} · ${month} · ${day}</div>
+                    <div class="poster-brutal-curator" contenteditable="true">${style.name}</div>
+                </div>`;
+
+            const inner = tmpl === 'grid' ? gridTmpl : tmpl === 'minimal' ? minimalTmpl : brutalTmpl;
+            container.innerHTML = '<div class="poster-preview-wrapper"><button class="poster-refresh-btn" onclick="renderPosterPreview()" title="刷新海报">↻</button><div class="poster-canvas poster-tmpl-'+tmpl+'" data-poster-size="'+currentPosterSize+'" style="transform:rotate('+rot+'deg);aspect-ratio:'+aspect+'">'+inner+'</div></div>';
         }
 
         function renderPrompts(filter = '') {
@@ -1925,30 +1875,17 @@ console.log(greet('UI/UX Pro Max'));</pre>
         }
 
         function selectColorScheme(id) {
-            try {
             currentColorScheme = colorSchemes.find(c => c.id === id) || guofengColors.find(c => c.id === id);
-            if (!currentColorScheme) { showToast('配色未找到: ID ' + id); return; }
             applyColorScheme(currentColorScheme);
             updateActiveCards();
             if (activeTab === 'preview') renderPreview();
             updateFavoriteBtn();
             saveState();
             showToast(`已切换到配色: ${currentColorScheme.name}`);
-            // Linkage: if Sanxingdui color selected, recommend Sanxingdui effect
-            try {
-                const linkedEffectId = STYLE_LINKAGE.colorToEffect[id];
-                if (linkedEffectId && (!currentArtEffect || currentArtEffect.id !== linkedEffectId)) {
-                    const effect = artEffects.find(e => e.id === linkedEffectId);
-                    if (effect) {
-                        showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentColorScheme.name} × ${effect.name.split('·')[0].trim()} 联动推荐</span><button onclick="applyLinkageEffect(${linkedEffectId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
-                    }
-                }
-            } catch (err) {
-                console.error('Linkage color error:', err);
-            }
-            } catch (err) {
-                console.error('selectColorScheme error:', err);
-                showToast('配色切换错误: ' + (err && err.message ? err.message : String(err)));
+            // Linkage: recommend linked effect
+            const linkedEffectId = STYLE_LINKAGE.colorToEffect[id];
+            if (linkedEffectId && currentArtEffect && currentArtEffect.id !== linkedEffectId) {
+                showToast(`🔮 联动推荐: ${currentColorScheme.name} × ${STYLE_LINKAGE.effectName[linkedEffectId]}，效果面板可一键激活`);
             }
         }
 
@@ -2145,23 +2082,14 @@ console.log(greet('UI/UX Pro Max'));</pre>
         });
 
         function switchPreviewMode(mode) {
-            try {
-                currentPreviewMode = mode;
-                document.querySelectorAll('#preview-tab .filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                const btn = document.getElementById(`preview-btn-${mode}`);
-                if (btn) btn.classList.add('active');
-                const posterControls = document.getElementById('poster-controls');
-                if (posterControls) {
-                    posterControls.classList.toggle('hidden', mode !== 'poster');
-                }
-                renderPreview();
-                saveState();
-            } catch (err) {
-                console.error('switchPreviewMode error:', err);
-                showToast('预览切换错误: ' + (err && err.message ? err.message : String(err)));
-            }
+            currentPreviewMode = mode;
+            document.querySelectorAll('#preview-tab .filter-btn').forEach(btn => btn.classList.remove('active'));
+            const btn = document.getElementById('preview-btn-' + mode);
+            if (btn) btn.classList.add('active');
+            const posterControls = document.getElementById('poster-controls');
+            if (posterControls) posterControls.classList.toggle('hidden', mode !== 'poster');
+            renderPreview();
+            saveState();
         }
 
         function applyLinkageEffect(effectId) {
@@ -2532,13 +2460,13 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 filtered = filtered.filter(e => e.category === effectCategoryFilter);
             }
             grid.innerHTML = filtered.map(effect => {
-                const hasLinkage = STYLE_LINKAGE.effectToColor[effect.id];
+                const linkedColor = STYLE_LINKAGE.effectToColor[effect.id];
                 return `
                 <div class="style-card card p-6 ${currentArtEffect.id === effect.id ? 'active' : ''}" onclick="selectEffect(${effect.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectEffect(${effect.id});}" tabindex="0" role="button" aria-pressed="${currentArtEffect.id === effect.id}" id="effect-card-${effect.id}">
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-xl font-bold">${effect.name}</h3>
                         <div class="flex gap-1">
-                            ${hasLinkage ? `<span class="poster-linkage-badge" title="与 ${STYLE_LINKAGE.colorNames[STYLE_LINKAGE.effectToColor[effect.id]]} 联动">🔮 联动</span>` : ''}
+                            ${linkedColor ? '<span class="poster-linkage-badge">🔮 联动</span>' : ''}
                             <span class="badge px-2 py-1 text-xs">${effect.category}</span>
                         </div>
                     </div>
@@ -2702,17 +2630,11 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             renderEffectStatusBar();
             saveState();
             showToast(`已选择效果: ${currentArtEffect.name}`);
-            // Linkage: if Sanxingdui effect selected, recommend Sanxingdui color
-            try {
-                const linkedColorId = STYLE_LINKAGE.effectToColor[id];
-                if (linkedColorId && (!currentColorScheme || currentColorScheme.id !== linkedColorId)) {
-                    const color = colorSchemes.find(c => c.id === linkedColorId) || guofengColors.find(c => c.id === linkedColorId);
-                    if (color) {
-                        showToast(`<div style="display:flex;align-items:center;gap:8px;"><span>🔮 ${currentArtEffect.name.split('·')[0].trim()} × ${color.name} 联动推荐</span><button onclick="applyLinkageColor(${linkedColorId})" style="padding:2px 8px;border-radius:4px;border:none;background:var(--primary);color:var(--on-primary);font-size:12px;cursor:pointer;">一键激活</button></div>`, true);
-                    }
-                }
-            } catch (err) {
-                console.error('Linkage effect error:', err);
+            // Linkage: recommend linked color
+            const linkedColorId = STYLE_LINKAGE.effectToColor[id];
+            if (linkedColorId && currentColorScheme && currentColorScheme.id !== linkedColorId) {
+                const colorName = STYLE_LINKAGE.colorNames[linkedColorId];
+                showToast(`🔮 联动推荐: ${currentArtEffect.name.split('·')[0].trim()} × ${colorName}，配色面板可一键激活`);
             }
         }
 

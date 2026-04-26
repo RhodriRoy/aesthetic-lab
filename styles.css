@@ -5185,20 +5185,12 @@
         }
 
         /* ============================================
-           Poster contenteditable polish
+           Poster Template: GRID (default)
            ============================================ */
-        .poster-canvas [contenteditable="true"] {
-            outline: none;
-            border-bottom: 1px dashed transparent;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .poster-canvas [contenteditable="true"]:hover {
-            border-bottom-color: var(--primary);
-            cursor: text;
-        }
-        .poster-canvas [contenteditable="true"]:focus {
-            border-bottom-color: var(--primary);
-            background: rgba(0,0,0,0.02);
+        .poster-tmpl-grid {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1.5rem 1.25rem;
         }
 
         /* ============================================
