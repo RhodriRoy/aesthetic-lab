@@ -2098,12 +2098,14 @@ console.log(greet('UI/UX Pro Max'));</pre>
             updateEffectCurrentInfo();
             renderEffectFloatGrid();
             renderEffectFloatParams();
+            renderEffects();
             updateActiveCards();
             updateFavoriteBtn();
             if (activeTab === 'preview') renderPreview();
             renderEffectStatusBar();
+            renderLinkageBar();
             saveState();
-            showToast(`已联动激活: ${effect.name.split('·')[0].trim()}`);
+            showToast('已联动激活效果: ' + effect.name.split('·')[0].trim());
         }
 
         function applyLinkageColor(colorId) {
@@ -2111,11 +2113,13 @@ console.log(greet('UI/UX Pro Max'));</pre>
             if (!color) return;
             currentColorScheme = color;
             applyColorScheme(color);
+            renderColors();
             updateActiveCards();
             if (activeTab === 'preview') renderPreview();
             updateFavoriteBtn();
+            renderLinkageBar();
             saveState();
-            showToast(`已联动激活: ${color.name}`);
+            showToast('已联动激活配色: ' + color.name);
         }
 
         function renderLinkageBar() {
