@@ -1607,7 +1607,9 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 </div>`;
 
             const inner = tmpl === 'grid' ? gridTmpl : tmpl === 'minimal' ? minimalTmpl : brutalTmpl;
+            const overlay = document.getElementById('art-effect-overlay');
             container.innerHTML = '<div class="poster-preview-wrapper"><button class="poster-refresh-btn" onclick="renderPosterPreview()" title="刷新海报">↻</button><div class="poster-canvas poster-tmpl-'+tmpl+'" data-poster-size="'+currentPosterSize+'" style="transform:rotate('+rot+'deg);aspect-ratio:'+aspect+'">'+inner+'</div></div>';
+            if (overlay) container.appendChild(overlay);
         }
 
         function renderPrompts(filter = '') {
