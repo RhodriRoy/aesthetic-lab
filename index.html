@@ -9,8 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <!-- Chinese Open Source Fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/misans-webfont/misans-style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/misans@1.0.0/dist/MiSans/result.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/dyh/dist/SmileySans-Oblique/result.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/yozai/dist/Yozai-Regular/result.css">
@@ -19,13 +20,163 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="min-h-screen">
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content">
+            <div class="welcome-brand">
+                <div class="welcome-top-line"></div>
+                <div class="welcome-mark">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="4" width="24" height="24" rx="6" stroke="#000000" stroke-width="1.5"/>
+                        <line x1="4" y1="12" x2="28" y2="12" stroke="#000000" stroke-width="1.5"/>
+                        <rect x="9" y="17" width="6" height="6" rx="1.5" fill="#000000" opacity="0.85"/>
+                        <rect x="17" y="17" width="6" height="6" rx="1.5" fill="#000000" opacity="0.35"/>
+                    </svg>
+                </div>
+                <h1 class="welcome-title">UI/UX Pro Max</h1>
+                <p class="welcome-subtitle">完整风格参考系统 · 设计师的灵感工作台</p>
+            </div>
+
+            <div class="welcome-cards-deck">
+                <!-- Card 1: Styles — Brick Orange -->
+                <div class="welcome-card" style="--end-rotate:-17deg; --start-rotate:-32deg; --delay:0.5s; --tx:-225px; --ty:32px; --w:138px; --h:180px;">
+                    <div class="welcome-card-pattern">
+                        <svg viewBox="0 0 140 100" preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                                </linearGradient>
+                                <mask id="mask1">
+                                    <rect x="0" y="0" width="140" height="100" fill="url(#grad1)"/>
+                                </mask>
+                            </defs>
+                            <g mask="url(#mask1)">
+                                <line x1="12" y1="5" x2="12" y2="85" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                                <line x1="22" y1="5" x2="22" y2="70" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                <line x1="32" y1="5" x2="32" y2="90" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                                <line x1="42" y1="5" x2="42" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="52" y1="5" x2="52" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                                <line x1="62" y1="5" x2="62" y2="95" stroke="rgba(255,255,255,0.55)" stroke-width="2.5"/>
+                                <line x1="72" y1="5" x2="72" y2="65" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                                <line x1="82" y1="5" x2="82" y2="88" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                                <line x1="92" y1="5" x2="92" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="102" y1="5" x2="102" y2="92" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                                <line x1="112" y1="5" x2="112" y2="55" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                <line x1="122" y1="5" x2="122" y2="82" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="welcome-card-label">Styles</div>
+                </div>
+
+                <!-- Card 2: Colors — Cream -->
+                <div class="welcome-card" style="--end-rotate:6deg; --start-rotate:-18deg; --delay:0.65s; --tx:-70px; --ty:-48px; --w:148px; --h:194px;">
+                    <div class="welcome-card-pattern">
+                        <svg viewBox="0 0 140 100" preserveAspectRatio="xMidYMid slice">
+                            <rect x="10" y="10" width="10" height="10" rx="1" fill="rgba(0,0,0,0.12)"/>
+                            <rect x="28" y="8" width="10" height="10" rx="1" fill="rgba(0,0,0,0.18)"/>
+                            <rect x="48" y="14" width="10" height="10" rx="1" fill="rgba(0,0,0,0.08)"/>
+                            <rect x="66" y="6" width="10" height="10" rx="1" fill="rgba(0,0,0,0.22)"/>
+                            <rect x="86" y="12" width="10" height="10" rx="1" fill="rgba(0,0,0,0.14)"/>
+                            <rect x="106" y="8" width="10" height="10" rx="1" fill="rgba(0,0,0,0.2)"/>
+                            <rect x="16" y="30" width="10" height="10" rx="1" fill="rgba(0,0,0,0.1)"/>
+                            <rect x="36" y="28" width="10" height="10" rx="1" fill="rgba(0,0,0,0.16)"/>
+                            <rect x="56" y="32" width="10" height="10" rx="1" fill="rgba(0,0,0,0.2)"/>
+                            <rect x="76" y="26" width="10" height="10" rx="1" fill="rgba(0,0,0,0.12)"/>
+                            <rect x="96" y="30" width="10" height="10" rx="1" fill="rgba(0,0,0,0.18)"/>
+                            <rect x="116" y="28" width="10" height="10" rx="1" fill="rgba(0,0,0,0.08)"/>
+                            <rect x="8" y="50" width="10" height="10" rx="1" fill="rgba(0,0,0,0.14)"/>
+                            <rect x="28" y="48" width="10" height="10" rx="1" fill="rgba(0,0,0,0.1)"/>
+                            <rect x="48" y="52" width="10" height="10" rx="1" fill="rgba(0,0,0,0.2)"/>
+                            <rect x="68" y="46" width="10" height="10" rx="1" fill="rgba(0,0,0,0.16)"/>
+                            <rect x="88" y="50" width="10" height="10" rx="1" fill="rgba(0,0,0,0.12)"/>
+                            <rect x="108" y="48" width="10" height="10" rx="1" fill="rgba(0,0,0,0.18)"/>
+                            <rect x="18" y="70" width="10" height="10" rx="1" fill="rgba(0,0,0,0.08)"/>
+                            <rect x="38" y="68" width="10" height="10" rx="1" fill="rgba(0,0,0,0.14)"/>
+                            <rect x="58" y="72" width="10" height="10" rx="1" fill="rgba(0,0,0,0.1)"/>
+                            <rect x="78" y="66" width="10" height="10" rx="1" fill="rgba(0,0,0,0.2)"/>
+                            <rect x="98" y="70" width="10" height="10" rx="1" fill="rgba(0,0,0,0.12)"/>
+                            <rect x="118" y="68" width="10" height="10" rx="1" fill="rgba(0,0,0,0.16)"/>
+                        </svg>
+                    </div>
+                    <div class="welcome-card-label">Colors</div>
+                </div>
+
+                <!-- Card 3: Effects — Blue -->
+                <div class="welcome-card" style="--end-rotate:-5deg; --start-rotate:10deg; --delay:0.8s; --tx:35px; --ty:42px; --w:130px; --h:172px;">
+                    <div class="welcome-card-pattern">
+                        <svg viewBox="0 0 140 100" preserveAspectRatio="xMidYMid slice">
+                            <line x1="5" y1="18" x2="135" y2="18" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                            <path d="M5 32 Q35 22 70 32 T135 32" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                            <line x1="5" y1="46" x2="135" y2="46" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                            <path d="M5 60 Q35 50 70 60 T135 60" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                            <line x1="5" y1="74" x2="135" y2="74" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <path d="M5 88 Q35 78 70 88 T135 88" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                        </svg>
+                    </div>
+                    <div class="welcome-card-label">Effects</div>
+                </div>
+
+                <!-- Card 4: Export — Mint -->
+                <div class="welcome-card" style="--end-rotate:14deg; --start-rotate:24deg; --delay:0.95s; --tx:125px; --ty:-35px; --w:144px; --h:188px;">
+                    <div class="welcome-card-pattern">
+                        <svg viewBox="0 0 140 100" preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <pattern id="grid4" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M20 0 L0 0 L0 20" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="0.8"/>
+                                </pattern>
+                            </defs>
+                            <rect x="5" y="5" width="130" height="90" fill="url(#grid4)"/>
+                            <circle cx="25" cy="25" r="2.5" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="65" cy="25" r="2.5" fill="rgba(0,0,0,0.15)"/>
+                            <circle cx="105" cy="25" r="2.5" fill="rgba(0,0,0,0.2)"/>
+                            <circle cx="45" cy="45" r="2.5" fill="rgba(0,0,0,0.18)"/>
+                            <circle cx="85" cy="45" r="2.5" fill="rgba(0,0,0,0.22)"/>
+                            <circle cx="25" cy="65" r="2.5" fill="rgba(0,0,0,0.12)"/>
+                            <circle cx="65" cy="65" r="2.5" fill="rgba(0,0,0,0.28)"/>
+                            <circle cx="105" cy="65" r="2.5" fill="rgba(0,0,0,0.16)"/>
+                            <circle cx="45" cy="85" r="2.5" fill="rgba(0,0,0,0.2)"/>
+                            <circle cx="85" cy="85" r="2.5" fill="rgba(0,0,0,0.14)"/>
+                        </svg>
+                    </div>
+                    <div class="welcome-card-label">Export</div>
+                </div>
+
+                <!-- Card 5: Prompts — Charcoal -->
+                <div class="welcome-card" style="--end-rotate:-12deg; --start-rotate:-26deg; --delay:1.1s; --tx:240px; --ty:28px; --w:134px; --h:178px;">
+                    <div class="welcome-card-pattern">
+                        <svg viewBox="0 0 140 100" preserveAspectRatio="xMidYMid slice">
+                            <rect x="12" y="15" width="32" height="55" rx="4" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+                            <rect x="54" y="10" width="32" height="65" rx="4" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                            <rect x="96" y="20" width="32" height="50" rx="4" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <line x1="60" y1="22" x2="80" y2="22" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <line x1="60" y1="30" x2="76" y2="30" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="38" x2="82" y2="38" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                            <rect x="60" y="48" width="18" height="12" rx="1" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+                            <line x1="18" y1="28" x2="38" y2="28" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+                            <line x1="18" y1="36" x2="34" y2="36" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+                            <line x1="102" y1="32" x2="122" y2="32" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+                        </svg>
+                    </div>
+                    <div class="welcome-card-label">Prompts</div>
+                </div>
+            </div>
+
+            <div class="welcome-cta">
+                <button id="welcome-cta-btn" class="welcome-cta-btn">进入工作台</button>
+                <p class="welcome-cta-hint">按 Enter 或点击任意处继续</p>
+            </div>
+        </div>
+    </div>
+
     <div id="art-effect-scope">
     <!-- Header -->
     <header class="sticky top-0 z-50 border-b" style="background-color: var(--card); border-color: var(--border);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <h1 class="text-2xl font-bold" style="font-family: var(--font-heading);">UI/UX Pro Max</h1>
+                    <h1 class="text-2xl font-bold" style="font-family: 'Playfair Display', Georgia, serif;">UI/UX Pro Max</h1>
                     <span class="badge px-3 py-1 text-sm">完整风格参考系统</span>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -59,18 +210,31 @@
             <button class="tab-btn" onclick="switchTab('prompts', event)" role="tab" aria-selected="false" aria-controls="prompts-tab" id="tab-prompts">提示词</button>
             <button class="tab-btn" onclick="switchTab('favorites', event)" role="tab" aria-selected="false" aria-controls="favorites-tab" id="tab-favorites">我的收藏</button>
             <button class="tab-btn" onclick="switchTab('effects', event)" role="tab" aria-selected="false" aria-controls="effects-tab" id="tab-effects">艺术效果</button>
+            <button class="tab-btn" onclick="switchTab('collections', event)" role="tab" aria-selected="false" aria-controls="collections-tab" id="tab-collections">主题合集</button>
 
         </div>
 
         <!-- Styles Tab -->
         <div id="styles-tab" class="tab-content" role="tabpanel" aria-labelledby="tab-styles">
             <div class="mb-6">
-                <h2 class="text-3xl font-bold mb-2">20种 UI 风格</h2>
-                <p class="text-lg mb-4" style="color: var(--muted-foreground);">选择一种风格来查看详细定义和应用场景</p>
+                <div class="welcome-top-line" style="margin: 0 0 1rem 0;"></div>
+                <h2 class="text-3xl font-bold mb-2" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 400; letter-spacing: -0.02em;">20种 UI 风格</h2>
+                <p class="text-lg mb-4" style="color: rgba(0,0,0,0.4);">选择一种风格来查看详细定义和应用场景</p>
                 <div class="flex gap-2 mb-4">
-                    <input type="text" id="style-search" class="search-input" placeholder="搜索风格..." oninput="debouncedFilterStyles()">
+                    <input type="text" id="style-search" class="search-input flex-1" placeholder="搜索风格、关键词或适用场景..." oninput="debouncedFilterStyles()">
                     <button id="style-filter-fav" class="filter-btn" onclick="toggleFilterFav('styles')">⭐ 已收藏</button>
                 </div>
+                <!-- 分类筛选 -->
+                <div class="flex gap-2 mb-3 flex-wrap" id="style-category-filters">
+                    <button class="filter-btn active" onclick="filterStyleCategory('all', event)">全部</button>
+                    <button class="filter-btn" onclick="filterStyleCategory('modern', event)">现代系统</button>
+                    <button class="filter-btn" onclick="filterStyleCategory('brutalist', event)">粗野主义</button>
+                    <button class="filter-btn" onclick="filterStyleCategory('minimal', event)">极简</button>
+                    <button class="filter-btn" onclick="filterStyleCategory('retro', event)">复古</button>
+                    <button class="filter-btn" onclick="filterStyleCategory('artistic', event)">艺术</button>
+                </div>
+                <!-- 热门标签云 -->
+                <div class="flex gap-2 mb-4 flex-wrap" id="style-tag-cloud"></div>
             </div>
             <div id="styles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Styles will be populated here -->
@@ -184,6 +348,8 @@
                             <option value="standard" selected>标准版</option>
                             <option value="detailed">详细版</option>
                             <option value="midjourney">Midjourney</option>
+                            <option value="dalle">DALL-E</option>
+                            <option value="stable-diffusion">Stable Diffusion</option>
                             <option value="chatgpt">ChatGPT</option>
                         </select>
                         <button onclick="copyCurrentPrompt()" class="btn-primary px-4 py-2 text-sm">复制</button>
@@ -200,7 +366,54 @@
                     <a href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">ChatGPT</a>
                     <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">Claude</a>
                     <a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">Midjourney</a>
+                    <a href="https://labs.openai.com" target="_blank" rel="noopener noreferrer" class="btn-outline px-3 py-1.5 text-xs">DALL-E</a>
+                    <button onclick="showPromptHistory()" class="btn-ghost px-3 py-1.5 text-xs">📜 历史记录</button>
+                    <button onclick="clearPromptHistory()" class="btn-ghost px-3 py-1.5 text-xs">🗑️ 清除历史</button>
                     <button onclick="downloadPromptTxt()" class="btn-ghost px-3 py-1.5 text-xs">导出 .txt</button>
+                </div>
+            </div>
+
+            <!-- Design Token Export Section -->
+            <div id="design-token-export" class="card p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold">设计令牌导出</h2>
+                        <p class="text-sm mt-1" style="color: var(--muted-foreground);">一键导出为各种开发框架和 Figma 可用的格式</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <button onclick="exportToken('tailwind')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">🌊</span>
+                        <span>Tailwind</span>
+                    </button>
+                    <button onclick="exportToken('css')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">🎨</span>
+                        <span>CSS 变量</span>
+                    </button>
+                    <button onclick="exportToken('figma-tokens')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">📐</span>
+                        <span>Figma Tokens</span>
+                    </button>
+                    <button onclick="exportToken('figma-dtcg')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">🔷</span>
+                        <span>Figma DTCG</span>
+                    </button>
+                    <button onclick="exportToken('figma-script')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">⚡</span>
+                        <span>Figma 脚本</span>
+                    </button>
+                    <button onclick="exportToken('swiftui')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">🍎</span>
+                        <span>SwiftUI</span>
+                    </button>
+                    <button onclick="exportToken('compose')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">🤖</span>
+                        <span>Compose</span>
+                    </button>
+                    <button onclick="exportToken('json')" class="btn-outline px-4 py-3 text-sm flex flex-col items-center gap-1">
+                        <span class="text-lg">📦</span>
+                        <span>完整 JSON</span>
+                    </button>
                 </div>
             </div>
 
@@ -226,8 +439,10 @@
                 <!-- Favorites will be populated here -->
             </div>
             <div id="favorites-empty" class="hidden text-center py-16">
-                <p class="text-xl" style="color: var(--muted-foreground);">还没有收藏任何组合</p>
-                <p class="text-sm mt-2" style="color: var(--muted-foreground);">切换到「实时预览」Tab，调好喜欢的风格+配色+字体后，点右上角的 ☆ 收藏</p>
+                <div class="empty-state-illustration">⭐</div>
+                <p class="text-xl font-bold mb-2" style="color: var(--foreground);">还没有收藏任何组合</p>
+                <p class="text-sm mb-6 max-w-md mx-auto" style="color: var(--muted-foreground);">切换到「实时预览」Tab，调好喜欢的风格+配色+字体后，点右上角的 ☆ 收藏按钮即可保存。</p>
+                <button onclick="switchTab('preview', {target: document.getElementById('tab-preview')})" class="btn-primary px-5 py-2 text-sm font-medium">去实时预览试试</button>
             </div>
         </div>
 
@@ -246,6 +461,17 @@
             </div>
             <div id="effects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Effects will be populated here -->
+            </div>
+        </div>
+
+        <!-- Collections Tab -->
+        <div id="collections-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-collections">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold mb-2">主题合集</h2>
+                <p class="text-lg mb-4" style="color: var(--muted-foreground);">按场景、情绪与工作流精心策划的风格组合，一键应用整套配置</p>
+            </div>
+            <div id="collections-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Collections will be populated here -->
             </div>
         </div>
     </main>
@@ -333,6 +559,10 @@
                 <span style="font-family: var(--font-mono);">Fv</span>
                 <span>我的收藏</span>
             </button>
+            <button onclick="switchTab('collections', event); toggleMobileMoreMenu()" class="flex items-center gap-2 w-full p-2 text-sm rounded" style="color: var(--foreground);" data-mobile-tab="collections">
+                <span style="font-family: var(--font-mono);">Co</span>
+                <span>主题合集</span>
+            </button>
         </div>
     </div>
 
@@ -348,6 +578,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="ui-ux-pro-max-data.js"></script>
     <script src="art-effects-data.js"></script>
+    <script src="collections-data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

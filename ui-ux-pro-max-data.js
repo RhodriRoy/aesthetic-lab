@@ -13,6 +13,23 @@ const uiStyles = [
       chineseBody: "MiSans",
       fallback: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
       note: "得意黑的几何斜切感呼应粗野主义的大胆边框，MiSans保证中文正文清晰可读"
+    },
+    walkthrough: {
+      origin: "Neubrutalism（新粗野主义）源自 1990 年代早期网页设计的反美学运动。当时网页技术简陋，设计师用粗黑表格边框、默认系统字体和纯色块构建页面。2020 年代初，设计师 Ksenia Semirova、Pascal Deville 等人重新发掘这种「未经修饰」的美学，将其从「技术限制」提升为「设计宣言」。",
+      features: [
+        { label: "粗黑边框", desc: "3–4px solid black，无圆角或仅 2px，形成强烈的「贴纸感」轮廓" },
+        { label: "高对比原色", desc: "红 #E11D48、蓝 #2563EB、黄 #F59E0B 直接平涂，无渐变、无透明度" },
+        { label: "大偏移阴影", desc: "4–6px 的纯色投影（多为黑色），制造「浮起」的错觉而非柔和深度" },
+        { label: "全大写粗体字", desc: "tight tracking（紧凑字距）的大写标题，传递 loud & unapologetic 的态度" },
+        { label: "可见边界框", desc: "卡片、按钮、输入框都有明确的「盒子」感，拒绝无缝融合" }
+      ],
+      useCases: [
+        { name: "独立杂志与 Zine", example: "《Brutalist Websites》收录了大量不加修饰的个人网站，用粗边框和系统字体传递朋克态度" },
+        { name: "反主流品牌", example: "街头潮牌和独立音乐人常用此风格表达反叛精神，与主流 SaaS 的精致感形成鲜明对比" },
+        { name: "创意作品集", example: "设计师和开发者的个人主页，用粗野主义展示「我不需要讨好你」的自信" }
+      ],
+      relatedStyles: [15],
+      relatedEffects: [1, 14]
     }
   },
   {
@@ -29,6 +46,23 @@ const uiStyles = [
       chineseBody: "MiSans Light",
       fallback: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
       note: "MiSans的简洁现代感与玻璃拟态的通透轻盈完美契合"
+    },
+    walkthrough: {
+      origin: "Glassmorphism（玻璃拟态）在 2020 年代初随 Apple macOS Big Sur 和 Microsoft Fluent Design 的推进而流行。其根源可追溯至 2000 年代初的 macOS Aqua 界面（半透明标题栏）和 2013 年的 iOS 7 毛玻璃效果。设计师们提取了「物理玻璃」的核心特质——透光、折射、边缘高光——将其抽象为数字界面语言。",
+      features: [
+        { label: "半透明背景", desc: "rgba 白色 10–20% 不透明度，让底层内容隐约透出，创造层级深度" },
+        { label: "背景模糊", desc: "backdrop-filter: blur(12–20px)，模拟磨砂玻璃的失真折射效果" },
+        { label: "1px 细边框", desc: "带有微弱不透明度（rgba 白 30–50%），勾勒玻璃边缘的厚度感" },
+        { label: "柔和阴影", desc: "0 8px 32px rgba(0,0,0,0.1)，让玻璃层「浮」在背景之上" },
+        { label: "层级深度", desc: "多层半透明卡片叠加，通过模糊强度和透明度差异建立 z-depth" }
+      ],
+      useCases: [
+        { name: "仪表盘与后台", example: "数据密集型后台用玻璃面板覆盖在实时图表之上，既保持上下文又不遮挡数据" },
+        { name: "音乐播放器", example: "Apple Music 和 Spotify 的「现在播放」界面用专辑封面作为动态背景，玻璃控制栏浮于其上" },
+        { name: "高端 SaaS", example: "金融科技和 AI 产品常用玻璃拟态传递「轻盈、智能、未来感」的品牌印象" }
+      ],
+      relatedStyles: [12, 13],
+      relatedEffects: [11, 15]
     }
   },
   {
@@ -45,6 +79,23 @@ const uiStyles = [
       chineseBody: "MiSans",
       fallback: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
       note: "文楷的温润人文感呼应拟物光影，MiSans提供清晰正文阅读体验"
+    },
+    walkthrough: {
+      origin: "Neomorphism（新拟态/Soft UI）于 2019 年由乌克兰设计师 Alexander Plyuto 在 Dribbble 上发布的一组概念作品引爆设计社区。它是对 2010 年代早期 Skeuomorphism（拟物主义）的极简回应——保留了「物理光影」但去掉了皮革、金属等具象纹理。灵感来源包括 1980–90 年代的索尼/博朗电子产品外壳、陶瓷器皿的柔和光影。",
+      features: [
+        { label: "双阴影系统", desc: "左上高光（#FFFFFF）+ 右下暗部（#A3B1C6），模拟单一光源照射的挤出感" },
+        { label: "单色调浅灰", desc: "以 #E0E5EC 为基底，所有元素在相近明度中靠阴影区分" },
+        { label: "凹陷状态", desc: "按钮按下时阴影反转为 inset，制造「按入」的触觉反馈" },
+        { label: "柔和圆角", desc: "8–16px 的 border-radius，与粗野主义的直角形成鲜明对比" },
+        { label: "低对比度", desc: "前景与背景色差极小，依赖阴影而非颜色建立层次" }
+      ],
+      useCases: [
+        { name: "智能家居控制", example: "灯光、温度调节面板用 neomorphism 模拟实体旋钮和开关的触感" },
+        { name: "音乐播放器", example: "播放/暂停按钮的 soft press 反馈让数字交互有了「物理按键」的满足感" },
+        { name: "极简工具", example: "计算器、计时器等单功能应用，用 neomorphism 的克制美学避免视觉噪音" }
+      ],
+      relatedStyles: [16, 17],
+      relatedEffects: [15]
     }
   },
   {
@@ -61,6 +112,23 @@ const uiStyles = [
       chineseBody: "MiSans",
       fallback: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
       note: "得意黑的科技感粗体与Orbitron的赛博未来感共振，MiSans深色可读"
+    },
+    walkthrough: {
+      origin: "Dark Mode（深色模式）的界面历史远比智能手机更久。1970–80 年代的 CRT 终端（如 DEC VT100）只能显示绿色或琥珀色磷光在黑色背景上。现代意义上的 Dark Mode 复兴始于 2016 年的设计社区探索，2019 年 Android 10 和 iOS 13 将其纳入系统级支持。OLED 屏幕的普及让「纯黑省电」成为技术驱动力。",
+      features: [
+        { label: "OLED 纯黑", desc: "#0A0A0F 或 #050508 的极深背景，让像素完全关闭，节省电量并消除视觉疲劳" },
+        { label: "霓虹强调色", desc: "青 #00FFFF、洋红 #FF00FF、电蓝 #3B82F6，在黑暗背景上产生发光幻觉" },
+        { label: "微妙 glow", desc: "text-shadow 和 box-shadow 模拟霓虹灯管的辉光溢出，增强未来感" },
+        { label: "数据可视化优化", desc: "深色背景让图表线条和高亮数据点更加醒目，适合监控仪表盘" },
+        { label: "避免纯白文字", desc: "使用柔和灰 #E2E8F0 替代纯白，减少极端对比带来的阅读疲劳" }
+      ],
+      useCases: [
+        { name: "代码编辑器", example: "VS Code、Sublime Text 的深色主题让开发者长时间编码时眼睛更舒适" },
+        { name: "加密货币与金融科技", example: "Coinbase、Binance 等交易所用深色模式传递「高端、技术、全天候交易」的品牌认知" },
+        { name: "游戏与娱乐", example: "Steam、Epic Games Launcher 等游戏平台用深色界面让玩家沉浸式浏览" }
+      ],
+      relatedStyles: [9, 11],
+      relatedEffects: [7, 11, 12]
     }
   },
   {
@@ -77,6 +145,23 @@ const uiStyles = [
       chineseBody: "MiSans",
       fallback: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif",
       note: "悠哉的圆润活泼与渐变网格的有机流动形成呼应"
+    },
+    walkthrough: {
+      origin: "Gradient Mesh（渐变网格）的数字形态源自 Adobe Illustrator 的 Gradient Mesh 工具（1990 年代末），但作为一种 UI 风格，它更多受到 1960–70 年代 Psychedelic Art（迷幻艺术）和 1980 年代 Memphis Design 色彩实验的影响。2020 年后，随着 CSS conic-gradient 和 backdrop-filter 的普及，流体渐变从平面设计进入界面设计领域。",
+      features: [
+        { label: "流体渐变", desc: "3–5 个颜色停靠点之间平滑过渡，拒绝生硬的线性分割" },
+        { label: "有机 Blob 形状", desc: "无规则边界的柔和色块，模仿液体、细胞或星云的自然形态" },
+        { label: "混合模式", desc: "multiply、screen、overlay 等 blend-mode 让重叠色块产生新的色彩" },
+        { label: "极光/日落色板", desc: "紫、粉、蓝、橙的梦幻组合，唤起黄昏天空和北极光的情绪" },
+        { label: "动态呼吸", desc: "渐变位置缓慢漂移，让界面产生「活着」的有机感" }
+      ],
+      useCases: [
+        { name: "创意工具", example: "Figma、Canva 等设计工具的欢迎页用渐变网格传递「无限创意可能」" },
+        { name: "青年品牌", example: "TikTok、Snapchat 等面向 Z 世代的产品用高饱和渐变表达活力与 playful" },
+        { name: "艺术展览", example: "数字美术馆和虚拟展厅用渐变网格作为沉浸式背景，打破矩形屏幕的边界感" }
+      ],
+      relatedStyles: [5, 16],
+      relatedEffects: [2, 13]
     }
   },
   {
@@ -578,22 +663,22 @@ const guofengColors = [
     category: "guofeng",
     description: "三星堆青铜与黄金的现代活力演绎",
     colors: {
-      primary: "#2E8B57",
+      primary: "#35A668",
       onPrimary: "#FFFFFF",
-      secondary: "#FFC107",
+      secondary: "#FFD54F",
       onSecondary: "#1A1A1A",
       accent: "#FF8C42",
       onAccent: "#FFFFFF",
-      background: "#F5F5F0",
-      foreground: "#2D2D2D",
-      card: "#FAFAF5",
-      cardForeground: "#2D2D2D",
-      muted: "#E8ECE9",
-      mutedForeground: "#6B7B6E",
-      border: "#D4D9D6",
+      background: "#FAFAF5",
+      foreground: "#1E2A22",
+      card: "#FFFFFF",
+      cardForeground: "#1E2A22",
+      muted: "#E8F0EB",
+      mutedForeground: "#4A6B5A",
+      border: "#B8C8C0",
       destructive: "#E63946",
       onDestructive: "#FFFFFF",
-      ring: "#2E8B57"
+      ring: "#35A668"
     },
     notes: "青铜绿的现代新生，黄金面具的耀眼变奏。古蜀文明遇上当代活力。"
   },

@@ -88,7 +88,7 @@
         // 主题管理器
         // ============================================
         const ThemeManager = {
-            mode: 'auto', // 'light' | 'dark' | 'auto'
+            mode: 'light', // 'light' | 'dark' | 'auto'
             init() {
                 const saved = localStorage.getItem('uiuxProMaxTheme');
                 if (saved && ['light','dark','auto'].includes(saved)) this.mode = saved;
@@ -210,6 +210,194 @@
                     }
                 }, null, 2);
             },
+            figmaTokensDTCG() {
+                const c = currentColorScheme.colors;
+                return JSON.stringify({
+                    "$meta": {
+                        "tokenSetOrder": ["global"],
+                        "themes": [],
+                        "exportVersion": 2
+                    },
+                    "global": {
+                        "color": {
+                            "primary": {
+                                "$type": "color",
+                                "$value": c.primary,
+                                "$description": "主要品牌色"
+                            },
+                            "onPrimary": {
+                                "$type": "color",
+                                "$value": c.onPrimary,
+                                "$description": "主要色上的文字颜色"
+                            },
+                            "secondary": {
+                                "$type": "color",
+                                "$value": c.secondary,
+                                "$description": "次要品牌色"
+                            },
+                            "accent": {
+                                "$type": "color",
+                                "$value": c.accent,
+                                "$description": "强调色"
+                            },
+                            "background": {
+                                "$type": "color",
+                                "$value": c.background,
+                                "$description": "页面背景色"
+                            },
+                            "foreground": {
+                                "$type": "color",
+                                "$value": c.foreground,
+                                "$description": "主要文字颜色"
+                            },
+                            "card": {
+                                "$type": "color",
+                                "$value": c.card,
+                                "$description": "卡片背景色"
+                            },
+                            "cardForeground": {
+                                "$type": "color",
+                                "$value": c.cardForeground,
+                                "$description": "卡片上的文字颜色"
+                            },
+                            "muted": {
+                                "$type": "color",
+                                "$value": c.muted,
+                                "$description": "弱化背景色"
+                            },
+                            "mutedForeground": {
+                                "$type": "color",
+                                "$value": c.mutedForeground,
+                                "$description": "弱化文字颜色"
+                            },
+                            "border": {
+                                "$type": "color",
+                                "$value": c.border,
+                                "$description": "边框颜色"
+                            },
+                            "destructive": {
+                                "$type": "color",
+                                "$value": c.destructive,
+                                "$description": "危险/错误状态色"
+                            },
+                            "ring": {
+                                "$type": "color",
+                                "$value": c.ring,
+                                "$description": "焦点环颜色"
+                            }
+                        },
+                        "font": {
+                            "heading": {
+                                "$type": "fontFamily",
+                                "$value": currentFontPairing.heading,
+                                "$description": "标题字体"
+                            },
+                            "body": {
+                                "$type": "fontFamily",
+                                "$value": currentFontPairing.body,
+                                "$description": "正文字体"
+                            },
+                            "cnHeading": {
+                                "$type": "fontFamily",
+                                "$value": currentChineseFontPairing.heading,
+                                "$description": "中文标题字体"
+                            },
+                            "cnBody": {
+                                "$type": "fontFamily",
+                                "$value": currentChineseFontPairing.body,
+                                "$description": "中文字体"
+                            }
+                        }
+                    }
+                }, null, 2);
+            },
+            figmaPluginScript() {
+                const c = currentColorScheme.colors;
+                const tokens = {
+                    colors: {
+                        primary: c.primary,
+                        onPrimary: c.onPrimary,
+                        secondary: c.secondary,
+                        onSecondary: c.onSecondary,
+                        accent: c.accent,
+                        onAccent: c.onAccent,
+                        background: c.background,
+                        foreground: c.foreground,
+                        card: c.card,
+                        cardForeground: c.cardForeground,
+                        muted: c.muted,
+                        mutedForeground: c.mutedForeground,
+                        border: c.border,
+                        destructive: c.destructive,
+                        ring: c.ring
+                    },
+                    fonts: {
+                        heading: currentFontPairing.heading,
+                        body: currentFontPairing.body,
+                        cnHeading: currentChineseFontPairing.heading,
+                        cnBody: currentChineseFontPairing.body
+                    },
+                    style: currentStyle.name,
+                    colorScheme: currentColorScheme.name
+                };
+                return `// UI/UX Pro Max - Figma Plugin Import Script
+// 使用方法: 在 Figma 中打开 Plugins > Development > Run Script, 粘贴此代码
+
+const tokens = ${JSON.stringify(tokens, null, 2)};
+
+// 创建颜色样式
+function createColorStyle(name, color) {
+  const style = figma.getLocalPaintStyles().find(s => s.name === name);
+  if (style) return style;
+  
+  const newStyle = figma.createPaintStyle();
+  newStyle.name = name;
+  newStyle.paints = [{ type: 'SOLID', color: hexToRgb(color) }];
+  return newStyle;
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  return { r, g, b };
+}
+
+// 创建文本样式
+function createTextStyle(name, fontFamily) {
+  const style = figma.getLocalTextStyles().find(s => s.name === name);
+  if (style) return style;
+  
+  const newStyle = figma.createTextStyle();
+  newStyle.name = name;
+  newStyle.fontName = { family: fontFamily, style: 'Regular' };
+  return newStyle;
+}
+
+// 执行导入
+(async () => {
+  const styles = [];
+  
+  // 导入颜色
+  for (const [key, value] of Object.entries(tokens.colors)) {
+    const style = createColorStyle(\`UI/UX Pro Max/\${key}\`, value);
+    styles.push(style);
+  }
+  
+  // 导入字体
+  for (const [key, value] of Object.entries(tokens.fonts)) {
+    try {
+      await figma.loadFontAsync({ family: value, style: 'Regular' });
+      const style = createTextStyle(\`UI/UX Pro Max/\${key}\`, value);
+      styles.push(style);
+    } catch (e) {
+      console.warn(\`字体 \${value} 加载失败\`);
+    }
+  }
+  
+  figma.notify(\`✅ 已导入 \${styles.length} 个样式来自 \${tokens.style} + \${tokens.colorScheme}\`);
+})();`;
+            },
             swiftUI() {
                 const c = currentColorScheme.colors;
                 return `import SwiftUI\n\nstruct AppColors {\n    static let primary = Color(hex: "${c.primary}")\n    static let secondary = Color(hex: "${c.secondary}")\n    static let accent = Color(hex: "${c.accent}")\n    static let background = Color(hex: "${c.background}")\n    static let foreground = Color(hex: "${c.foreground}")\n    static let card = Color(hex: "${c.card}")\n    static let muted = Color(hex: "${c.muted}")\n    static let border = Color(hex: "${c.border}")\n    static let destructive = Color(hex: "${c.destructive}")\n    static let ring = Color(hex: "${c.ring}")\n}`;
@@ -280,6 +468,20 @@
         let currentPaletteIndex = 0;
         let currentPosterTemplate = 'grid';
         let currentPosterSize = 'a4';
+        let promptHistory = [];
+
+        // ============================================
+        // M1: Dial-style FX Panel State
+        // ============================================
+        let effectPrecisionMode = 'normal'; // 'fine' | 'normal' | 'coarse'
+        let heldShortcutKey = null;         // currently held param shortcut key
+        const PRECISION_STEPS = { fine: 0.5, normal: 2, coarse: 5 }; // slider step in percent
+        const PRECISION_WHEEL = { fine: 0.005, normal: 0.02, coarse: 0.05 };
+        const PARAM_SHORTCUT_OVERRIDES = {
+            scanlines: 'n',    // scanlines vs saturation (s)
+            gridDensity: 'g',  // gridDensity vs grain (g) — actually grain is also g, but they never coexist
+            // Add more overrides if intra-effect conflicts arise
+        };
 
         // 风格联动映射：配色 <-> 艺术效果 推荐关联
         const STYLE_LINKAGE = {
@@ -456,8 +658,15 @@
                 favorites.splice(idx, 1);
                 showToast('已取消收藏');
             } else {
-                favorites.push({ key, name: `${currentStyle.name} + ${currentColorScheme.name}`, createdAt: Date.now() });
-                showToast('已收藏当前组合，在「我的收藏」中可重命名');
+                favorites.push({
+                    key,
+                    name: `${currentStyle.name} + ${currentColorScheme.name}`,
+                    createdAt: Date.now(),
+                    tags: [],
+                    group: '默认',
+                    note: ''
+                });
+                showToast('已收藏当前组合，在「我的收藏」中可编辑标签和备注');
             }
             saveState();
             updateFavoriteBtn();
@@ -536,7 +745,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             ThemeManager.init();
             const hasState = loadState();
+            initWelcomeScreen();
             renderStyles();
+            renderStyleTagCloud();
             renderColors();
             renderTypography();
             renderChineseTypography();
@@ -559,6 +770,7 @@
             renderEffectFloatCategories();
             if (hasState && activeTab === 'preview') renderPreview();
             if (hasState && activeTab === 'effects') { renderEffects(); renderEffectCategoryFilters(); }
+            if (hasState && activeTab === 'collections') renderCollections();
             // Restore poster controls state
             const tmplSel = document.getElementById('poster-template-select');
             const sizeSel = document.getElementById('poster-size-select');
@@ -572,6 +784,157 @@
             const themeBtn = document.getElementById('theme-toggle-btn');
             if (themeBtn) themeBtn.textContent = ThemeManager.getIcon();
         });
+
+        // ============================================
+        // Welcome Screen
+        // ============================================
+        function initWelcomeScreen() {
+            const screen = document.getElementById('welcome-screen');
+            if (!screen) return;
+
+            // Mouse parallax on cards deck
+            const deck = document.querySelector('.welcome-cards-deck');
+            const cards = deck ? Array.from(deck.querySelectorAll('.welcome-card')) : [];
+            let parallaxRafId = null;
+            let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+            function animateParallax() {
+                currentX += (targetX - currentX) * 0.08;
+                currentY += (targetY - currentY) * 0.08;
+                const x = currentX;
+                const y = currentY;
+                cards.forEach((card, i) => {
+                    if (card.matches(':hover')) return;
+                    const depth = (i + 1) * 0.3;
+                    const offsetX = x * 12 * depth;
+                    const offsetY = y * 8 * depth;
+                    card.style.transform = `translateX(calc(var(--tx) + ${offsetX.toFixed(2)}px)) translateY(calc(var(--ty) + ${offsetY.toFixed(2)}px)) rotate(var(--end-rotate))`;
+                });
+                parallaxRafId = requestAnimationFrame(animateParallax);
+            }
+
+            // Random card colors from color library
+            function applyRandomCardColors() {
+                if (!cards.length) return;
+                const allSchemes = [];
+                if (typeof colorSchemes !== 'undefined') allSchemes.push(...colorSchemes);
+                if (typeof guofengColors !== 'undefined') allSchemes.push(...guofengColors);
+                if (!allSchemes.length) return;
+
+                const scheme = allSchemes[Math.floor(Math.random() * allSchemes.length)];
+                const palette = scheme.colors || scheme;
+                const candidateKeys = ['primary', 'secondary', 'accent', 'foreground', 'muted'];
+                const candidates = [];
+
+                candidateKeys.forEach(key => {
+                    const c = palette[key];
+                    if (!c || typeof c !== 'string' || !c.startsWith('#')) return;
+                    const lum = getLuminance(c);
+                    if (lum < 0.9 && !candidates.includes(c)) candidates.push(c);
+                });
+
+                const fallbacks = ['#F5F0E8', '#1F1F1F'];
+                let fbIdx = 0;
+                while (candidates.length < 5) {
+                    const f = fallbacks[fbIdx % fallbacks.length];
+                    if (!candidates.includes(f)) candidates.push(f);
+                    fbIdx++;
+                }
+
+                // Fisher-Yates shuffle
+                for (let i = candidates.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+                }
+
+                cards.forEach((card, i) => {
+                    card.style.background = candidates[i];
+                    const label = card.querySelector('.welcome-card-label');
+                    if (label) {
+                        label.style.color = getLuminance(candidates[i]) > 0.5
+                            ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)';
+                    }
+                });
+            }
+            applyRandomCardColors();
+
+            // Card 2: stagger pixel animation delays
+            if (cards[1]) {
+                cards[1].querySelectorAll('.welcome-card-pattern svg rect').forEach((rect, i) => {
+                    rect.style.animationDelay = `${(i * 0.1).toFixed(2)}s`;
+                    rect.style.transformOrigin = 'center';
+                });
+            }
+            // Card 5: stagger stroke animation delays
+            if (cards[4]) {
+                cards[4].querySelectorAll('.welcome-card-pattern svg *').forEach((el, i) => {
+                    el.style.animationDelay = `${(i * 0.15).toFixed(2)}s`;
+                });
+            }
+
+            if (deck) {
+                deck.addEventListener('mousemove', (e) => {
+                    const rect = deck.getBoundingClientRect();
+                    targetX = (e.clientX - rect.left - rect.width / 2) / rect.width;
+                    targetY = (e.clientY - rect.top - rect.height / 2) / rect.height;
+                    if (!parallaxRafId) {
+                        parallaxRafId = requestAnimationFrame(animateParallax);
+                    }
+                });
+                deck.addEventListener('mouseleave', () => {
+                    targetX = 0;
+                    targetY = 0;
+                });
+            }
+
+            function dismissWelcome(skipAnimation) {
+                if (parallaxRafId) {
+                    cancelAnimationFrame(parallaxRafId);
+                    parallaxRafId = null;
+                }
+
+                if (skipAnimation) {
+                    screen.remove();
+                    return;
+                }
+                screen.classList.add('exiting');
+                setTimeout(() => {
+                    if (screen.parentNode) screen.remove();
+                }, 400);
+            }
+
+            // CTA button click
+            const ctaBtn = document.getElementById('welcome-cta-btn');
+            if (ctaBtn) {
+                ctaBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dismissWelcome(false);
+                });
+            }
+
+            // Click anywhere on screen to dismiss
+            screen.addEventListener('click', function() {
+                dismissWelcome(false);
+            });
+
+            // Keyboard shortcuts
+            function onKeyDown(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    dismissWelcome(false);
+                } else if (e.key === 'Escape') {
+                    dismissWelcome(true);
+                }
+            }
+            document.addEventListener('keydown', onKeyDown);
+
+            // Auto-dismiss after first dismiss to clean up listener
+            const originalDismiss = dismissWelcome;
+            dismissWelcome = function(skipAnimation) {
+                originalDismiss(skipAnimation);
+                document.removeEventListener('keydown', onKeyDown);
+            };
+        }
 
         // Render functions
         function renderStyles(filter = '') {
@@ -610,8 +973,11 @@
                             `<span class="badge px-2 py-1 text-xs">${kw}</span>`
                         ).join('')}
                     </div>
-                    <div class="text-sm" style="color: var(--muted-foreground);">
-                        <span class="font-medium">氛围：</span>${style.vibe}
+                    <div class="flex items-center justify-between mt-3 pt-3" style="border-top: 1px solid var(--border);">
+                        <div class="text-sm" style="color: var(--muted-foreground);">
+                            <span class="font-medium">氛围：</span>${style.vibe}
+                        </div>
+                        <button onclick="event.stopPropagation();showWalkthrough('style', ${style.id})" class="btn-ghost px-2 py-1 text-xs" title="深入了解此风格">🔍 研习</button>
                     </div>
                 </div>
                 `;
@@ -1620,7 +1986,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 filtered = filtered.filter(s =>
                     s.name.toLowerCase().includes(q) ||
                     s.keywords.toLowerCase().includes(q) ||
-                    s.bestFor.toLowerCase().includes(q) ||
+                    (s.bestFor || '').toLowerCase().includes(q) ||
                     s.vibe.toLowerCase().includes(q)
                 );
             }
@@ -1646,7 +2012,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
                             <div class="flex flex-wrap gap-1.5 mb-2">
                                 ${keywords.map(kw => `<span class="text-xs px-1.5 py-0.5 rounded" style="background: var(--muted); color: var(--muted-foreground);">${kw}</span>`).join('')}
                             </div>
-                            <p class="text-xs mb-2" style="color: var(--muted-foreground);"><span class="font-medium">适用:</span> ${style.bestFor}</p>
+                            <p class="text-xs mb-2" style="color: var(--muted-foreground);"><span class="font-medium">适用:</span> ${style.bestFor || ''}</p>
                             <div class="code-block p-2.5 text-xs" style="max-height: 80px; overflow: hidden; position: relative;">
                                 <pre class="whitespace-pre-wrap" style="font-family: var(--font-mono); line-height: 1.5;">${promptPreview.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
                                 <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: linear-gradient(transparent, var(--muted));"></div>
@@ -1717,6 +2083,17 @@ console.log(greet('UI/UX Pro Max'));</pre>
         function copyCurrentPrompt() {
             const format = document.getElementById('prompt-format-select')?.value || 'standard';
             const text = generatePrompt(null, format);
+            
+            // 记录提示词历史
+            promptHistory.unshift({
+                text,
+                format,
+                style: currentStyle.name,
+                colorScheme: currentColorScheme.name,
+                timestamp: Date.now()
+            });
+            if (promptHistory.length > 20) promptHistory.pop(); // 最多保留20条
+            
             navigator.clipboard.writeText(text).then(() => {
                 showToast('当前配置提示词已复制！');
             });
@@ -1737,64 +2114,155 @@ console.log(greet('UI/UX Pro Max'));</pre>
             showToast('提示词已导出为 .txt');
         }
 
-        function renderFavorites() {
+        // 提示词历史
+        function showPromptHistory() {
+            if (!promptHistory.length) {
+                showToast('暂无历史记录');
+                return;
+            }
+            const historyText = promptHistory.map((item, i) => {
+                const time = new Date(item.timestamp).toLocaleString('zh-CN');
+                return `--- 记录 ${i + 1} | ${time} | ${item.style} + ${item.colorScheme} | 格式: ${item.format} ---\n${item.text}`;
+            }).join('\n\n');
+            
+            const blob = new Blob([historyText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `prompt-history-${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`已导出 ${promptHistory.length} 条提示词历史`);
+        }
+
+        function clearPromptHistory() {
+            promptHistory = [];
+            showToast('提示词历史已清除');
+        }
+
+        function renderFavorites(filter = { group: 'all', tag: null }) {
             const grid = document.getElementById('favorites-grid');
             const empty = document.getElementById('favorites-empty');
-            if (!favorites.length) {
+            
+            // 迁移旧数据格式
+            favorites = favorites.map(item => {
+                if (typeof item === 'string') {
+                    return { key: item, name: null, createdAt: 0, tags: [], group: '默认', note: '' };
+                }
+                return {
+                    key: item.key,
+                    name: item.name || null,
+                    createdAt: item.createdAt || 0,
+                    tags: item.tags || [],
+                    group: item.group || '默认',
+                    note: item.note || ''
+                };
+            });
+            
+            // 分组筛选
+            let filtered = favorites;
+            if (filter.group !== 'all') {
+                filtered = filtered.filter(item => item.group === filter.group);
+            }
+            if (filter.tag) {
+                filtered = filtered.filter(item => item.tags.includes(filter.tag));
+            }
+            
+            if (!filtered.length) {
                 grid.innerHTML = '';
                 empty.classList.remove('hidden');
                 return;
             }
             empty.classList.add('hidden');
-            grid.innerHTML = favorites.map(item => {
-                const key = typeof item === 'string' ? item : item.key;
-                const name = typeof item === 'string' ? null : item.name;
-                const parts = key.split('-');
-                if (parts.length < 4) return '';
-                const s = uiStyles.find(x => x.id === parseInt(parts[0]));
-                const c = colorSchemes.find(x => x.id === parseInt(parts[1])) || guofengColors.find(x => x.id === parseInt(parts[1]));
-                const f = fontPairings.find(x => x.id === parseInt(parts[2]));
-                const cf = chineseFontPairings.find(x => x.id === parseInt(parts[3]));
-                const e = parts[4] ? artEffects.find(x => x.id === parseInt(parts[4])) : null;
-                if (!s || !c || !f || !cf) return '';
-                const pv = stylePreviewVars[s.id] || { radius: '8px', shadow: 'none', border: '1px solid var(--border)' };
-                return `
-                <div class="style-card card p-6">
-                    <div class="mb-4 p-3 rounded-lg flex items-center justify-center gap-3" style="background-color: var(--muted);">
-                        <div style="width: 28px; height: 28px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: var(--card);"></div>
-                        <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: ${c.colors.primary};"></div>
-                        <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: ${c.colors.accent};"></div>
+            
+            // 获取所有分组和标签
+            const groups = [...new Set(favorites.map(item => item.group))];
+            const allTags = [...new Set(favorites.flatMap(item => item.tags))];
+            
+            grid.innerHTML = `
+                <div class="col-span-full mb-4">
+                    <div class="flex gap-2 flex-wrap items-center">
+                        <span class="text-sm font-medium">分组:</span>
+                        <button onclick="renderFavorites({ group: 'all' })" class="filter-btn ${filter.group === 'all' ? 'active' : ''}">全部</button>
+                        ${groups.map(g => `<button onclick="renderFavorites({ group: '${g}' })" class="filter-btn ${filter.group === g ? 'active' : ''}">${g}</button>`).join('')}
+                        <button onclick="createNewGroup()" class="btn-ghost px-2 py-1 text-xs">+ 新建分组</button>
                     </div>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-2">
-                            <h3 class="text-lg font-bold flex-1 min-w-0"
-                                contenteditable="true"
-                                onblur="renameFavorite('${key}', this.innerText)"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}"
-                                style="outline:none;border-bottom:1px solid transparent;"
-                                onfocus="this.style.borderBottomColor='var(--primary)'"
-                                title="点击编辑名称">${name || s.name}</h3>
-                            <span class="badge px-2 py-1 text-xs flex-shrink-0">#${s.id}</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded-full" style="background-color: ${c.colors.primary};"></div>
-                            <span class="text-sm">${c.name}</span>
-                        </div>
-                        <div class="text-sm" style="color: var(--muted-foreground);">
-                            <span class="font-medium">英文字体:</span> ${f.name}
-                        </div>
-                        <div class="text-sm" style="color: var(--muted-foreground);">
-                            <span class="font-medium">中文字体:</span> ${cf.name}
-                        </div>
-                        ${e ? `<div class="text-sm" style="color: var(--muted-foreground);"><span class="font-medium">艺术效果:</span> ${e.name}</div>` : ''}
+                    ${allTags.length ? `
+                    <div class="flex gap-2 flex-wrap items-center mt-3">
+                        <span class="text-sm font-medium">标签:</span>
+                        ${allTags.map(t => `<button onclick="renderFavorites({ group: '${filter.group}', tag: '${t}' })" class="badge px-2 py-1 text-xs cursor-pointer ${filter.tag === t ? 'active' : ''}">${t}</button>`).join('')}
+                        ${filter.tag ? `<button onclick="renderFavorites({ group: '${filter.group}' })" class="btn-ghost px-2 py-1 text-xs">清除标签筛选</button>` : ''}
                     </div>
-                    <div class="flex gap-2 mt-4 pt-4" style="border-top: 1px solid var(--border);">
-                        <button onclick="applyFavoriteCombo('${key}')" class="btn-primary flex-1 px-3 py-2 text-sm">应用组合</button>
-                        <button onclick="deleteFavoriteItem('${key}')" class="btn-ghost px-3 py-2 text-sm" style="color: var(--destructive);">删除</button>
+                    ` : ''}
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="exportFavorites('json')" class="btn-outline px-3 py-1.5 text-xs">📥 导出 JSON</button>
                     </div>
                 </div>
-                `;
-            }).join('');
+                ${filtered.map(item => {
+                    const key = item.key;
+                    const parts = key.split('-');
+                    if (parts.length < 4) return '';
+                    const s = uiStyles.find(x => x.id === parseInt(parts[0]));
+                    const c = colorSchemes.find(x => x.id === parseInt(parts[1])) || guofengColors.find(x => x.id === parseInt(parts[1]));
+                    const f = fontPairings.find(x => x.id === parseInt(parts[2]));
+                    const cf = chineseFontPairings.find(x => x.id === parseInt(parts[3]));
+                    const e = parts[4] ? artEffects.find(x => x.id === parseInt(parts[4])) : null;
+                    if (!s || !c || !f || !cf) return '';
+                    const pv = stylePreviewVars[s.id] || { radius: '8px', shadow: 'none', border: '1px solid var(--border)' };
+                    const name = item.name || s.name;
+                    const tags = item.tags || [];
+                    const note = item.note || '';
+                    const group = item.group || '默认';
+                    
+                    return `
+                    <div class="style-card card p-6">
+                        <div class="mb-4 p-3 rounded-lg flex items-center justify-center gap-3" style="background-color: var(--muted);">
+                            <div style="width: 28px; height: 28px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: var(--card);"></div>
+                            <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: ${c.colors.primary};"></div>
+                            <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: ${c.colors.accent};"></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <h3 class="text-lg font-bold flex-1 min-w-0"
+                                    contenteditable="true"
+                                    onblur="renameFavorite('${key}', this.innerText)"
+                                    onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}"
+                                    style="outline:none;border-bottom:1px solid transparent;"
+                                    onfocus="this.style.borderBottomColor='var(--primary)'"
+                                    title="点击编辑名称">${name}</h3>
+                                <span class="badge px-2 py-1 text-xs flex-shrink-0">${group}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-4 rounded-full" style="background-color: ${c.colors.primary};"></div>
+                                <span class="text-sm">${c.name}</span>
+                            </div>
+                            <div class="text-sm" style="color: var(--muted-foreground);">
+                                <span class="font-medium">英文字体:</span> ${f.name}
+                            </div>
+                            <div class="text-sm" style="color: var(--muted-foreground);">
+                                <span class="font-medium">中文字体:</span> ${cf.name}
+                            </div>
+                            ${e ? `<div class="text-sm" style="color: var(--muted-foreground);"><span class="font-medium">艺术效果:</span> ${e.name}</div>` : ''}
+                            
+                            <!-- 标签编辑 -->
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                ${tags.map(t => `<span class="badge px-2 py-0.5 text-xs cursor-pointer" onclick="removeTag('${key}', '${t}')" title="点击删除标签">${t} ✕</span>`).join('')}
+                                <input type="text" class="text-xs px-2 py-0.5 border rounded" style="width: 80px; background: transparent;" placeholder="+ 标签" onkeydown="if(event.key==='Enter'){addTag('${key}', this.value); this.value='';}" />
+                            </div>
+                            
+                            <!-- 备注编辑 -->
+                            ${note ? `<div class="text-xs p-2 rounded mt-2" style="background: var(--muted); color: var(--muted-foreground);">📝 ${note}</div>` : ''}
+                            <input type="text" class="text-xs px-2 py-1 border rounded w-full" style="background: transparent;" placeholder="添加备注..." value="${note.replace(/'/g, "\\'")}" onchange="updateNote('${key}', this.value)" />
+                        </div>
+                        <div class="flex gap-2 mt-4 pt-4" style="border-top: 1px solid var(--border);">
+                            <button onclick="applyFavoriteCombo('${key}')" class="btn-primary flex-1 px-3 py-2 text-sm">应用组合</button>
+                            <button onclick="moveToGroup('${key}')" class="btn-ghost px-3 py-2 text-sm">移动分组</button>
+                            <button onclick="deleteFavoriteItem('${key}')" class="btn-ghost px-3 py-2 text-sm" style="color: var(--destructive);">删除</button>
+                        </div>
+                    </div>
+                    `;
+                }).join('')}
+            `;
         }
 
         function applyFavoriteCombo(key) {
@@ -1846,6 +2314,78 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 renderFavorites();
                 updateFavoriteBtn();
                 showToast('已删除收藏');
+            }
+        }
+
+        // 标签管理
+        function addTag(key, tag) {
+            if (!tag || !tag.trim()) return;
+            const idx = favorites.findIndex(f => (typeof f === 'string' ? f : f.key) === key);
+            if (idx >= 0) {
+                if (!favorites[idx].tags) favorites[idx].tags = [];
+                const tagName = tag.trim();
+                if (!favorites[idx].tags.includes(tagName)) {
+                    favorites[idx].tags.push(tagName);
+                    saveState();
+                    renderFavorites();
+                }
+            }
+        }
+
+        function removeTag(key, tag) {
+            const idx = favorites.findIndex(f => (typeof f === 'string' ? f : f.key) === key);
+            if (idx >= 0 && favorites[idx].tags) {
+                favorites[idx].tags = favorites[idx].tags.filter(t => t !== tag);
+                saveState();
+                renderFavorites();
+            }
+        }
+
+        // 备注管理
+        function updateNote(key, note) {
+            const idx = favorites.findIndex(f => (typeof f === 'string' ? f : f.key) === key);
+            if (idx >= 0) {
+                favorites[idx].note = note.trim();
+                saveState();
+            }
+        }
+
+        // 分组管理
+        function createNewGroup() {
+            const name = prompt('输入新分组名称:');
+            if (name && name.trim()) {
+                renderFavorites({ group: 'all' });
+                showToast(`分组 "${name.trim()}" 已创建`);
+            }
+        }
+
+        function moveToGroup(key) {
+            const groups = [...new Set(favorites.map(item => item.group))];
+            const existing = groups.join('\n');
+            const input = prompt(`输入分组名称（现有分组）:\n${existing}`);
+            if (input && input.trim()) {
+                const idx = favorites.findIndex(f => (typeof f === 'string' ? f : f.key) === key);
+                if (idx >= 0) {
+                    favorites[idx].group = input.trim();
+                    saveState();
+                    renderFavorites();
+                    showToast('已移动分组');
+                }
+            }
+        }
+
+        // 导出收藏
+        function exportFavorites(format = 'json') {
+            if (format === 'json') {
+                const data = JSON.stringify(favorites, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `uiux-pro-max-favorites-${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('已导出收藏为 JSON');
             }
         }
 
@@ -2043,7 +2583,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
                 if (btn.dataset.mobileTab === tab) btn.classList.add('active');
             });
             // Tabs inside "more" menu highlight the "more" button
-            const moreTabs = ['typography', 'prompts', 'favorites'];
+            const moreTabs = ['typography', 'prompts', 'favorites', 'collections'];
             if (moreTabs.includes(tab)) {
                 const moreBtn = document.getElementById('mobile-more-btn');
                 if (moreBtn) moreBtn.classList.add('active');
@@ -2055,12 +2595,15 @@ console.log(greet('UI/UX Pro Max'));</pre>
             const panel = document.getElementById(`${tab}-tab`);
             if (panel) {
                 panel.classList.remove('hidden');
+                // Force reflow to re-trigger tab fade-in animation
+                void panel.offsetWidth;
             }
             
             if (tab === 'preview') { renderPreview(); setTimeout(updateFavoriteBtn, 0); renderEffectStatusBar(); }
             if (tab === 'favorites') renderFavorites();
             if (tab === 'effects') { renderEffects(); renderEffectCategoryFilters(); }
             if (tab === 'prompts') { renderPrompts(); renderCurrentPrompt(); }
+            if (tab === 'collections') renderCollections();
             saveState();
         }
 
@@ -2094,7 +2637,8 @@ console.log(greet('UI/UX Pro Max'));</pre>
             const effect = artEffects.find(e => e.id === effectId);
             if (!effect) return;
             currentArtEffect = effect;
-            currentPaletteIndex = 0;
+            // 三星堆·现代效果联动时默认使用"现代明亮"色板
+            currentPaletteIndex = (effectId === 18 && effect.colorPalettes && effect.colorPalettes.length > 1) ? 1 : 0;
             effectEnabled = true;
             applyArtEffect(effect);
             updateEffectCurrentInfo();
@@ -2191,8 +2735,7 @@ console.log(greet('UI/UX Pro Max'));</pre>
         }
 
         function filterStyles() {
-            const search = document.getElementById('style-search').value;
-            renderStyles(search);
+            renderStylesWithFilters();
         }
 
         function filterColors(category, evt) {
@@ -2218,6 +2761,119 @@ console.log(greet('UI/UX Pro Max'));</pre>
         const debouncedFilterFonts = debounce(filterFonts, 200);
         const debouncedFilterEffects = debounce(filterEffects, 200);
 
+        // 风格分类筛选
+        let currentStyleCategory = 'all';
+        let currentStyleTag = null;
+
+        const STYLE_CATEGORIES = {
+            modern: [11, 12, 13, 14, 18], // Material3, iOS, Fluent, Atomic, Flat2
+            brutalist: [1, 15], // Neubrutalism, Neo-Brutalism
+            minimal: [7, 8, 20], // Swiss, Minimalist, Zen
+            retro: [3, 10, 17, 19], // Neomorphism, ArtDeco, Skeuomorphism, LineArt
+            artistic: [2, 5, 6, 9, 16] // Glassmorphism, GradientMesh, Bauhaus, Cyberpunk, Claymorphism
+        };
+
+        function filterStyleCategory(category, evt) {
+            currentStyleCategory = category;
+            const container = document.getElementById('style-category-filters');
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            }
+            if (evt && evt.target) evt.target.classList.add('active');
+            renderStylesWithFilters();
+        }
+
+        function filterStyleTag(tag) {
+            currentStyleTag = currentStyleTag === tag ? null : tag;
+            renderStylesWithFilters();
+            renderStyleTagCloud();
+        }
+
+        function renderStyleTagCloud() {
+            const container = document.getElementById('style-tag-cloud');
+            if (!container) return;
+            
+            const allKeywords = uiStyles.flatMap(s => s.keywords.split(', '));
+            const keywordCount = {};
+            allKeywords.forEach(kw => {
+                const normalized = kw.trim();
+                if (normalized) keywordCount[normalized] = (keywordCount[normalized] || 0) + 1;
+            });
+            
+            const topTags = Object.entries(keywordCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 15)
+                .map(([tag]) => tag);
+            
+            container.innerHTML = `
+                <span class="text-xs font-medium" style="color: var(--muted-foreground);">热门:</span>
+                ${topTags.map(tag => `
+                    <button onclick="filterStyleTag('${tag}')" class="badge px-2 py-0.5 text-xs cursor-pointer ${currentStyleTag === tag ? 'active' : ''}">${tag}</button>
+                `).join('')}
+                ${currentStyleTag ? `<button onclick="filterStyleTag(null)" class="btn-ghost px-2 py-0.5 text-xs">清除</button>` : ''}
+            `;
+        }
+
+        function renderStylesWithFilters() {
+            const search = document.getElementById('style-search')?.value || '';
+            let filtered = uiStyles;
+            
+            // 分类筛选
+            if (currentStyleCategory !== 'all') {
+                const categoryIds = STYLE_CATEGORIES[currentStyleCategory] || [];
+                filtered = filtered.filter(s => categoryIds.includes(s.id));
+            }
+            
+            // 标签筛选
+            if (currentStyleTag) {
+                filtered = filtered.filter(s => s.keywords.toLowerCase().includes(currentStyleTag.toLowerCase()));
+            }
+            
+            // 搜索筛选
+            if (search) {
+                filtered = filtered.filter(s => 
+                    s.name.toLowerCase().includes(search.toLowerCase()) ||
+                    s.keywords.toLowerCase().includes(search.toLowerCase()) ||
+                    s.description.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+            
+            // 收藏筛选
+            if (filterFavMode.styles) {
+                const favIds = getFavIds('styles');
+                filtered = filtered.filter(s => favIds.has(s.id));
+            }
+            
+            const grid = document.getElementById('styles-grid');
+            grid.innerHTML = filtered.map(style => {
+                const pv = stylePreviewVars[style.id] || { radius: '8px', shadow: 'none', border: '1px solid var(--border)' };
+                return `
+                <div class="style-card card p-6 ${currentStyle.id === style.id ? 'active' : ''}" 
+                     onclick="selectStyle(${style.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectStyle(${style.id});}" 
+                     tabindex="0" role="button" aria-pressed="${currentStyle.id === style.id}" id="style-card-${style.id}">
+                    <div class="mb-4 p-3 rounded-lg flex items-center justify-center gap-3" style="background-color: var(--muted);">
+                        <div style="width: 28px; height: 28px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: var(--card);"></div>
+                        <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: var(--primary);"></div>
+                        <div style="width: 40px; height: 20px; border-radius: ${pv.radius}; box-shadow: ${pv.shadow}; border: ${pv.border}; background-color: var(--muted);"></div>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">${style.name}</h3>
+                        <span class="badge px-2 py-1 text-xs">#${style.id}</span>
+                    </div>
+                    <p class="text-sm mb-3" style="color: var(--muted-foreground);">${style.description}</p>
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        ${style.keywords.split(', ').slice(0, 5).map(kw => 
+                            `<span class="badge px-2 py-1 text-xs">${kw}</span>`
+                        ).join('')}
+                    </div>
+                    <div class="text-sm" style="color: var(--muted-foreground);">
+                        <span class="font-medium">氛围：</span>${style.vibe}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
         function generateConfigCode() {
             return Exporter.tailwind();
         }
@@ -2239,6 +2895,71 @@ console.log(greet('UI/UX Pro Max'));</pre>
             a.click();
             URL.revokeObjectURL(url);
             showToast('配置已导出！');
+        }
+
+        // 设计令牌导出
+        function exportToken(format) {
+            let content, filename, type;
+            switch (format) {
+                case 'tailwind':
+                    content = Exporter.tailwind();
+                    filename = `tailwind.config.js`;
+                    type = 'application/javascript';
+                    break;
+                case 'css':
+                    content = Exporter.cssVariables();
+                    filename = `design-tokens.css`;
+                    type = 'text/css';
+                    break;
+                case 'figma-tokens':
+                    content = Exporter.figmaTokens();
+                    filename = `figma-tokens.json`;
+                    type = 'application/json';
+                    break;
+                case 'figma-dtcg':
+                    content = Exporter.figmaTokensDTCG();
+                    filename = `figma-dtcg-tokens.json`;
+                    type = 'application/json';
+                    break;
+                case 'figma-script':
+                    content = Exporter.figmaPluginScript();
+                    filename = `figma-import-script.js`;
+                    type = 'application/javascript';
+                    break;
+                case 'swiftui':
+                    content = Exporter.swiftUI();
+                    filename = `AppColors.swift`;
+                    type = 'text/swift';
+                    break;
+                case 'compose':
+                    content = Exporter.compose();
+                    filename = `AppColors.kt`;
+                    type = 'text/kotlin';
+                    break;
+                case 'json':
+                    content = JSON.stringify({
+                        style: { id: currentStyle.id, name: currentStyle.name },
+                        colorScheme: { id: currentColorScheme.id, name: currentColorScheme.name, colors: currentColorScheme.colors },
+                        fontPairing: { id: currentFontPairing.id, name: currentFontPairing.name, heading: currentFontPairing.heading, body: currentFontPairing.body },
+                        chineseFontPairing: { id: currentChineseFontPairing.id, name: currentChineseFontPairing.name, heading: currentChineseFontPairing.heading, body: currentChineseFontPairing.body },
+                        timestamp: new Date().toISOString()
+                    }, null, 2);
+                    filename = `design-tokens-${Date.now()}.json`;
+                    type = 'application/json';
+                    break;
+                default:
+                    showToast('未知的导出格式');
+                    return;
+            }
+            
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`已导出: ${filename}`);
         }
 
         // ============================================
@@ -2290,7 +3011,7 @@ ${effect ? `Art Direction Overlay — ${effect.name}:\n• ${effect.visualFeatur
 - Description: ${style.description}
 - Vibe: ${style.vibe}
 - Keywords: ${style.keywords}
-- Best for: ${style.bestFor}
+- Best for: ${style.bestFor || 'UI/UX design, web applications, digital products'}
 
 ## 2. Color System (${scheme.name})
 | Token | Hex | Usage |
@@ -2360,6 +3081,12 @@ ${style.description}
 ${effect ? `**Art Direction — ${effect.name}:**\n${effect.description}\nApply these visual traits to all components.` : ''}
 
 Please generate a complete, production-ready HTML file with embedded CSS that includes a responsive landing page with: navigation, hero section, feature grid, and footer.`;
+
+                case 'dalle':
+                    return `A professional ${styleName} style user interface design mockup for a web application. The color scheme features primary color ${c.primary}, secondary ${c.secondary}, and accent ${c.accent} on a ${c.background} background. The interface uses ${font.heading} for headings and ${font.body} for body text. ${style.vibe} aesthetic with ${style.keywords.split(', ').slice(0, 3).join(', ')} visual characteristics. Clean, modern, high-quality UI design with proper spacing and hierarchy. ${effect ? `Additional ${effect.nameEn || effect.name} artistic overlay with ${effect.description.substring(0, 80)}.` : ''} White background presentation, professional design portfolio quality.`;
+
+                case 'stable-diffusion':
+                    return `${styleName} UI design, ${scheme.name} colors, ${c.primary} ${c.secondary} ${c.accent}, modern web interface, ${font.heading} typography, ${style.keywords.split(', ').slice(0, 5).join(', ')}, clean layout, professional mockup, UI/UX design, dribbble style, high quality, detailed${effect ? `, ${effect.nameEn || effect.name} artistic effect` : ''}, 4k resolution, sharp focus, studio lighting`;
 
                 default:
                     return style.prompt;
@@ -2457,6 +3184,190 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             }
         }
 
+        // ============================================
+        // M2: Walkthrough System
+        // ============================================
+        let walkthroughTab = 'origin'; // 'origin' | 'features' | 'useCases' | 'related'
+        let walkthroughContext = null; // { type, id }
+
+        function buildWalkthroughBodyHtml(type, id, tab) {
+            const item = type === 'style'
+                ? uiStyles.find(s => s.id === id)
+                : artEffects.find(e => e.id === id);
+            if (!item) return '';
+            const wt = item.walkthrough;
+
+            if (type === 'effect' && !wt) {
+                return `
+                    <div class="space-y-5">
+                        <div class="walkthrough-section">
+                            <h4 class="walkthrough-section-title">📖 概述</h4>
+                            <p style="color: var(--muted-foreground); line-height: 1.7;">${item.description}</p>
+                        </div>
+                        ${item.visualFeatures ? `
+                        <div class="walkthrough-section">
+                            <h4 class="walkthrough-section-title">🎨 视觉特征</h4>
+                            <ul class="walkthrough-list">
+                                ${item.visualFeatures.map(f => `<li>${f}</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                        <div class="walkthrough-section">
+                            <h4 class="walkthrough-section-title">🎯 适用场景</h4>
+                            <p style="color: var(--muted-foreground); line-height: 1.7;">${item.bestFor}</p>
+                        </div>
+                        <div class="walkthrough-section">
+                            <h4 class="walkthrough-section-title">🛠️ 推荐工具</h4>
+                            <p style="color: var(--muted-foreground); line-height: 1.7;">${item.tools}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            if (!wt) return '<p style="color: var(--muted-foreground);">此风格的深度研习内容正在筹备中。</p>';
+
+            if (tab === 'origin') {
+                return `
+                    <div class="walkthrough-section">
+                        <h4 class="walkthrough-section-title">📖 起源与背景</h4>
+                        <p style="color: var(--muted-foreground); line-height: 1.8; font-size: 0.95rem;">${wt.origin}</p>
+                    </div>
+                `;
+            }
+            if (tab === 'features') {
+                return `
+                    <div class="walkthrough-section">
+                        <h4 class="walkthrough-section-title">🎨 核心视觉特征</h4>
+                        <div class="grid gap-3">
+                            ${wt.features.map(f => `
+                                <div class="card p-4" style="border-left: 3px solid var(--primary);">
+                                    <div class="font-bold text-sm mb-1">${f.label}</div>
+                                    <div class="text-sm" style="color: var(--muted-foreground); line-height: 1.6;">${f.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            if (tab === 'useCases') {
+                return `
+                    <div class="walkthrough-section">
+                        <h4 class="walkthrough-section-title">🎯 应用场景</h4>
+                        <div class="grid gap-3">
+                            ${wt.useCases.map(u => `
+                                <div class="card p-4">
+                                    <div class="font-bold text-sm mb-1" style="color: var(--primary);">${u.name}</div>
+                                    <div class="text-sm" style="color: var(--muted-foreground); line-height: 1.6;">${u.example}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            if (tab === 'related') {
+                const relatedStyles = (wt.relatedStyles || []).map(sid => {
+                    const s = uiStyles.find(x => x.id === sid);
+                    return s ? `<button onclick="closeModal();selectStyle(${s.id})" class="badge px-3 py-1 text-xs" style="cursor:pointer;">${s.name}</button>` : '';
+                }).join('');
+                const relatedEffects = (wt.relatedEffects || []).map(eid => {
+                    const e = artEffects.find(x => x.id === eid);
+                    return e ? `<button onclick="closeModal();selectEffect(${e.id})" class="badge px-3 py-1 text-xs" style="cursor:pointer;">${e.name}</button>` : '';
+                }).join('');
+                return `
+                    <div class="walkthrough-section">
+                        <h4 class="walkthrough-section-title">🔗 关联推荐</h4>
+                        ${relatedStyles ? `<div class="mb-4"><div class="text-xs uppercase tracking-wider mb-2" style="color: var(--muted-foreground);">相关风格</div><div class="flex flex-wrap gap-2">${relatedStyles}</div></div>` : ''}
+                        ${relatedEffects ? `<div><div class="text-xs uppercase tracking-wider mb-2" style="color: var(--muted-foreground);">相关艺术效果</div><div class="flex flex-wrap gap-2">${relatedEffects}</div></div>` : ''}
+                        ${!relatedStyles && !relatedEffects ? '<p style="color: var(--muted-foreground);">暂无关联推荐</p>' : ''}
+                    </div>
+                `;
+            }
+            return '';
+        }
+
+        function showWalkthrough(type, id) {
+            const item = type === 'style'
+                ? uiStyles.find(s => s.id === id)
+                : artEffects.find(e => e.id === id);
+            if (!item) return;
+
+            // Graceful fallback: if no walkthrough data, show basic detail
+            const wt = item.walkthrough;
+            if (!wt && type === 'style') {
+                showDetail(id);
+                return;
+            }
+
+            const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('modal-content');
+            lastFocusedElement = document.activeElement;
+            walkthroughTab = 'origin';
+            walkthroughContext = { type, id };
+
+            const hasWt = !!wt;
+            const tabs = [
+                { id: 'origin', label: '📖 起源' },
+                { id: 'features', label: '🎨 特征' },
+                { id: 'useCases', label: '🎯 场景' },
+                { id: 'related', label: '🔗 关联' }
+            ];
+            const actionBtn = type === 'style'
+                ? `<button onclick="closeModal();selectStyle(${item.id});switchTab('preview', {target: document.getElementById('tab-preview')});" class="btn-primary px-4 py-2 text-sm font-medium">应用此风格并预览 →</button>`
+                : `<button onclick="closeModal();selectEffect(${item.id});if(!effectEnabled){const sw=document.getElementById('effect-toggle-switch');if(sw){sw.checked=true;toggleEffectEnabled(true);}}switchTab('preview', {target: document.getElementById('tab-preview')});" class="btn-primary px-4 py-2 text-sm font-medium">应用此效果并预览 →</button>`;
+
+            content.innerHTML = `
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h2 class="text-2xl font-bold">${item.name}</h2>
+                        <p class="text-sm mt-1" style="color: var(--muted-foreground);">${type === 'style' ? item.description : item.nameEn}</p>
+                    </div>
+                    <button onclick="closeModal()" class="text-2xl" aria-label="关闭">&times;</button>
+                </div>
+                ${hasWt || type === 'effect' ? `
+                <div class="flex gap-1 mb-5 overflow-x-auto pb-1">
+                    ${tabs.map(t => `
+                        <button data-wt-tab="${t.id}" onclick="switchWalkthroughTab('${t.id}')" class="walkthrough-nav-btn ${walkthroughTab === t.id ? 'active' : ''}">${t.label}</button>
+                    `).join('')}
+                </div>
+                <div class="walkthrough-body" style="min-height: 200px;">
+                    ${buildWalkthroughBodyHtml(type, id, walkthroughTab)}
+                </div>
+                ` : `
+                <div class="walkthrough-body" style="min-height: 200px;">
+                    <p style="color: var(--muted-foreground);">此风格的深度研习内容正在筹备中。</p>
+                </div>
+                `}
+                <div class="flex justify-end gap-3 mt-6 pt-4" style="border-top: 1px solid var(--border);">
+                    <button onclick="closeModal()" class="btn-ghost px-4 py-2 text-sm">关闭</button>
+                    ${actionBtn}
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.setAttribute('aria-modal', 'true');
+            requestAnimationFrame(() => {
+                const closeBtn = content.querySelector('button[aria-label="关闭"]');
+                if (closeBtn) closeBtn.focus();
+                trapFocus(content);
+            });
+        }
+
+        function switchWalkthroughTab(tab) {
+            walkthroughTab = tab;
+            if (!walkthroughContext) return;
+            const { type, id } = walkthroughContext;
+
+            // Update nav button active states locally
+            document.querySelectorAll('.walkthrough-nav-btn').forEach(btn => {
+                const btnTab = btn.getAttribute('data-wt-tab');
+                btn.classList.toggle('active', btnTab === tab);
+            });
+
+            // Update body content locally without rebuilding the entire modal
+            const body = document.querySelector('.walkthrough-body');
+            if (body) {
+                body.innerHTML = buildWalkthroughBodyHtml(type, id, tab);
+            }
+        }
+
         function showToast(message, html = false) {
             const existing = document.querySelectorAll('.toast');
             if (existing.length >= 3) {
@@ -2488,6 +3399,104 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 btn.onclick = function(e) { filterEffectsCategory(cat.id, e); };
                 container.appendChild(btn);
             });
+        }
+
+        // ============================================
+        // M2: Collections (主题合集)
+        // ============================================
+        function renderCollections() {
+            const grid = document.getElementById('collections-grid');
+            if (!grid || typeof collections === 'undefined') return;
+            grid.innerHTML = collections.map(col => {
+                const style = uiStyles.find(s => s.id === col.config.styleId);
+                const color = [...colorSchemes, ...guofengColors].find(c => c.id === col.config.colorSchemeId);
+                const font = fontPairings.find(f => f.id === col.config.fontPairingId);
+                const cnFont = chineseFontPairings.find(f => f.id === col.config.chineseFontPairingId);
+                const effect = artEffects.find(e => e.id === col.config.artEffectId);
+                return `
+                <div class="style-card card p-6" onclick="applyCollection(${col.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();applyCollection(${col.id});}" tabindex="0" role="button">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">${col.emoji}</span>
+                            <h3 class="text-xl font-bold">${col.name}</h3>
+                        </div>
+                        <span class="badge px-2 py-1 text-xs">合集</span>
+                    </div>
+                    <p class="text-sm mb-4" style="color: var(--muted-foreground); line-height: 1.6;">${col.description}</p>
+                    <div class="flex flex-wrap gap-1.5 mb-4">
+                        ${col.tags.map(t => `<span class="badge px-2 py-0.5 text-xs">${t}</span>`).join('')}
+                    </div>
+                    <div class="space-y-2 text-xs" style="color: var(--muted-foreground);">
+                        <div class="flex items-center gap-2">
+                            <span style="width: 48px;" class="font-medium">风格</span>
+                            <span>${style ? style.name : '—'}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span style="width: 48px;" class="font-medium">配色</span>
+                            <span>${color ? color.name : '—'}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span style="width: 48px;" class="font-medium">字体</span>
+                            <span>${font ? font.name : '—'} / ${cnFont ? cnFont.name : '—'}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span style="width: 48px;" class="font-medium">效果</span>
+                            <span>${effect ? effect.name.split('·')[0].trim() : '—'} ${col.config.effectEnabled ? '· 开' : '· 关'}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 flex justify-end" style="border-top: 1px solid var(--border);">
+                        <span class="text-xs font-medium" style="color: var(--primary);">点击应用整套配置 →</span>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function applyCollection(collectionId) {
+            const col = collections.find(c => c.id === collectionId);
+            if (!col) return;
+            const cfg = col.config;
+
+            // Push current state to history before changing
+            HistoryManager.push({ style: currentStyle.id, color: currentColorScheme.id, font: currentFontPairing.id, cnFont: currentChineseFontPairing.id, effect: currentArtEffect.id, effectEnabled, previewMode: currentPreviewMode });
+
+            const style = uiStyles.find(s => s.id === cfg.styleId);
+            const color = [...colorSchemes, ...guofengColors].find(c => c.id === cfg.colorSchemeId);
+            const font = fontPairings.find(f => f.id === cfg.fontPairingId);
+            const cnFont = chineseFontPairings.find(f => f.id === cfg.chineseFontPairingId);
+            const effect = artEffects.find(e => e.id === cfg.artEffectId);
+
+            if (style) { currentStyle = style; applyStyle(style.id); }
+            if (color) { currentColorScheme = color; applyColorScheme(color); }
+            if (font) { currentFontPairing = font; applyFontPairing(font.id); }
+            if (cnFont) { currentChineseFontPairing = cnFont; applyChineseFontPairing(cnFont.id); }
+            if (effect) {
+                currentArtEffect = effect;
+                currentPaletteIndex = 0;
+            }
+            if (cfg.effectEnabled && effect) {
+                effectEnabled = true;
+                artEffectOverrideActive = true;
+                const sw = document.getElementById('effect-toggle-switch');
+                if (sw) sw.checked = true;
+                applyArtEffect(effect);
+            } else {
+                effectEnabled = false;
+                artEffectOverrideActive = false;
+                const sw = document.getElementById('effect-toggle-switch');
+                if (sw) sw.checked = false;
+                applyArtEffect(null);
+            }
+
+            updateActiveCards();
+            updateFavoriteBtn();
+            updateEffectCurrentInfo();
+            renderEffectFloatGrid();
+            renderEffectFloatParams();
+            renderEffectStatusBar();
+            if (activeTab === 'preview') renderPreview();
+            saveState();
+            showToast(`已应用合集「${col.name}」`);
         }
 
         function renderEffects(filter = '') {
@@ -2526,8 +3535,11 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                     <div class="text-sm mb-2" style="color: var(--muted-foreground);">
                         <span class="font-medium">工具:</span> ${effect.tools}
                     </div>
-                    <div class="text-xs mt-2 pt-2" style="border-top: 1px solid var(--border); color: var(--muted-foreground);">
-                        <span class="font-medium">氛围:</span> ${effect.vibe}
+                    <div class="flex items-center justify-between mt-2 pt-2" style="border-top: 1px solid var(--border);">
+                        <div class="text-xs" style="color: var(--muted-foreground);">
+                            <span class="font-medium">氛围:</span> ${effect.vibe}
+                        </div>
+                        <button onclick="event.stopPropagation();showWalkthrough('effect', ${effect.id})" class="btn-ghost px-2 py-1 text-xs" title="深入了解此效果">🔍 研习</button>
                     </div>
                 </div>
             `;}).join('');
@@ -2724,6 +3736,7 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 if (sidebar) sidebar.classList.add('hidden');
                 const gf = document.getElementById('gf-art-effect');
                 if (gf) gf.remove();
+                body.classList.remove('art-effect-18-bright');
                 applyColorScheme(currentColorScheme);
                 applyStyle(currentStyle.id);
                 return;
@@ -2731,6 +3744,12 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
 
             artEffectOverrideActive = true;
             body.classList.add('art-effect-' + effect.id);
+            // 三星堆效果根据色板切换明亮/古朴视觉
+            if (effect.id === 18 && currentPaletteIndex === 1) {
+                body.classList.add('art-effect-18-bright');
+            } else {
+                body.classList.remove('art-effect-18-bright');
+            }
             overlay.classList.add('art-effect-' + effect.id);
             overlay.classList.add('active');
             overlay.style.display = '';
@@ -2806,6 +3825,79 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             renderEffectFloatParams();
         }
 
+        function getParamShortcut(paramId) {
+            if (PARAM_SHORTCUT_OVERRIDES[paramId]) return PARAM_SHORTCUT_OVERRIDES[paramId];
+            return paramId.charAt(0).toLowerCase();
+        }
+
+        function getPrecisionStep() {
+            return PRECISION_STEPS[effectPrecisionMode] || 2;
+        }
+
+        function getPrecisionWheelDelta() {
+            return PRECISION_WHEEL[effectPrecisionMode] || 0.02;
+        }
+
+        function saveEffectSnapshot(name) {
+            if (!currentArtEffect) return;
+            const key = `uiuxProMaxSnapshot_${currentArtEffect.id}`;
+            const snapshots = JSON.parse(localStorage.getItem(key) || '[]');
+            const snapshot = {
+                name: name || `快照 ${snapshots.length + 1}`,
+                params: { ...(currentArtEffect._paramValues || {}) },
+                paletteIndex: currentPaletteIndex,
+                createdAt: Date.now()
+            };
+            snapshots.push(snapshot);
+            if (snapshots.length > 10) snapshots.shift(); // max 10 snapshots
+            localStorage.setItem(key, JSON.stringify(snapshots));
+            showToast(`已保存快照: ${snapshot.name}`);
+            renderEffectFloatParams();
+        }
+
+        function loadEffectSnapshot(index) {
+            if (!currentArtEffect) return;
+            const key = `uiuxProMaxSnapshot_${currentArtEffect.id}`;
+            const snapshots = JSON.parse(localStorage.getItem(key) || '[]');
+            const snapshot = snapshots[index];
+            if (!snapshot) return;
+            currentArtEffect._paramValues = { ...snapshot.params };
+            if (snapshot.paletteIndex !== undefined) {
+                currentPaletteIndex = snapshot.paletteIndex;
+            }
+            renderEffectFloatParams();
+            if (effectEnabled) {
+                applyArtEffect(currentArtEffect);
+                updateActiveCards();
+            }
+            saveState();
+            showToast(`已加载快照: ${snapshot.name}`);
+        }
+
+        function deleteEffectSnapshot(index) {
+            if (!currentArtEffect) return;
+            const key = `uiuxProMaxSnapshot_${currentArtEffect.id}`;
+            const snapshots = JSON.parse(localStorage.getItem(key) || '[]');
+            snapshots.splice(index, 1);
+            localStorage.setItem(key, JSON.stringify(snapshots));
+            renderEffectFloatParams();
+        }
+
+        function setPrecisionMode(mode) {
+            effectPrecisionMode = mode;
+            renderEffectFloatParams();
+            showToast(`精度模式: ${mode === 'fine' ? '精细' : mode === 'coarse' ? '粗略' : '标准'}`);
+        }
+
+        function toggleSnapshotDropdown() {
+            const dd = document.getElementById('snapshot-dropdown');
+            if (!dd) return;
+            const isHidden = dd.classList.contains('hidden');
+            // Hide any other open dropdowns first
+            document.querySelectorAll('.snapshot-dropdown').forEach(el => el.classList.add('hidden'));
+            if (isHidden) dd.classList.remove('hidden');
+        }
+
         function renderEffectFloatParams() {
             const paramsContainer = document.getElementById('effect-float-params');
             const slidersContainer = document.getElementById('effect-float-params-sliders');
@@ -2848,20 +3940,51 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 `;
             }
 
-            slidersContainer.innerHTML = paletteHtml + currentArtEffect.parameters.map(p => {
+            // Precision mode switcher + Snapshot controls
+            const step = getPrecisionStep();
+            const snapshotKey = `uiuxProMaxSnapshot_${currentArtEffect.id}`;
+            const snapshots = JSON.parse(localStorage.getItem(snapshotKey) || '[]');
+            const controlsHtml = `
+                <div class="flex items-center justify-between mb-3">
+                    <div class="precision-switcher">
+                        <button class="precision-btn ${effectPrecisionMode === 'fine' ? 'active' : ''}" onclick="setPrecisionMode('fine')" title="精细步进 (${PRECISION_STEPS.fine}%)">精</button>
+                        <button class="precision-btn ${effectPrecisionMode === 'normal' ? 'active' : ''}" onclick="setPrecisionMode('normal')" title="标准步进 (${PRECISION_STEPS.normal}%)">标</button>
+                        <button class="precision-btn ${effectPrecisionMode === 'coarse' ? 'active' : ''}" onclick="setPrecisionMode('coarse')" title="粗略步进 (${PRECISION_STEPS.coarse}%)">粗</button>
+                    </div>
+                    <div class="flex items-center gap-1 relative">
+                        <button class="snapshot-btn" onclick="saveEffectSnapshot()" title="保存当前参数快照">💾</button>
+                        <button class="snapshot-btn" onclick="toggleSnapshotDropdown()" title="加载或删除快照">📂 ${snapshots.length}</button>
+                        <div id="snapshot-dropdown" class="snapshot-dropdown hidden">
+                            ${snapshots.length === 0 ? '<div class="snapshot-item" style="color:var(--muted-foreground);justify-content:center;">暂无快照</div>' : snapshots.map((s, i) => `
+                                <div class="snapshot-item" onclick="loadEffectSnapshot(${i})">
+                                    <span>${s.name}</span>
+                                    <span class="snapshot-delete" onclick="event.stopPropagation();deleteEffectSnapshot(${i})">删除</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            slidersContainer.innerHTML = paletteHtml + controlsHtml + currentArtEffect.parameters.map(p => {
                 const val = currentArtEffect._paramValues[p.id] !== undefined ? currentArtEffect._paramValues[p.id] : p.default / 100;
                 const displayVal = Math.round(val * 100);
+                const sc = getParamShortcut(p.id);
+                const isHeld = heldShortcutKey === sc;
                 return `
                     <div>
                         <div class="flex justify-between text-xs mb-1">
-                            <span>${p.name}</span>
+                            <span class="flex items-center gap-1.5">
+                                <span>${p.name}</span>
+                                <span class="shortcut-pill ${isHeld ? 'active' : ''}" id="shortcut-pill-${p.id}" title="按住 ${sc.toUpperCase()} + 滚轮快速调参">${sc.toUpperCase()}+滚轮</span>
+                            </span>
                             <span class="font-mono" id="float-param-val-${p.id}">${displayVal}${p.unit}</span>
                         </div>
-                        <input type="range" min="0" max="100" value="${displayVal}"
-                            class="w-full h-1.5 rounded-lg appearance-none cursor-pointer"
+                        <input type="range" min="0" max="100" value="${displayVal}" step="${step}"
+                            class="dial-range"
                             style="background: linear-gradient(to right, var(--primary) 0%, var(--primary) ${displayVal}%, var(--muted) ${displayVal}%, var(--muted) 100%);"
                             oninput="updateEffectParam('${p.id}', this.value / 100, this)"
-                            aria-label="${p.name} 参数滑块">
+                            aria-label="${p.name} 参数滑块，步进 ${step}%">
                     </div>
                 `;
             }).join('');
@@ -2876,6 +3999,12 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
             root.style.setProperty('--primary', palette[0] || '#2563EB');
             root.style.setProperty('--accent', palette[1] || '#EA580C');
             root.style.setProperty('--ring', palette[2] || palette[0] || '#2563EB');
+            // 三星堆效果根据色板切换明亮/古朴视觉
+            if (currentArtEffect.id === 18) {
+                const body = document.body;
+                if (currentPaletteIndex === 1) body.classList.add('art-effect-18-bright');
+                else body.classList.remove('art-effect-18-bright');
+            }
             // Re-render float panel to update selection highlight
             renderEffectFloatParams();
             renderEffectFloatGrid();
@@ -2951,9 +4080,10 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (heldShortcutKey) return; // skip global shortcuts when param shortcut is held
             const key = e.key;
-            if (key >= '1' && key <= '7') {
-                const tabs = ['styles', 'colors', 'typography', 'preview', 'prompts', 'favorites', 'effects'];
+            if (key >= '1' && key <= '8') {
+                const tabs = ['styles', 'colors', 'typography', 'preview', 'prompts', 'favorites', 'effects', 'collections'];
                 const tab = tabs[parseInt(key) - 1];
                 if (tab) {
                     const btn = document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`);
@@ -2977,6 +4107,95 @@ Please generate a complete, production-ready HTML file with embedded CSS that in
                 randomizeEffectParams();
             }
         });
+
+        // ============================================
+        // M1: Dial-style Param Shortcuts + Wheel Tuning
+        // ============================================
+        let wheelSaveTimer = null;
+
+        function getCurrentEffectParamByShortcut(key) {
+            if (!currentArtEffect || !currentArtEffect.parameters) return null;
+            const lowerKey = key.toLowerCase();
+            return currentArtEffect.parameters.find(p => getParamShortcut(p.id) === lowerKey) || null;
+        }
+
+        function updateEffectParamRealtime(paramId, value) {
+            if (!currentArtEffect._paramValues) currentArtEffect._paramValues = {};
+            value = Math.max(0, Math.min(1, value));
+            currentArtEffect._paramValues[paramId] = value;
+            const displayVal = Math.round(value * 100);
+            // Update labels
+            const valLabel = document.getElementById('param-val-' + paramId);
+            if (valLabel) valLabel.textContent = displayVal + '%';
+            const floatValLabel = document.getElementById('float-param-val-' + paramId);
+            if (floatValLabel) floatValLabel.textContent = displayVal + '%';
+            // Update slider background & value
+            const slider = document.querySelector(`input[oninput*="updateEffectParam('${paramId}'"]`);
+            if (slider) {
+                slider.value = displayVal;
+                slider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${displayVal}%, var(--muted) ${displayVal}%, var(--muted) 100%)`;
+            }
+            // Update CSS variable
+            const root = document.documentElement;
+            root.style.setProperty('--art-' + paramId, value);
+            if (paramId === 'intensity') {
+                root.style.setProperty('--art-intensity', value);
+            }
+            if (activeTab === 'preview') renderPreview();
+            // Debounced save
+            if (wheelSaveTimer) clearTimeout(wheelSaveTimer);
+            wheelSaveTimer = setTimeout(() => saveState(), 300);
+        }
+
+        function updateShortcutPillHighlight() {
+            if (!currentArtEffect || !currentArtEffect.parameters) return;
+            currentArtEffect.parameters.forEach(p => {
+                const pill = document.getElementById('shortcut-pill-' + p.id);
+                if (pill) {
+                    const sc = getParamShortcut(p.id);
+                    if (heldShortcutKey && heldShortcutKey === sc) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // Param shortcut keydown
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.repeat) return;
+            const key = e.key;
+            if (key.length !== 1) return; // only single character keys
+            const param = getCurrentEffectParamByShortcut(key);
+            if (param) {
+                heldShortcutKey = key.toLowerCase();
+                updateShortcutPillHighlight();
+            }
+        });
+
+        // Param shortcut keyup
+        document.addEventListener('keyup', function(e) {
+            const key = e.key.toLowerCase();
+            if (heldShortcutKey === key) {
+                heldShortcutKey = null;
+                updateShortcutPillHighlight();
+            }
+        });
+
+        // Wheel tuning
+        document.addEventListener('wheel', function(e) {
+            if (!heldShortcutKey || !currentArtEffect || !currentArtEffect.parameters) return;
+            const param = getCurrentEffectParamByShortcut(heldShortcutKey);
+            if (!param) return;
+            e.preventDefault();
+            const currentVal = currentArtEffect._paramValues[param.id] !== undefined
+                ? currentArtEffect._paramValues[param.id]
+                : param.default / 100;
+            const delta = getPrecisionWheelDelta() * (e.deltaY > 0 ? -1 : 1);
+            updateEffectParamRealtime(param.id, currentVal + delta);
+        }, { passive: false });
 
         // ============================================
         // 历史记录 Undo / Redo

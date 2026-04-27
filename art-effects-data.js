@@ -560,6 +560,10 @@ const artEffects = [
     tools: "Procreate, Photoshop, Illustrator, Substance Painter, 真实青铜铸造",
     prompt: "Sanxingdui Modern style, ancient bronze patina textures in deep olive-green and turquoise, gold leaf mask highlights with geometric borders, mysterious spiral cloud-thunder patterns, exaggerated eye and ear silhouettes, deep brown background with oxidized copper spots, vermillion red accents, time-weathered surfaces, ancient Shu civilization meets modern minimalism, archaeological futurism, patina gradients, irregular corroded edges",
     colorPalette: ["#4A6741", "#C9A227", "#2F6B5E", "#1A1410", "#9B2D1B", "#D4AF37"],
+    colorPalettes: [
+      { name: "古朴青铜", palette: ["#4A6741", "#C9A227", "#2F6B5E", "#1A1410", "#9B2D1B", "#D4AF37"] },
+      { name: "现代明亮", palette: ["#5A9A50", "#E8C84A", "#4A9B85", "#3A3028", "#C04A30", "#F0D060"] }
+    ],
     uiApplication: "深褐卡片配铜绿边框，金色高亮按钮，纵目轮廓装饰角标，回纹分割线，铜锈斑驳背景",
     parameters: [
       { id: "patina", name: "铜绿斑驳", min: 0, max: 100, default: 55, unit: "%" },

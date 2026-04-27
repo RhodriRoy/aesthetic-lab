@@ -1,20 +1,20 @@
 ﻿:root {
-            --primary: #2563EB;
+            --primary: #000000;
             --on-primary: #FFFFFF;
-            --secondary: #3B82F6;
+            --secondary: #1F1F1F;
             --on-secondary: #FFFFFF;
-            --accent: #EA580C;
+            --accent: #000000;
             --on-accent: #FFFFFF;
-            --background: #F8FAFC;
+            --background: #FFFFFF;
             --foreground: #1E293B;
             --card: #FFFFFF;
             --card-foreground: #1E293B;
-            --muted: #E9EFF8;
-            --muted-foreground: #64748B;
-            --border: #E2E8F0;
+            --muted: #F5F5F5;
+            --muted-foreground: #737373;
+            --border: #E5E5E5;
             --destructive: #DC2626;
             --on-destructive: #FFFFFF;
-            --ring: #2563EB;
+            --ring: #000000;
             --font-en-heading: 'Inter', 'Helvetica Neue', 'Arial';
             --font-en-body: 'Inter', 'Helvetica Neue', 'Arial';
             --font-en-mono: 'JetBrains Mono', 'Menlo', 'Monaco';
@@ -38,8 +38,8 @@
             --font-chinese-display: var(--font-cn-display);
             --font-chinese-rounded: var(--font-cn-rounded);
             --font-chinese-hand: var(--font-cn-hand);
-            --border-radius: 8px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --border-radius: 6px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.06);
             --border-width: 1px;
         }
 
@@ -210,7 +210,7 @@
 
         /* Dark mode active overrides */
         .dark-mode-active .style-card:hover {
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.06);
         }
 
         .dark-mode-active .color-swatch {
@@ -230,24 +230,39 @@
             background-color: var(--primary);
             color: var(--on-primary);
             border-radius: var(--border-radius, 6px);
-            box-shadow: var(--shadow, none);
-            border: var(--border-width, 0px) solid var(--primary);
+            box-shadow: none;
+            border: 1px solid var(--primary);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary);
         }
 
         .btn-secondary {
             background-color: var(--secondary);
             color: var(--on-secondary);
             border-radius: var(--border-radius, 6px);
-            box-shadow: var(--shadow, none);
-            border: var(--border-width, 0px) solid var(--secondary);
+            box-shadow: none;
+            border: 1px solid var(--secondary);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary);
         }
 
         .btn-accent {
             background-color: var(--accent);
             color: var(--on-accent);
             border-radius: var(--border-radius, 6px);
-            box-shadow: var(--shadow, none);
-            border: var(--border-width, 0px) solid var(--accent);
+            box-shadow: none;
+            border: 1px solid var(--accent);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .btn-accent:hover {
+            background-color: transparent;
+            color: var(--accent);
         }
 
         .input {
@@ -283,12 +298,12 @@
 
         .style-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
         .style-card.active {
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px var(--primary);
+            box-shadow: 0 0 0 1.5px var(--primary);
         }
 
         .preview-section {
@@ -349,7 +364,7 @@
 
         .tab-btn:hover {
             background-color: var(--muted);
-            color: var(--foreground);
+            color: var(--primary);
         }
 
         .tab-btn.active {
@@ -408,12 +423,17 @@
         .btn-outline {
             background-color: transparent;
             color: var(--primary);
-            border: var(--border-width, 1px) solid var(--primary);
+            border: 1px solid var(--primary);
             border-radius: var(--border-radius, 6px);
             padding: 0.5rem 1rem;
             font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--on-primary);
         }
 
         .btn-ghost {
@@ -425,6 +445,11 @@
             font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .btn-ghost:hover {
+            background-color: var(--muted);
+            color: var(--primary);
         }
 
         .btn-disabled {
@@ -4225,7 +4250,7 @@
            三星堆·现代 · art-effect-18
            ============================================ */
         #art-effect-overlay.art-effect-18 {
-            background-color: #1A1410;
+            background-color: #2A2420;
             background-image:
                 /* 1. 铜绿斑驳大斑块 */
                 radial-gradient(ellipse at 30% 40%, rgba(74, 103, 65, calc(0.2 + var(--art-patina, 0.55) * 0.4)) 0%, transparent 55%),
@@ -4317,7 +4342,7 @@
         body.art-effect-18 {
             --font-heading: 'Cinzel', 'Cormorant', 'Noto Serif SC', serif !important;
             --font-body: 'Noto Serif SC', 'Source Han Serif SC', serif !important;
-            background: #1A1410 !important;
+            background: #2A2420 !important;
         }
         body.art-effect-18 h1, body.art-effect-18 h2, body.art-effect-18 h3 {
             font-family: var(--font-heading) !important;
@@ -4340,7 +4365,7 @@
         body.art-effect-18 .card {
             border-radius: 0px !important;
             border: calc(1px + var(--art-goldLeaf, 0.45) * 2px) solid rgba(201, 162, 39, calc(0.3 + var(--art-goldLeaf, 0.45) * 0.4)) !important;
-            background: linear-gradient(180deg, #1E1814 0%, #1A1410 100%) !important;
+            background: linear-gradient(180deg, #2E2824 0%, #2A2420 100%) !important;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(201, 162, 39, calc(0.05 + var(--art-goldLeaf, 0.45) * 0.1)) !important;
             position: relative;
         }
@@ -4375,7 +4400,7 @@
             border-radius: 0px !important;
         }
         body.art-effect-18 input, body.art-effect-18 textarea, body.art-effect-18 select {
-            background: #1E1814 !important;
+            background: #2E2824 !important;
             border: 1px solid rgba(201, 162, 39, 0.3) !important;
             color: #D4AF37 !important;
             border-radius: 0px !important;
@@ -4398,13 +4423,53 @@
         }
         body.art-effect-18 .step-dot {
             border: 2px solid rgba(201, 162, 39, 0.4) !important;
-            background: #1E1814 !important;
+            background: #2E2824 !important;
         }
         body.art-effect-18 .toggle-track {
             background: rgba(74, 103, 65, 0.3) !important;
         }
         body.art-effect-18 .toggle-thumb {
             background: #C9A227 !important;
+        }
+
+        /* 现代明亮版覆盖 */
+        body.art-effect-18-bright {
+            background: #F5F0E8 !important;
+        }
+        body.art-effect-18-bright #art-effect-overlay.art-effect-18 {
+            background-color: #F5F0E8;
+        }
+        body.art-effect-18-bright h1, body.art-effect-18-bright h2, body.art-effect-18-bright h3 {
+            color: #2E8B57 !important;
+        }
+        body.art-effect-18-bright h1::after {
+            background: linear-gradient(135deg, #D4AF37, #5A9A50);
+            border-color: #D4AF37;
+        }
+        body.art-effect-18-bright .card {
+            border-color: rgba(201, 162, 39, calc(0.5 + var(--art-goldLeaf, 0.45) * 0.3)) !important;
+            background: #FFFFFF !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(201, 162, 39, calc(0.1 + var(--art-goldLeaf, 0.45) * 0.15)) !important;
+        }
+        body.art-effect-18-bright .card::before {
+            background: linear-gradient(90deg, transparent, rgba(201, 162, 39, calc(0.4 + var(--art-goldLeaf, 0.45) * 0.3)), transparent);
+        }
+        body.art-effect-18-bright input, body.art-effect-18-bright textarea, body.art-effect-18-bright select {
+            background: #FAFAF5 !important;
+            border-color: rgba(201, 162, 39, 0.45) !important;
+            color: #2D2D2D !important;
+        }
+        body.art-effect-18-bright input:focus, body.art-effect-18-bright textarea:focus, body.art-effect-18-bright select:focus {
+            border-color: #D4AF37 !important;
+            box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.25) !important;
+        }
+        body.art-effect-18-bright .progress-track {
+            background: rgba(74, 103, 65, 0.12) !important;
+            border-color: rgba(201, 162, 39, 0.35) !important;
+        }
+        body.art-effect-18-bright .step-dot {
+            background: #FAFAF5 !important;
+            border-color: rgba(201, 162, 39, 0.5) !important;
         }
 
         /* ============================================
@@ -4861,7 +4926,7 @@
 
         /* Force light/dark theme overrides */
         body.force-light {
-            background-color: #F8FAFC !important;
+            background-color: #FFFFFF !important;
             color: #1E293B !important;
         }
         body.force-dark {
@@ -4874,7 +4939,7 @@
             border-color: rgba(255,255,255,0.1) !important;
         }
         body.force-dark .dark-mode-active .style-card:hover {
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
         body.force-dark .dark-mode-active .color-swatch {
             border-color: rgba(255,255,255,0.15);
@@ -5213,4 +5278,572 @@
         @keyframes linkagePulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.75; }
+        }
+
+        /* ============================================
+           M1: Dial-style FX Panel & Animation Infrastructure
+           ============================================ */
+
+        /* --- Tab Transition Animations --- */
+        .tab-content {
+            animation: tabFadeIn 0.25s ease-out;
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content.hidden {
+            display: none;
+        }
+
+        /* --- Page / Section Transitions --- */
+        .page-transition {
+            animation: pageFadeIn 0.3s ease-out;
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Empty State Illustration --- */
+        .empty-state-illustration {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            animation: emptyFloat 3s ease-in-out infinite;
+        }
+        @keyframes emptyFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* --- FX Panel: Precision Mode Switcher --- */
+        .precision-switcher {
+            display: inline-flex;
+            gap: 0;
+            border-radius: var(--border-radius, 6px);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: var(--card);
+        }
+        .precision-btn {
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            color: var(--muted-foreground);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        .precision-btn:hover {
+            background: var(--muted);
+            color: var(--foreground);
+        }
+        .precision-btn.active {
+            background: var(--primary);
+            color: var(--on-primary);
+        }
+        .precision-btn:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: var(--border);
+        }
+        .precision-btn.active::after {
+            display: none;
+        }
+
+        /* --- FX Panel: Shortcut Pill --- */
+        .shortcut-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 3px;
+            background: var(--muted);
+            color: var(--muted-foreground);
+            border: 1px solid var(--border);
+            font-family: var(--font-mono);
+            letter-spacing: 0.04em;
+            transition: all 0.15s ease;
+        }
+        .shortcut-pill.active {
+            background: var(--primary);
+            color: var(--on-primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 37, 99, 235), 0.25);
+        }
+
+        /* --- FX Panel: Snapshot Controls --- */
+        .snapshot-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            border-radius: var(--border-radius, 4px);
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--foreground);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .snapshot-btn:hover {
+            background: var(--muted);
+        }
+        .snapshot-dropdown {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 4px);
+            min-width: 140px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius, 6px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            z-index: 200;
+            padding: 4px;
+        }
+        .snapshot-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--foreground);
+        }
+        .snapshot-item:hover {
+            background: var(--muted);
+        }
+        .snapshot-delete {
+            font-size: 0.65rem;
+            color: var(--destructive);
+            padding: 2px 4px;
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        .snapshot-item:hover .snapshot-delete {
+            opacity: 1;
+        }
+        .snapshot-delete:hover {
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        /* --- FX Panel: Range Input Enhancement --- */
+        .dial-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            outline: none;
+            transition: height 0.15s ease;
+        }
+        .dial-range:hover {
+            height: 6px;
+        }
+        .dial-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--card);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .dial-range::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 37, 99, 235), 0.25);
+        }
+        .dial-range::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--card);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        /* --- Reduced Motion Respect --- */
+        @media (prefers-reduced-motion: reduce) {
+            .tab-content,
+            .page-transition,
+            .empty-state-illustration,
+            #art-effect-float-panel,
+            .style-card,
+            .dial-range::-webkit-slider-thumb {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* ============================================
+           Welcome Screen (Hero Landing) v3 — Interface Craft
+           ============================================ */
+        .welcome-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #FFFFFF;
+            animation: welcomeFadeIn 0.5s ease-out;
+        }
+        .welcome-screen.exiting {
+            animation: welcomeFadeOut 0.3s ease-in forwards;
+        }
+        @keyframes welcomeFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes welcomeFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .welcome-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 720px;
+            width: 100%;
+        }
+
+        /* Brand / Title Area */
+        .welcome-brand {
+            animation: welcomeSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+        }
+        .welcome-top-line {
+            width: 48px;
+            height: 1px;
+            background: rgba(0,0,0,0.12);
+            margin: 0 auto 1.25rem;
+            animation: welcomeSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+        }
+        .welcome-mark {
+            margin: 0 auto 1.25rem;
+            animation: welcomeSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+        }
+        .welcome-title {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 400;
+            color: #000000;
+            line-height: 1.05;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .welcome-subtitle {
+            font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+            color: rgba(0,0,0,0.4);
+            font-weight: 400;
+            line-height: 1.6;
+            animation: welcomeSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+        }
+        @keyframes welcomeSlideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards Deck */
+        .welcome-cards-deck {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            margin: 2.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Individual Card */
+        .welcome-card {
+            position: absolute;
+            width: var(--w, 140px);
+            height: var(--h, 185px);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            cursor: default;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+            animation: welcomeCardEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--delay) both;
+        }
+
+        /* Card label colors — overridden by JS based on random background */
+        .welcome-card .welcome-card-label {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Card micro-animations */
+        @keyframes card1Sway {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+        @keyframes card2Breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        @keyframes card3Flow {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -80; }
+        }
+        @keyframes card4Pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        @keyframes card5Fade {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (min-width: 769px) {
+            /* Card 1: Styles — whole pattern sways left-right */
+            .welcome-card:nth-child(1) .welcome-card-pattern svg {
+                animation: card1Sway 3s ease-in-out calc(var(--delay) + 1s) infinite;
+            }
+            /* Card 2: Colors — pixels breathe (delays set by JS) */
+            .welcome-card:nth-child(2) .welcome-card-pattern svg rect {
+                animation: card2Breathe 2.5s ease-in-out infinite;
+            }
+            /* Card 3: Effects — wave paths flow */
+            .welcome-card:nth-child(3) .welcome-card-pattern svg path {
+                stroke-dasharray: 20;
+                animation: card3Flow 3s linear calc(var(--delay) + 1s) infinite;
+            }
+            /* Card 4: Export — whole pattern pulses */
+            .welcome-card:nth-child(4) .welcome-card-pattern svg {
+                animation: card4Pulse 4s ease-in-out calc(var(--delay) + 1s) infinite;
+            }
+            /* Card 5: Prompts — strokes fade in/out with stagger (delays set by JS) */
+            .welcome-card:nth-child(5) .welcome-card-pattern svg * {
+                animation: card5Fade 3s ease-in-out infinite;
+            }
+        }
+
+        .welcome-card-pattern {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-card-pattern svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .welcome-card-label {
+            padding: 0.6rem 0.85rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 0.01em;
+            text-align: left;
+        }
+
+        /* Card hover */
+        .welcome-card:hover {
+            z-index: 10;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.18);
+        }
+        .welcome-card:hover .welcome-card-pattern svg {
+            transform: translateY(-6px) scale(1.05);
+        }
+
+        /* Card entrance animation */
+        @keyframes welcomeCardEnter {
+            from {
+                opacity: 0;
+                transform: translateX(var(--tx)) translateY(calc(var(--ty) + 50px)) rotate(var(--start-rotate)) scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(var(--tx)) translateY(var(--ty)) rotate(var(--end-rotate)) scale(1);
+            }
+        }
+
+        /* CTA */
+        .welcome-cta {
+            animation: welcomeSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.4s both;
+        }
+        .welcome-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2.25rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #000000;
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.25);
+            border-radius: 2px;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        .welcome-cta-btn:hover {
+            background: #000000;
+            color: #FFFFFF;
+            border-color: #000000;
+        }
+        .welcome-cta-btn:active {
+            transform: scale(0.97);
+        }
+        .welcome-cta-hint {
+            margin-top: 0.875rem;
+            font-size: 0.7rem;
+            color: rgba(0,0,0,0.3);
+            letter-spacing: 0.04em;
+        }
+
+        /* Responsive */
+        @media (min-width: 769px) {
+            .welcome-card {
+                transform: translateX(var(--tx)) translateY(var(--ty)) rotate(var(--end-rotate));
+            }
+            .welcome-card:hover {
+                transform: translateX(var(--tx)) translateY(calc(var(--ty) - 16px)) rotate(var(--end-rotate)) scale(1.08);
+            }
+            .welcome-card {
+                animation: welcomeCardEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--delay) both;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-cards-deck {
+                height: auto;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                margin: 2rem 0;
+            }
+            .welcome-card {
+                position: relative;
+                width: var(--w, 110px);
+                height: var(--h, 145px);
+                transform: none !important;
+                --start-rotate: 0deg;
+                --end-rotate: 0deg;
+                --tx: 0px;
+                --ty: 0px;
+            }
+            .welcome-card:hover {
+                transform: translateY(-8px) scale(1.04) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-cards-deck {
+                gap: 0.5rem;
+            }
+            .welcome-card {
+                width: var(--w, 100px);
+                height: var(--h, 130px);
+                border-radius: 12px;
+            }
+            .welcome-card-label {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.65rem;
+            }
+        }
+
+        /* Reduced motion respect */
+        @media (prefers-reduced-motion: reduce) {
+            .welcome-screen, .welcome-brand, .welcome-top-line, .welcome-subtitle, .welcome-cta, .welcome-card {
+                animation: none !important;
+            }
+            .welcome-card {
+                transform: translateX(var(--tx)) translateY(var(--ty)) rotate(var(--end-rotate)) !important;
+                transition: none !important;
+            }
+            .welcome-card-pattern svg {
+                transition: none !important;
+            }
+        }
+
+        /* ============================================
+           M2: Walkthrough System Styles
+           ============================================ */
+        .walkthrough-nav-btn {
+            padding: 0.4rem 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-radius: var(--border-radius, 6px);
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--muted-foreground);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .walkthrough-nav-btn:hover {
+            background: var(--muted);
+            color: var(--foreground);
+        }
+        .walkthrough-nav-btn.active {
+            background: var(--primary);
+            color: var(--on-primary);
+            border-color: var(--primary);
+        }
+        .walkthrough-section {
+            animation: walkthroughFadeIn 0.25s ease-out;
+        }
+        @keyframes walkthroughFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .walkthrough-section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+            color: var(--foreground);
+        }
+        .walkthrough-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.5rem;
+        }
+        .walkthrough-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+        .walkthrough-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
         }
